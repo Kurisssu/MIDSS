@@ -335,12 +335,12 @@ def _json_safe(value):
     """Înlocuiește recursiv float-urile nefinite cu None.
 
     `json.dumps` scrie implicit tokenurile `NaN` / `Infinity`, care NU sunt JSON valid
-    (RFC 8259 admite doar numere finite). `System.Text.Json` din SITIM le respinge, iar
+    (RFC 8259 admite doar numere finite). `System.Text.Json` din MIDSS le respinge, iar
     răspunsul devine imposibil de deserializat — nu doar metrica afectată, ci întregul
     payload al sesiunii.
 
     S-a manifestat concret: un client a raportat `training_loss = NaN` într-o rundă, iar
-    din acel moment SITIM nu a mai putut ingera NICIO rundă, deși antrenarea a mers până
+    din acel moment MIDSS nu a mai putut ingera NICIO rundă, deși antrenarea a mers până
     la capăt. O metrică lipsă se reprezintă corect ca `null`.
     """
     if isinstance(value, float):
@@ -522,7 +522,7 @@ def start_session():
     min_fit_clients = max(1, int(payload.get("min_fit_clients", 3)))
     min_evaluate_clients = max(1, int(payload.get("min_evaluate_clients", 3)))
 
-    # Arhitectura e per sesiune: vine din dropdown-ul UI prin SITIM. Lipsa ei cade pe
+    # Arhitectura e per sesiune: vine din dropdown-ul UI prin MIDSS. Lipsa ei cade pe
     # FL_ARCHITECTURE, deci apelurile vechi raman valide.
     try:
         architecture = resolve_architecture(payload.get("architecture"))

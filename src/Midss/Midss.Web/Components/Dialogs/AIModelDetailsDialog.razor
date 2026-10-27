@@ -1,0 +1,78 @@
+@using Midss.Web.Services
+@inject DialogService DialogService
+@inject IStringLocalizer<SharedResource> L
+
+<div class="midss-model-dialog">
+
+    <div class="midss-model-dialog-header">
+        <div class="midss-model-dialog-icon">
+            <RadzenIcon Icon="psychology" />
+        </div>
+        <div class="midss-model-dialog-title-block">
+            <div class="midss-model-dialog-name">
+                @Model.Name
+                @if (Model.IsActive)
+                {
+                    <RadzenBadge Text="@L["Common.Active"]" BadgeStyle="BadgeStyle.Success" Variant="Variant.Flat" class="rz-ms-2" />
+                }
+                else
+                {
+                    <RadzenBadge Text="@L["Common.Inactive"]" BadgeStyle="BadgeStyle.Secondary" Variant="Variant.Flat" class="rz-ms-2" />
+                }
+            </div>
+            <span class="midss-model-dialog-version">v@Model.Version</span>
+        </div>
+    </div>
+
+    <div class="midss-model-metrics">
+        <div class="midss-model-metric">
+            <span class="midss-model-metric-value">@(Model.Accuracy.HasValue ? $"{Model.Accuracy.Value:P1}" : "—")</span>
+            <span class="midss-model-metric-label">@L["AIModels.Accuracy"]</span>
+        </div>
+        <div class="midss-model-metric">
+            <span class="midss-model-metric-value">@(Model.NumClasses?.ToString() ?? "—")</span>
+            <span class="midss-model-metric-label">@L["ModelDialog.Classes"]</span>
+        </div>
+        <div class="midss-model-metric">
+            <span class="midss-model-metric-value">@(Model.InputShape ?? "—")</span>
+            <span class="midss-model-metric-label">Input shape</span>
+        </div>
+    </div>
+
+    <div class="midss-model-details-grid">
+        <div class="midss-model-detail-row">
+            <span class="midss-model-detail-label">@L["ModelDialog.TrainingSource"]</span>
+            <span class="midss-model-detail-value">@(Model.TrainingSource ?? "—")</span>
+        </div>
+        <div class="midss-model-detail-row">
+            <span class="midss-model-detail-label">@L["ModelDialog.StorageFile"]</span>
+            <span class="midss-model-detail-value midss-mono">@Model.StorageFileName</span>
+        </div>
+        <div class="midss-model-detail-row">
+            <span class="midss-model-detail-label">@L["AIModels.UploadDate"]</span>
+            <span class="midss-model-detail-value">@Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</span>
+        </div>
+        <div class="midss-model-detail-row">
+            <span class="midss-model-detail-label">@L["ModelDialog.InternalId"]</span>
+            <span class="midss-model-detail-value midss-mono midss-model-id-text">@Model.Id</span>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Description))
+    {
+        <div class="midss-model-description-block">
+            <span class="midss-model-detail-label">@L["Common.Description"]</span>
+            <p class="midss-model-description-text">@Model.Description</p>
+        </div>
+    }
+
+    <div class="midss-model-dialog-footer">
+        <RadzenButton Text="@L["Common.Close"]" Icon="close" ButtonStyle="ButtonStyle.Light"
+                      Click="@(() => DialogService.Close())" />
+    </div>
+
+</div>
+
+@code {
+    [Parameter] public AIModelDto Model { get; set; } = null!;
+}

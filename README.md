@@ -1,10 +1,12 @@
-# SITIM — Ghid de instalare și pornire pe un PC nou
+# MIDSS — Ghid de instalare și pornire pe un PC nou
 
-**SITIM** (*Système d'Information pour le Traitement des Images Médicales*) — platformă web medicală multi-tenant pentru gestionarea, vizualizarea și analiza studiilor DICOM. Teză de licență, FCIM UTM, filiera francofonă.
+**MIDSS** (*Medical Imaging Diagnosis Support System*) — platformă web medicală multi-tenant pentru gestionarea, vizualizarea și analiza studiilor DICOM. Teză de licență, FCIM UTM, filiera francofonă.
+
+> Proiect derivat din **SITIM** (*Système d'Information pour le Traitement des Images Médicales*), aplicația tezei de licență; MIDSS este numele platformei din articolul ICCP 2026. Repository-ul servește ca referință și bază de lucru pentru cursurile *Tehnici de proiectare a produselor software* și *Arhitectura sistemelor software*.
 
 Ghidul acesta te duce de la **Windows proaspăt instalat** până la **aplicația funcțională în dev**, inclusiv modulele opționale (AI, Federated Learning).
 
-> 📌 **Convenție de cale.** În exemple repository-ul este clonat în `D:\University\SITIM`. Poți folosi orice cale — înlocuiește-o peste tot. Comenzile `dotnet` și `docker compose` din ghid se rulează din **rădăcina repository-ului**, dacă nu e indicat altfel.
+> 📌 **Convenție de cale.** În exemple repository-ul este clonat în `D:\University\MIDSS`. Poți folosi orice cale — înlocuiește-o peste tot. Comenzile `dotnet` și `docker compose` din ghid se rulează din **rădăcina repository-ului**, dacă nu e indicat altfel.
 
 ---
 
@@ -29,7 +31,7 @@ Ghidul acesta te duce de la **Windows proaspăt instalat** până la **aplicați
 Tot proiectul stă într-un singur repository Git (monorepo): soluția .NET, infrastructura Docker, stack-ul Federated Learning, scripturile Python și documentația.
 
 ```powershell
-git clone https://github.com/Kurisssu/MIDSS.git D:\University\SITIM
+git clone https://github.com/Kurisssu/MIDSS.git D:\University\MIDSS
 ```
 
 ### Ce NU este în Git (și de unde îl iei)
@@ -49,13 +51,13 @@ git clone https://github.com/Kurisssu/MIDSS.git D:\University\SITIM
 ## 2. Structura proiectului
 
 ```
-D:\University\SITIM\
-├── src\Sitim\            # Soluția .NET
-│   ├── Sitim.Core            # entități domeniu + interfețe servicii
-│   ├── Sitim.Infrastructure  # EF Core, Orthanc, ONNX, MinIO, orchestrare FL
-│   ├── Sitim.Api             # Web API + Hangfire + seeding
-│   ├── Sitim.Web             # Blazor Server UI (Radzen)
-│   └── Sitim.slnx            # fișierul de soluție
+D:\University\MIDSS\
+├── src\Midss\            # Soluția .NET
+│   ├── Midss.Core            # entități domeniu + interfețe servicii
+│   ├── Midss.Infrastructure  # EF Core, Orthanc, ONNX, MinIO, orchestrare FL
+│   ├── Midss.Api             # Web API + Hangfire + seeding
+│   ├── Midss.Web             # Blazor Server UI (Radzen)
+│   └── Midss.slnx            # fișierul de soluție
 ├── infra\                # 🐳 Docker: Postgres, Orthanc ×3, OHIF, MinIO, gateway (+ .env.example)
 ├── FederatedLearning\    # 🤝 Stack Flower (server + 3 clienți) (+ .env.example)
 ├── scripts\              # 🐍 Seed DICOM, training, test ONNX
@@ -66,7 +68,7 @@ D:\University\SITIM\
 └── .config\dotnet-tools.json  # dotnet-ef local (dotnet tool restore)
 ```
 
-**Arhitectură (Clean Architecture, layering strict):** `Core` (fără dependențe) → `Infrastructure` (implementează Core) → `Api` (DI + endpoints) / `Web` (UI, vorbește doar cu API-ul prin `SitimApiClient`).
+**Arhitectură (Clean Architecture, layering strict):** `Core` (fără dependențe) → `Infrastructure` (implementează Core) → `Api` (DI + endpoints) / `Web` (UI, vorbește doar cu API-ul prin `MidssApiClient`).
 
 ---
 
@@ -103,7 +105,7 @@ Ambele apar **exact pe un Windows proaspăt** și blochează proiectul. Rezolvă
 Smart App Control (activ implicit **doar pe instalări curate** de Windows 11) blochează DLL-urile nesemnate compilate local. Efect: **`dotnet ef` nu poate rula migrațiile**, cu eroarea:
 
 ```
-Could not load assembly 'Sitim.Infrastructure'.
+Could not load assembly 'Midss.Infrastructure'.
 System.IO.FileLoadException: An Application Control policy has blocked this file. (0x800711C7)
 ```
 
@@ -111,9 +113,9 @@ System.IO.FileLoadException: An Application Control policy has blocked this file
 
 > ⚠️ Odată dezactivat, nu mai poate fi reactivat fără reinstalarea Windows-ului — de aceea decide-o **acum**, la început.
 
-#### b) Rezervă porturile SITIM (PowerShell ca Administrator)
+#### b) Rezervă porturile MIDSS (PowerShell ca Administrator)
 
-Windows (Hyper-V/WSL, serviciul `winnat`) rezervă la **fiecare boot** un bloc **aleatoriu** de porturi TCP. Dacă blocul nimerește peste porturile SITIM, containerele Orthanc/Adminer nu pornesc:
+Windows (Hyper-V/WSL, serviciul `winnat`) rezervă la **fiecare boot** un bloc **aleatoriu** de porturi TCP. Dacă blocul nimerește peste porturile MIDSS, containerele Orthanc/Adminer nu pornesc:
 
 ```
 Error response from daemon: ports are not available ... bind: An attempt was made to
@@ -159,23 +161,23 @@ Apoi aplică: `wsl --shutdown`, repornește Docker Desktop.
 Cu prerechizitele făcute, repository-ul clonat și **secretele setate** ([§5.1](#51-clonează-repository-ul-și-setează-secretele)):
 
 ```powershell
-cd D:\University\SITIM
+cd D:\University\MIDSS
 dotnet tool restore
 
 # 1. Infrastructura Docker (Postgres, Orthanc ×3, OHIF, MinIO, gateway) — citește infra\.env
 docker compose -f infra\docker-compose.yml up -d
 
 # 2. Schema bazei de date
-dotnet ef database update --project src\Sitim\Sitim.Infrastructure --startup-project src\Sitim\Sitim.Api
+dotnet ef database update --project src\Midss\Midss.Infrastructure --startup-project src\Midss\Midss.Api
 
 # 3. API — terminal 1  (ATENȚIE la -lp https)
-dotnet run --project src\Sitim\Sitim.Api -lp https
+dotnet run --project src\Midss\Midss.Api -lp https
 
 # 4. Web — terminal 2
-dotnet run --project src\Sitim\Sitim.Web
+dotnet run --project src\Midss\Midss.Web
 ```
 
-Deschide **https://localhost:5001** → login `superadmin@sitim.local` / parola pe care ai pus-o în `Seed:SuperAdminPassword`.
+Deschide **https://localhost:5001** → login `superadmin@midss.local` / parola pe care ai pus-o în `Seed:SuperAdminPassword`.
 
 Apoi, obligatoriu o singură dată: creează instituțiile și **setează-le `OrthancBaseUrl` pe `localhost`** ([§5.6](#56-creează-instituțiile-și-leagă-le-de-orthanc)).
 
@@ -186,8 +188,8 @@ Apoi, obligatoriu o singură dată: creează instituțiile și **setează-le `Or
 ### 5.1 Clonează repository-ul și setează secretele
 
 ```powershell
-git clone https://github.com/Kurisssu/MIDSS.git D:\University\SITIM
-cd D:\University\SITIM
+git clone https://github.com/Kurisssu/MIDSS.git D:\University\MIDSS
+cd D:\University\MIDSS
 dotnet tool restore
 ```
 
@@ -204,22 +206,22 @@ notepad infra\.env      # completează POSTGRES_PASSWORD și MINIO_ROOT_PASSWORD
 
 #### b) API — .NET user-secrets
 
-`src\Sitim\Sitim.Api\appsettings.Development.json` conține doar `CHANGE_ME_VIA_USER_SECRETS`. Valorile reale stau în user-secrets (`%APPDATA%\Microsoft\UserSecrets\<UserSecretsId>\secrets.json`, în afara repository-ului). Rulează din folderul proiectului API:
+`src\Midss\Midss.Api\appsettings.Development.json` conține doar `CHANGE_ME_VIA_USER_SECRETS`. Valorile reale stau în user-secrets (`%APPDATA%\Microsoft\UserSecrets\<UserSecretsId>\secrets.json`, în afara repository-ului). Rulează din folderul proiectului API:
 
 ```powershell
-cd src\Sitim\Sitim.Api
+cd src\Midss\Midss.Api
 
 # aceeași parolă ca POSTGRES_PASSWORD din infra\.env
-dotnet user-secrets set "ConnectionStrings:Default" "Host=localhost;Port=5432;Database=sitim;Username=sitim;Password=<POSTGRES_PASSWORD>"
+dotnet user-secrets set "ConnectionStrings:Default" "Host=localhost;Port=5432;Database=midss;Username=midss;Password=<POSTGRES_PASSWORD>"
 
 # cheie HS256, minim 32 de caractere (generator mai jos)
 dotnet user-secrets set "Jwt:SigningKey" "<cheie aleatorie de minim 32 de caractere>"
 
-# parola contului superadmin@sitim.local, creat la prima pornire (minim 8 caractere)
+# parola contului superadmin@midss.local, creat la prima pornire (minim 8 caractere)
 dotnet user-secrets set "Seed:SuperAdminPassword" "<parola super-admin>"
 
 # MinIO: utilizatorul root din docker-compose.yml și MINIO_ROOT_PASSWORD din infra\.env
-dotnet user-secrets set "MinIO:AccessKey" "sitim"
+dotnet user-secrets set "MinIO:AccessKey" "midss"
 dotnet user-secrets set "MinIO:SecretKey" "<MINIO_ROOT_PASSWORD>"
 
 dotnet user-secrets list      # verificare
@@ -249,31 +251,31 @@ Completează `FL_ORTHANC_USERNAME` / `FL_ORTHANC_PASSWORD` și GUID-urile instit
 Asigură-te că **Docker Desktop rulează** și că există `infra\.env` ([§5.1a](#a-docker--infraenv)), apoi:
 
 ```powershell
-cd D:\University\SITIM
+cd D:\University\MIDSS
 docker compose -f infra\docker-compose.yml up -d
 docker compose -f infra\docker-compose.yml ps        # toate trebuie Up / healthy
 ```
 
 | Container | Rol | Port host |
 |-----------|-----|-----------|
-| `sitim-postgres` | PostgreSQL | 5432 |
-| `sitim-adminer` | UI administrare DB | 8080 |
-| `sitim-orthanc-mci` | PACS instituția MCI | 8042 · 4242 |
-| `sitim-orthanc-mikof` | PACS instituția Mikof | 8043 · 4243 |
-| `sitim-orthanc-ovisus` | PACS instituția Ovisus | 8044 · 4244 |
-| `sitim-ohif` | viewer OHIF | prin gateway |
-| `sitim-gateway` | reverse proxy Nginx | 3000 |
-| `sitim-minio` | stocare `.onnx` | 9000 · 9001 |
+| `midss-postgres` | PostgreSQL | 5432 |
+| `midss-adminer` | UI administrare DB | 8080 |
+| `midss-orthanc-mci` | PACS instituția MCI | 8042 · 4242 |
+| `midss-orthanc-mikof` | PACS instituția Mikof | 8043 · 4243 |
+| `midss-orthanc-ovisus` | PACS instituția Ovisus | 8044 · 4244 |
+| `midss-ohif` | viewer OHIF | prin gateway |
+| `midss-gateway` | reverse proxy Nginx | 3000 |
+| `midss-minio` | stocare `.onnx` | 9000 · 9001 |
 
-> `sitim-minio-setup` creează bucket-ul `ai-models` și se oprește — e normal să-l vezi `Exited (0)`.
+> `midss-minio-setup` creează bucket-ul `ai-models` și se oprește — e normal să-l vezi `Exited (0)`.
 
 ### 5.3 Aplică migrațiile
 
 Schema **nu** se creează automat la pornirea API-ului:
 
 ```powershell
-cd D:\University\SITIM
-dotnet ef database update --project src\Sitim\Sitim.Infrastructure --startup-project src\Sitim\Sitim.Api
+cd D:\University\MIDSS
+dotnet ef database update --project src\Midss\Midss.Infrastructure --startup-project src\Midss\Midss.Api
 ```
 
 > `dotnet ef` vine din manifestul local (`dotnet tool restore`). Connection string-ul e citit din user-secrets-ul API ([§5.1b](#b-api--net-user-secrets)).
@@ -283,7 +285,7 @@ dotnet ef database update --project src\Sitim\Sitim.Infrastructure --startup-pro
 ### 5.4 Pornește API-ul
 
 ```powershell
-dotnet run --project src\Sitim\Sitim.Api -lp https
+dotnet run --project src\Midss\Midss.Api -lp https
 ```
 
 > 🔴 **`-lp https` e obligatoriu.** Fără el, `dotnet run` folosește primul profil din `launchSettings.json` (`http`) și leagă **doar** `http://localhost:5080`. Dar UI-ul Blazor și gateway-ul OHIF apelează **`https://localhost:7006`** — fără acest flag primești erori de conexiune și viewer-ul nu încarcă imagini.
@@ -297,18 +299,18 @@ API: **https://localhost:7006** · Swagger: `/swagger` · Hangfire: `/hangfire`.
 În **al doilea terminal**:
 
 ```powershell
-cd D:\University\SITIM
-dotnet run --project src\Sitim\Sitim.Web
+cd D:\University\MIDSS
+dotnet run --project src\Midss\Midss.Web
 ```
 
-UI: **https://localhost:5001**. Loghează-te cu `superadmin@sitim.local` / parola din `Seed:SuperAdminPassword` ([§5.1b](#b-api--net-user-secrets)).
+UI: **https://localhost:5001**. Loghează-te cu `superadmin@midss.local` / parola din `Seed:SuperAdminPassword` ([§5.1b](#b-api--net-user-secrets)).
 
 ### 5.6 Creează instituțiile și leagă-le de Orthanc
 
 Arhitectura e multi-tenant: **fiecare instituție are propriul Orthanc**.
 
 1. În UI → **Administrare instituții** → creează 3 instituții cu slug-urile `mci`, `mikof`, `ovisus`.
-2. Setează-le `OrthancBaseUrl`. Deschide Adminer (http://localhost:8080 · sistem `PostgreSQL` · server `postgres` · user `sitim` · parolă = `POSTGRES_PASSWORD` din `infra\.env` · db `sitim`) și rulează:
+2. Setează-le `OrthancBaseUrl`. Deschide Adminer (http://localhost:8080 · sistem `PostgreSQL` · server `postgres` · user `midss` · parolă = `POSTGRES_PASSWORD` din `infra\.env` · db `midss`) și rulează:
 
 ```sql
 UPDATE institutions SET "OrthancBaseUrl" = 'http://localhost:8042' WHERE "Slug" = 'mci';
@@ -324,10 +326,10 @@ UPDATE institutions SET "OrthancBaseUrl" = 'http://localhost:8044' WHERE "Slug" 
 
 ### 5.7 Verifică `Storage:BasePath`
 
-În `src\Sitim\Sitim.Api\appsettings.json`:
+În `src\Midss\Midss.Api\appsettings.json`:
 
 ```json
-"Storage": { "BasePath": "D:\\University\\TEZA\\sitim\\docs" }
+"Storage": { "BasePath": "D:\\University\\TEZA\\midss\\docs" }
 ```
 
 E singura cale absolută din configurare (arhive DICOM locale). Dacă ai instalat proiectul în altă locație, **actualizeaz-o** (sau suprascrie prin user-secrets / variabilă de mediu) și asigură-te că folderul există. În versiunea actuală `StorageOptions` e doar înregistrat în DI și nu e citit de niciun serviciu, deci o cale greșită nu blochează pornirea.
@@ -339,16 +341,16 @@ Fără SMTP configurat, crearea unui utilizator nou **eșuează și contul e șt
 Configurează cu un **Gmail App Password** (necesită 2FA activ pe cont):
 
 ```powershell
-cd D:\University\SITIM\src\Sitim
-dotnet user-secrets set "Smtp:Username"    "adresa_ta@gmail.com" --project Sitim.Api
-dotnet user-secrets set "Smtp:Password"    "aaaabbbbccccdddd"    --project Sitim.Api
-dotnet user-secrets set "Smtp:FromAddress" "adresa_ta@gmail.com" --project Sitim.Api
+cd D:\University\MIDSS\src\Midss
+dotnet user-secrets set "Smtp:Username"    "adresa_ta@gmail.com" --project Midss.Api
+dotnet user-secrets set "Smtp:Password"    "aaaabbbbccccdddd"    --project Midss.Api
+dotnet user-secrets set "Smtp:FromAddress" "adresa_ta@gmail.com" --project Midss.Api
 ```
 
-⚠️ App Password-ul se afișează cu spații (`aaaa bbbb cccc dddd`) — introdu-l **fără spații**. `Username` și `FromAddress` trebuie să fie **aceeași adresă Gmail reală** (nu un nume ca „SITIM"). Repornește API-ul după setare.
+⚠️ App Password-ul se afișează cu spații (`aaaa bbbb cccc dddd`) — introdu-l **fără spații**. `Username` și `FromAddress` trebuie să fie **aceeași adresă Gmail reală** (nu un nume ca „MIDSS"). Repornește API-ul după setare.
 
 ```powershell
-dotnet user-secrets list --project Sitim.Api      # verificare
+dotnet user-secrets list --project Midss.Api      # verificare
 ```
 
 ---
@@ -361,13 +363,13 @@ Scriptul `scripts\seed_orthanc_fl.py` convertește imaginile fundus APTOS în DI
 
 ```powershell
 # 1. venv nou (venv-ul nu e în Git și nu e portabil între mașini)
-py -3.11 -m venv D:\University\SITIM\scripts\venv
+py -3.11 -m venv D:\University\MIDSS\scripts\venv
 
 # 2. dependențe
-& D:\University\SITIM\scripts\venv\Scripts\python.exe -m pip install numpy pandas pydicom Pillow
+& D:\University\MIDSS\scripts\venv\Scripts\python.exe -m pip install numpy pandas pydicom Pillow
 
 # 3. rulează seed-ul (implicit: TOATE cele ~3662 imagini APTOS)
-& D:\University\SITIM\scripts\venv\Scripts\python.exe D:\University\SITIM\scripts\seed_orthanc_fl.py
+& D:\University\MIDSS\scripts\venv\Scripts\python.exe D:\University\MIDSS\scripts\seed_orthanc_fl.py
 ```
 
 > 💡 Folosește **`py -3.11`**, nu `python` — pe un Windows curat `python` deschide alias-ul Microsoft Store, nu interpretorul real.
@@ -455,7 +457,7 @@ docker compose -f docker-compose.fl.yml -f docker-compose.gpu.yml --env-file .en
 ### 8.2 Pornește stack-ul FL
 
 ```powershell
-cd D:\University\SITIM\FederatedLearning
+cd D:\University\MIDSS\FederatedLearning
 
 # CPU
 docker compose -f docker-compose.fl.yml --env-file .env up -d --build
@@ -519,13 +521,15 @@ După finalizare poți **activa modelul FL** pentru inferență, direct din pagi
 
 | Credențiale (dev) | User | Parola se setează în |
 |------|-----------|--------|
-| SITIM super-admin | `superadmin@sitim.local` | user-secrets API: `Seed:SuperAdminPassword` |
-| PostgreSQL | `sitim` | `infra\.env`: `POSTGRES_PASSWORD` (+ user-secrets: `ConnectionStrings:Default`) |
-| MinIO | `sitim` | `infra\.env`: `MINIO_ROOT_PASSWORD` (+ user-secrets: `MinIO:SecretKey`) |
+| MIDSS super-admin | `superadmin@midss.local` | user-secrets API: `Seed:SuperAdminPassword` |
+| PostgreSQL | `midss` | `infra\.env`: `POSTGRES_PASSWORD` (+ user-secrets: `ConnectionStrings:Default`) |
+| MinIO | `midss` | `infra\.env`: `MINIO_ROOT_PASSWORD` (+ user-secrets: `MinIO:SecretKey`) |
 
 Vezi [§5.1](#51-clonează-repository-ul-și-setează-secretele). Orthanc are autentificarea **dezactivată** în dev.
 
-> CORS: API-ul acceptă doar `http://localhost:5000` și `https://localhost:5001`. Dacă schimbi portul UI-ului, actualizează politica `"SitimWeb"` din `Sitim.Api/Program.cs`.
+> CORS: API-ul acceptă doar `http://localhost:5000` și `https://localhost:5001`. Dacă schimbi portul UI-ului, actualizează politica `"MidssWeb"` din `Midss.Api/Program.cs`.
+
+> ⚠️ **Porturi comune cu SITIM.** MIDSS folosește exact porturile proiectului SITIM din care derivă (5000/5001, 7006, 5432, 8042–8044, 3000, 9000/9001, 18080/18081). Pe aceeași mașină nu pot rula simultan: oprește întâi stack-ul SITIM (`docker compose -p sitim stop` și procesele `dotnet run`). Volumele Docker sunt separate (proiectul compose se numește `midss`), deci datele nu se amestecă.
 
 ---
 
@@ -536,16 +540,16 @@ Vezi [§5.1](#51-clonează-repository-ul-și-setează-secretele). Orthanc are au
 dotnet tool restore
 
 # --- Build ---
-dotnet build src\Sitim\Sitim.slnx
+dotnet build src\Midss\Midss.slnx
 
 # --- Migrații EF Core ---
-dotnet ef database update       --project src\Sitim\Sitim.Infrastructure --startup-project src\Sitim\Sitim.Api
-dotnet ef migrations add <Nume> --project src\Sitim\Sitim.Infrastructure --startup-project src\Sitim\Sitim.Api
-dotnet ef database update <MigrațieAnterioară> --project src\Sitim\Sitim.Infrastructure --startup-project src\Sitim\Sitim.Api  # revert
+dotnet ef database update       --project src\Midss\Midss.Infrastructure --startup-project src\Midss\Midss.Api
+dotnet ef migrations add <Nume> --project src\Midss\Midss.Infrastructure --startup-project src\Midss\Midss.Api
+dotnet ef database update <MigrațieAnterioară> --project src\Midss\Midss.Infrastructure --startup-project src\Midss\Midss.Api  # revert
 
 # --- Rulare ---
-dotnet run --project src\Sitim\Sitim.Api -lp https      # API pe 7006
-dotnet run --project src\Sitim\Sitim.Web                # UI pe 5001
+dotnet run --project src\Midss\Midss.Api -lp https      # API pe 7006
+dotnet run --project src\Midss\Midss.Web                # UI pe 5001
 
 # --- Docker infra (din infra\) ---
 docker compose up -d ; docker compose ps ; docker compose logs -f
@@ -553,10 +557,10 @@ docker compose down          # oprește, păstrează datele
 docker compose down -v       # oprește ȘI șterge volumele (reset total)
 
 # --- Reset complet al bazei de date ---
-cd D:\University\SITIM\infra
+cd D:\University\MIDSS\infra
 docker compose down -v ; docker compose up -d
-cd D:\University\SITIM
-dotnet ef database update --project src\Sitim\Sitim.Infrastructure --startup-project src\Sitim\Sitim.Api
+cd D:\University\MIDSS
+dotnet ef database update --project src\Midss\Midss.Infrastructure --startup-project src\Midss\Midss.Api
 # apoi: recreează instituțiile (§5.6), re-rulează seed-ul (§6), re-încarcă modelul (§7)
 
 # --- Federated Learning (din FederatedLearning\) ---
@@ -573,7 +577,7 @@ curl http://localhost:18081/clients
 
 **Containere Orthanc/Adminer nu pornesc; OHIF dă erori 500**
 `ports are not available ... forbidden by its access permissions` + `host not found in upstream "orthanc-mci"`.
-→ Windows a rezervat porturile. Aplică fix-ul din [§3.2b](#b-rezervă-porturile-sitim-powershell-ca-administrator). Verifică cu `netsh int ipv4 show excludedportrange protocol=tcp`.
+→ Windows a rezervat porturile. Aplică fix-ul din [§3.2b](#b-rezervă-porturile-midss-powershell-ca-administrator). Verifică cu `netsh int ipv4 show excludedportrange protocol=tcp`.
 
 **Gateway-ul (nginx) cade cu exit 1** → nginx rezolvă upstream-urile **la pornire**; dacă Orthanc-urile sunt jos, moare. Pornește întâi Orthanc-urile (`docker compose up -d` le ordonează corect), apoi repornește gateway-ul.
 
@@ -581,7 +585,7 @@ curl http://localhost:18081/clients
 
 ### Bază de date / migrații
 
-**`Could not load assembly 'Sitim.Infrastructure'` / `Application Control policy has blocked this file`** → Smart App Control, vezi [§3.2a](#a-dezactivează-smart-app-control).
+**`Could not load assembly 'Midss.Infrastructure'` / `Application Control policy has blocked this file`** → Smart App Control, vezi [§3.2a](#a-dezactivează-smart-app-control).
 
 **`dotnet ef` nu e recunoscut** → rulează `dotnet tool restore` din rădăcina repository-ului (unealta e în `.config/dotnet-tools.json`).
 
@@ -593,7 +597,7 @@ curl http://localhost:18081/clients
 
 ### Aplicație
 
-**UI-ul nu poate apela API-ul (connection refused)** → API-ul rulează pe portul greșit. Folosește **`-lp https`** ([§5.4](#54-pornește-api-ul)) și verifică `Sitim.Web/appsettings.json → Api:BaseUrl = https://localhost:7006`.
+**UI-ul nu poate apela API-ul (connection refused)** → API-ul rulează pe portul greșit. Folosește **`-lp https`** ([§5.4](#54-pornește-api-ul)) și verifică `Midss.Web/appsettings.json → Api:BaseUrl = https://localhost:7006`.
 
 **Avertisment de certificat HTTPS** → `dotnet dev-certs https --trust` (o singură dată).
 

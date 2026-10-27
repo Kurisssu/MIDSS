@@ -1,5 +1,5 @@
 """
-SITIM AI Module - ONNX Model Testing Script
+MIDSS AI Module - ONNX Model Testing Script
 Test the exported ONNX model with sample images
 """
 
@@ -75,7 +75,7 @@ def predict(image_path, session):
 
 def main():
     print("=" * 60)
-    print("SITIM AI Module - ONNX Model Testing")
+    print("MIDSS AI Module - ONNX Model Testing")
     print("=" * 60)
     
     # Check if model exists
@@ -137,7 +137,7 @@ def main():
     print("\n" + "=" * 60)
     print("✅ Testing completed!")
     print("\nNext steps:")
-    print("1. Copy retinopathy_pretrained_v1.onnx to SITIM API project")
+    print("1. Copy retinopathy_pretrained_v1.onnx to MIDSS API project")
     print("2. Implement AIInferenceService in backend")
     print("3. Test with real DICOM studies")
     print("=" * 60)

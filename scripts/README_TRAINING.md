@@ -1,4 +1,4 @@
-# SITIM - AI Module Training Environment
+# MIDSS - AI Module Training Environment
 
 ## Required Python Packages
 

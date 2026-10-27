@@ -1,0 +1,128 @@
+@using Midss.Web.Services
+@using Radzen.Blazor
+@inject DialogService DialogService
+@inject IStringLocalizer<SharedResource> L
+
+<div class="midss-model-picker-root">
+    <div class="midss-model-picker-header">
+        <div class="midss-model-picker-title">
+            <RadzenIcon Icon="psychology" />
+            <span>@L["ModelPicker.Title"]</span>
+        </div>
+        @if (Models is not null && Models.Any())
+        {
+            <span class="midss-model-picker-count">@L["ModelPicker.CompatibleCount", Models.Count]</span>
+        }
+    </div>
+
+    @if (Models == null || !Models.Any())
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Warning" AllowClose="false">
+            @L["ModelPicker.NoModels"]
+        </RadzenAlert>
+    }
+    else
+    {
+        <div class="midss-model-picker-grid">
+            <div class="midss-model-picker-list">
+                @foreach (var model in Models.OrderByDescending(m => m.Accuracy ?? 0))
+                {
+                    var isSelected = model.Id == SelectedModelId;
+                    <div class="@($"midss-model-card{(isSelected ? " is-selected" : string.Empty)}")"
+                         @onclick="@(() => SelectModel(model.Id))"
+                         role="button"
+                         tabindex="0">
+                        <div class="midss-model-card-radio">
+                            <RadzenIcon Icon="@(isSelected ? "check_circle" : "radio_button_unchecked")" />
+                        </div>
+                        <div class="midss-model-card-body">
+                            <div class="midss-model-card-name">@model.Name</div>
+                            <div class="midss-model-card-meta">
+                                <span class="midss-model-chip is-version">v@(model.Version)</span>
+                                @if (!string.IsNullOrWhiteSpace(model.TargetModality))
+                                {
+                                    <span class="midss-model-chip is-modality">@model.TargetModality</span>
+                                }
+                                @if (model.Accuracy.HasValue)
+                                {
+                                    <span class="midss-model-accuracy">
+                                        <RadzenIcon Icon="trending_up" />
+                                        @model.Accuracy.Value.ToString("P1")
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="midss-model-picker-details">
+                @if (SelectedModel is null)
+                {
+                    <div class="midss-model-details-empty">
+                        <RadzenIcon Icon="article" />
+                        <span>@L["ModelPicker.SelectForDetails"]</span>
+                    </div>
+                }
+                else
+                {
+                    <div class="midss-model-details-content">
+                        <div class="midss-model-details-header">
+                            <div class="midss-model-details-name">@SelectedModel.Name</div>
+                            <div class="midss-model-details-badges">
+                                <span class="midss-model-chip is-version">v@(SelectedModel.Version)</span>
+                                <span class="midss-model-chip is-modality">@(SelectedModel.TargetModality ?? L["ModelPicker.AnyModality"].Value)</span>
+                                <span class="midss-model-chip is-accuracy">@(SelectedModel.Accuracy?.ToString("P2") ?? L["ModelPicker.AccuracyNA"].Value)</span>
+                            </div>
+                        </div>
+
+                        <div class="midss-model-details-field">
+                            <div class="midss-model-details-label">@L["Common.Description"]</div>
+                            <div class="midss-model-details-value">
+                                @(string.IsNullOrWhiteSpace(SelectedModel.Description) ? L["ModelPicker.NoDescription"].Value : SelectedModel.Description)
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <div class="midss-model-picker-actions">
+        <RadzenButton Text="@L["Common.Cancel"]" ButtonStyle="ButtonStyle.Light" Click="@Cancel" />
+        <RadzenButton Text="@L["ModelPicker.StartAnalysis"]" Icon="play_arrow" ButtonStyle="ButtonStyle.Primary"
+                      Click="@Select" Disabled="@(SelectedModelId == Guid.Empty)" />
+    </div>
+</div>
+
+@code {
+    [Parameter] public List<AIModelSelectionDto>? Models { get; set; }
+
+    private Guid SelectedModelId = Guid.Empty;
+    private AIModelSelectionDto? SelectedModel =>
+        Models?.FirstOrDefault(m => m.Id == SelectedModelId);
+
+    protected override void OnParametersSet()
+    {
+        if (SelectedModelId == Guid.Empty && Models?.Any() == true)
+            SelectedModelId = Models.OrderByDescending(m => m.Accuracy ?? 0).First().Id;
+    }
+
+    private void Select()
+    {
+        if (SelectedModelId != Guid.Empty)
+        {
+            DialogService.Close(SelectedModelId);
+        }
+    }
+
+    private void SelectModel(Guid modelId)
+    {
+        SelectedModelId = modelId;
+    }
+
+    private void Cancel()
+    {
+        DialogService.Close();
+    }
+}

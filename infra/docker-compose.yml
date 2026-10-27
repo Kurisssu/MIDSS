@@ -1,26 +1,26 @@
-name: sitim
+name: midss
 
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: sitim-postgres
+    container_name: midss-postgres
     environment:
-      POSTGRES_DB: sitim
-      POSTGRES_USER: sitim
+      POSTGRES_DB: midss
+      POSTGRES_USER: midss
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in infra/.env (see .env.example)}
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sitim -d sitim"]
+      test: ["CMD-SHELL", "pg_isready -U midss -d midss"]
       interval: 10s
       timeout: 5s
       retries: 10
 
   adminer:
     image: adminer
-    container_name: sitim-adminer
+    container_name: midss-adminer
     ports:
       - "8080:8080"
     depends_on:
@@ -29,7 +29,7 @@ services:
   # Multi-Orthanc architecture: separate PACS instance per institution
   orthanc-mci:
     image: orthancteam/orthanc:25.12.3
-    container_name: sitim-orthanc-mci
+    container_name: midss-orthanc-mci
     environment:
       DICOM_WEB_PLUGIN_ENABLED: "true"
       VERBOSE_STARTUP: "true"
@@ -45,7 +45,7 @@ services:
 
   orthanc-mikof:
     image: orthancteam/orthanc:25.12.3
-    container_name: sitim-orthanc-mikof
+    container_name: midss-orthanc-mikof
     environment:
       DICOM_WEB_PLUGIN_ENABLED: "true"
       VERBOSE_STARTUP: "true"
@@ -61,7 +61,7 @@ services:
 
   orthanc-ovisus:
     image: orthancteam/orthanc:25.12.3
-    container_name: sitim-orthanc-ovisus
+    container_name: midss-orthanc-ovisus
     environment:
       DICOM_WEB_PLUGIN_ENABLED: "true"
       VERBOSE_STARTUP: "true"
@@ -78,10 +78,10 @@ services:
 
   ohif:
     image: orthancteam/ohif-v3:latest
-    container_name: sitim-ohif
+    container_name: midss-ohif
     volumes:
       # OHIF image serves under /ohif/ (PUBLIC_URL=/ohif/) and loads app-config.js
-      # from that subdir, so the SITIM data-source config must live there too.
+      # from that subdir, so the MIDSS data-source config must live there too.
       - ./ohif/app-config.js:/usr/share/nginx/html/ohif/app-config.js:ro
     depends_on:
       - orthanc-mci
@@ -90,7 +90,7 @@ services:
 
   gateway:
     image: nginx:1.27-alpine
-    container_name: sitim-gateway
+    container_name: midss-gateway
     ports:
       - "3000:80"
     volumes:
@@ -104,9 +104,9 @@ services:
   # MinIO Object Storage for AI models
   minio:
     image: minio/minio:latest
-    container_name: sitim-minio
+    container_name: midss-minio
     environment:
-      MINIO_ROOT_USER: sitim
+      MINIO_ROOT_USER: midss
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?set MINIO_ROOT_PASSWORD in infra/.env (see .env.example)}
     ports:
       - "9000:9000"   # API
@@ -123,15 +123,15 @@ services:
   # MinIO Client (mc) for initial bucket setup
   minio-setup:
     image: minio/mc:latest
-    container_name: sitim-minio-setup
+    container_name: midss-minio-setup
     depends_on:
       minio:
         condition: service_healthy
     entrypoint: >
       /bin/sh -c "
-      mc alias set sitim-minio http://minio:9000 sitim ${MINIO_ROOT_PASSWORD:?set MINIO_ROOT_PASSWORD in infra/.env};
-      mc mb --ignore-existing sitim-minio/ai-models;
-      mc policy set download sitim-minio/ai-models;
+      mc alias set midss-minio http://minio:9000 midss ${MINIO_ROOT_PASSWORD:?set MINIO_ROOT_PASSWORD in infra/.env};
+      mc mb --ignore-existing midss-minio/ai-models;
+      mc policy set download midss-minio/ai-models;
       echo 'MinIO bucket ai-models created successfully';
       "
 

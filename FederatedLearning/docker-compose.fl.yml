@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: fl-server/Dockerfile
-    container_name: sitim-fl-server
+    container_name: midss-fl-server
     environment:
       PYTHONUNBUFFERED: "1"
       FL_SERVER_ADDRESS: 0.0.0.0:8080
@@ -26,13 +26,13 @@ services:
       - "${FL_SERVER_PUBLISHED_PORT:-18080}:8080"
       - "${FL_CONTROL_API_PUBLISHED_PORT:-18081}:8081"
     networks:
-      - sitim-fl-net
+      - midss-fl-net
 
   fl-client-inst1:
     build:
       context: .
       dockerfile: fl-client/Dockerfile
-    container_name: sitim-fl-client-inst1
+    container_name: midss-fl-client-inst1
     depends_on:
       - fl-server
     environment:
@@ -74,13 +74,13 @@ services:
     # epuizează memoria partajată și worker-ul moare cu „Bus error". 2 GB e suficient.
     shm_size: "2gb"
     networks:
-      - sitim-fl-net
+      - midss-fl-net
 
   fl-client-inst2:
     build:
       context: .
       dockerfile: fl-client/Dockerfile
-    container_name: sitim-fl-client-inst2
+    container_name: midss-fl-client-inst2
     depends_on:
       - fl-server
     environment:
@@ -122,13 +122,13 @@ services:
     # epuizează memoria partajată și worker-ul moare cu „Bus error". 2 GB e suficient.
     shm_size: "2gb"
     networks:
-      - sitim-fl-net
+      - midss-fl-net
 
   fl-client-inst3:
     build:
       context: .
       dockerfile: fl-client/Dockerfile
-    container_name: sitim-fl-client-inst3
+    container_name: midss-fl-client-inst3
     depends_on:
       - fl-server
     environment:
@@ -170,8 +170,8 @@ services:
     # epuizează memoria partajată și worker-ul moare cu „Bus error". 2 GB e suficient.
     shm_size: "2gb"
     networks:
-      - sitim-fl-net
+      - midss-fl-net
 
 networks:
-  sitim-fl-net:
+  midss-fl-net:
     driver: bridge

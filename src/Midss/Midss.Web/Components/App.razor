@@ -1,0 +1,53 @@
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<SharedResource> L
+<!DOCTYPE html>
+<html lang="@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName"
+      data-theme="@AppearanceName">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@L["App.Title"]</title>
+    <base href="@NavigationManager.BaseUri" />
+    <meta name="color-scheme" content="@AppearanceName" />
+    <RadzenTheme Theme="@RadzenThemeName" />
+    <link rel="stylesheet" href="css/site.css" />
+    <link rel="stylesheet" href="@Assets["Midss.Web.styles.css"]" />
+    <link rel="icon" href="favicon.ico" />
+    <HeadOutlet @rendermode="@InteractiveServer" />
+</head>
+
+<body>
+    <CascadingAuthenticationState>
+        <Routes @rendermode="@InteractiveServer" />
+    </CascadingAuthenticationState>
+    <ReconnectModal />
+    <script src="_framework/blazor.web.js"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/modal.js"></script>
+</body>
+
+</html>
+
+@code {
+    // Appearance is resolved here, during the initial server render, so the Radzen stylesheet
+    // and the data-theme attribute that site.css keys off are decided in the same pass. Doing
+    // it client-side instead would paint the default theme first and correct it afterwards.
+    //
+    // Dark is the product default: anything other than an explicit light cookie renders dark.
+
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    private bool IsLight =>
+        HttpContext?.Request.Cookies[ThemeController.CookieName] == ThemeController.LightTheme;
+
+    /// <summary>"light" / "dark" — drives site.css tokens and the browser's own form controls.</summary>
+    private string AppearanceName => IsLight ? "light" : "dark";
+
+    /// <summary>The matching Radzen stylesheet, which supplies every --rz-* variable.</summary>
+    private string RadzenThemeName =>
+        IsLight ? ThemeController.LightTheme : ThemeController.DarkTheme;
+}
+

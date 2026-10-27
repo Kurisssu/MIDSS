@@ -3,7 +3,7 @@
 Seeds all three Orthanc instances with DICOM studies created from APTOS fundus PNGs.
 
 Goal: each institution receives a DIFFERENT, NON-OVERLAPPING subset of images.
-This avoids the SITIM cache constraint where the same Orthanc Study ID cannot
+This avoids the MIDSS cache constraint where the same Orthanc Study ID cannot
 belong to multiple institutions simultaneously.
 
 Workflow:
@@ -54,10 +54,10 @@ from pydicom.uid import (
 from PIL import Image
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
-SITIM_ROOT = Path(__file__).resolve().parent.parent
-IMAGES_DIR = SITIM_ROOT / "data" / "raw" / "train_images"
-TRAIN_CSV = SITIM_ROOT / "data" / "raw" / "train.csv"
-LABELS_DIR = SITIM_ROOT / "FederatedLearning" / "labels"
+MIDSS_ROOT = Path(__file__).resolve().parent.parent
+IMAGES_DIR = MIDSS_ROOT / "data" / "raw" / "train_images"
+TRAIN_CSV = MIDSS_ROOT / "data" / "raw" / "train.csv"
+LABELS_DIR = MIDSS_ROOT / "FederatedLearning" / "labels"
 
 # ── Orthanc instances ─────────────────────────────────────────────────────────
 ORTHS = {
@@ -379,7 +379,7 @@ def main() -> None:
     print("Done. Recommended next steps:")
     print("  1. Restart the FL client containers so they pick up the new labels:")
     print("     docker compose -f FederatedLearning\\docker-compose.fl.yml restart fl-client-inst1 fl-client-inst2 fl-client-inst3")
-    print("  2. In SITIM UI press 'Sincronizare' on the studies page (or just refresh).")
+    print("  2. In MIDSS UI press 'Sincronizare' on the studies page (or just refresh).")
 
 
 if __name__ == "__main__":

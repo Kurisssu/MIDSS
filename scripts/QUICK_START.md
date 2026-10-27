@@ -1,10 +1,10 @@
-# SITIM AI Training - Quick Start
+# MIDSS AI Training - Quick Start
 
 ## ⚡ TL;DR (Comenzi Rapide)
 
 ```powershell
 # 1. Setup Python environment
-cd D:\University\SITIM\scripts
+cd D:\University\MIDSS\scripts
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 
@@ -15,14 +15,14 @@ pip install onnx onnxruntime pandas pillow scikit-learn matplotlib seaborn tqdm
 # 3. Download APTOS dataset (manual)
 # - Go to: https://www.kaggle.com/competitions/aptos2019-blindness-detection/data
 # - Download "aptos2019-blindness-detection.zip" (4 GB)
-# - Extract to: D:\University\SITIM\data\raw\
+# - Extract to: D:\University\MIDSS\data\raw\
 
 # 4. Verify dataset
-cd D:\University\SITIM\data\raw
+cd D:\University\MIDSS\data\raw
 (Get-ChildItem -Path "train_images" -Filter *.png).Count  # Should be 3662
 
 # 5. Run training
-cd D:\University\SITIM\scripts
+cd D:\University\MIDSS\scripts
 python train_retinopathy.py
 
 # 6. Wait for completion (30min-6h depending on CPU/GPU)
@@ -30,10 +30,10 @@ python train_retinopathy.py
 # 7. Test model
 python test_onnx_model.py
 
-# 8. Copy to SITIM
+# 8. Copy to MIDSS
 Copy-Item `
-  -Path "D:\University\SITIM\models\retinopathy_pretrained_v1.onnx" `
-  -Destination "D:\University\SITIM\src\Sitim\Sitim.Api\models\"
+  -Path "D:\University\MIDSS\models\retinopathy_pretrained_v1.onnx" `
+  -Destination "D:\University\MIDSS\src\Midss\Midss.Api\models\"
 
 # ✅ DONE! Anunță agentul pentru backend integration
 ```
@@ -43,7 +43,7 @@ Copy-Item `
 ## 📁 Expected File Structure După Training
 
 ```
-D:\University\SITIM\
+D:\University\MIDSS\
 ├── data/
 │   └── raw/
 │       ├── train_images/              # 3662 PNG files
@@ -62,7 +62,7 @@ D:\University\SITIM\
 │   ├── TRAINING_GUIDE.md              # Detailed guide
 │   └── QUICK_START.md                 # This file
 │
-└── src/Sitim/Sitim.Api/
+└── src/Midss/Midss.Api/
     └── models/
         └── retinopathy_pretrained_v1.onnx  # Copy here after training
 ```

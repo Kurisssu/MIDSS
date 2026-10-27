@@ -19,7 +19,7 @@ from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms
 
-# NOTĂ (decizie SITIM): sursa de date este DOAR Orthanc. Fiecare instituție are propriul
+# NOTĂ (decizie MIDSS): sursa de date este DOAR Orthanc. Fiecare instituție are propriul
 # Orthanc populat cu subsetul ei non-IID (partiția se materializează la seeding prin
 # scripts/seed_orthanc_fl.py). Clientul descarcă aici imaginile full-resolution ale
 # studiilor proprii și le aduce la 512×512 normalizate ImageNet — identic cu inferența.

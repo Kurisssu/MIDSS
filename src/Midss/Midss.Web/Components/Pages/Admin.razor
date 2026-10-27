@@ -1,0 +1,127 @@
+@page "/admin"
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+@inject MidssApiClient Api
+@inject NotificationService Notification
+@inject NavigationManager Navigation
+@inject IConfiguration Config
+@inject IStringLocalizer<SharedResource> L
+
+<PageTitle>@L["Admin.PageTitle"]</PageTitle>
+
+<RadzenStack Gap="1rem">
+    <RadzenText Text="@L["Nav.Admin"]" TextStyle="TextStyle.DisplayH5" />
+
+    @* ── Health Check ───────────────────────────────── *@
+    <RadzenCard>
+        <RadzenText Text="@L["Admin.SystemStatus"]" TextStyle="TextStyle.H6" class="rz-mb-3" />
+        <RadzenRow AlignItems="AlignItems.Center" Gap="1rem">
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                    <RadzenText Text="API Backend:" TextStyle="TextStyle.Body1" class="rz-mb-0" />
+                    @if (apiHealthy.HasValue)
+                    {
+                        @if (apiHealthy.Value)
+                        {
+                            <RadzenBadge BadgeStyle="BadgeStyle.Success" Text="Online" />
+                        }
+                        else
+                        {
+                            <RadzenBadge BadgeStyle="BadgeStyle.Danger" Text="Offline" />
+                        }
+                    }
+                    else
+                    {
+                        <RadzenBadge BadgeStyle="BadgeStyle.Light" Text="@L["Admin.Unchecked"]" />
+                    }
+                </RadzenStack>
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenButton Text="@L["Admin.Check"]" Icon="health_and_safety" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small"
+                              Click="@CheckHealth" IsBusy="@isCheckingHealth" BusyText="@L["Admin.Checking"]" />
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenCard>
+
+    @* ── Quick actions ─────────────────────────────── *@
+    <RadzenCard>
+        <RadzenText Text="@L["Admin.QuickActions"]" TextStyle="TextStyle.H6" class="rz-mb-3" />
+        <RadzenStack Gap="1rem">
+            <RadzenRow AlignItems="AlignItems.Center">
+                <RadzenColumn Size="12" SizeMD="8">
+                    <RadzenStack>
+                        <RadzenText Text="@L["Admin.FullSync"]" TextStyle="TextStyle.Subtitle2" class="rz-mb-0" />
+                        <RadzenText Text="@L["Admin.FullSyncHint"]"
+                                    TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                    </RadzenStack>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="4">
+                    <RadzenButton Text="Sync All" Icon="sync" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small"
+                                  Click="@OnSyncAll" IsBusy="@isSyncing" BusyText="@L["Admin.SyncingAll"]" />
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenStack>
+    </RadzenCard>
+
+    @* ── External links ────────────────────────────── *@
+    <RadzenCard>
+        <RadzenText Text="@L["Admin.ExternalLinks"]" TextStyle="TextStyle.H6" class="rz-mb-3" />
+        <RadzenStack Gap="0.5rem">
+            <RadzenLink Text="Hangfire Dashboard" Path="@hangfireUrl" Target="_blank" Icon="open_in_new"
+                        Style="font-size: 1rem;" />
+            <RadzenLink Text="Orthanc Explorer" Path="@orthancUrl" Target="_blank" Icon="open_in_new"
+                        Style="font-size: 1rem;" />
+            <RadzenLink Text="Swagger API Docs" Path="@swaggerUrl" Target="_blank" Icon="open_in_new"
+                        Style="font-size: 1rem;" />
+        </RadzenStack>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    private bool? apiHealthy;
+    private bool isCheckingHealth;
+    private bool isSyncing;
+
+    private string apiBaseUrl = "https://localhost:7006";
+    private string hangfireUrl => $"{apiBaseUrl}/hangfire";
+    private string orthancUrl => "http://localhost:8042";
+    private string swaggerUrl => $"{apiBaseUrl}/swagger";
+
+    protected override void OnInitialized()
+    {
+        apiBaseUrl = (Config["Api:BaseUrl"] ?? "https://localhost:7006").TrimEnd('/');
+    }
+
+    private async Task CheckHealth()
+    {
+        isCheckingHealth = true;
+        apiHealthy = await Api.HealthCheckAsync();
+        isCheckingHealth = false;
+
+        Notification.Notify(
+            apiHealthy.Value ? NotificationSeverity.Success : NotificationSeverity.Error,
+            "Health Check",
+            apiHealthy.Value ? L["Admin.ApiOnline"] : L["Admin.ApiNotResponding"]);
+    }
+
+    private async Task OnSyncAll()
+    {
+        isSyncing = true;
+        try
+        {
+            var count = await Api.SyncAllStudiesAsync();
+            string msg = count == 0
+                ? L["Studies.NoNewStudies"]
+                : count == 1 ? L["Studies.SyncedOne"] : L["Studies.SyncedMany", count];
+            var severity = count == 0 ? NotificationSeverity.Info : NotificationSeverity.Success;
+            Notification.Notify(severity, L["StudyDetails.Sync"], msg);
+        }
+        catch (Exception ex)
+        {
+            Notification.Notify(NotificationSeverity.Error, L["Common.Error"], ex.Message);
+        }
+        finally
+        {
+            isSyncing = false;
+        }
+    }
+}

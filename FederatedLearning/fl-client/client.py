@@ -361,7 +361,7 @@ def main() -> None:
     reconnect_delay_seconds = int(os.getenv("FL_RECONNECT_DELAY_SECONDS", "5"))
 
     if not institution_id_raw:
-        raise RuntimeError("FL_INSTITUTION_ID is required and must be set to InstitutionId GUID from SITIM.")
+        raise RuntimeError("FL_INSTITUTION_ID is required and must be set to InstitutionId GUID from MIDSS.")
 
     try:
         institution_id = str(uuid.UUID(institution_id_raw))

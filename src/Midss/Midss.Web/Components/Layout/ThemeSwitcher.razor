@@ -1,0 +1,46 @@
+@implements IDisposable
+@inject NavigationManager Navigation
+@inject IStringLocalizer<SharedResource> L
+
+@*
+    Dark / light appearance toggle.
+
+    Deliberately a plain anchor, not an interactive button: the target controller rewrites the
+    cookie and the browser reloads, so the Radzen stylesheet and the <html data-theme> attribute
+    that drives site.css change together, in one server render. That rules out a flash of the
+    wrong theme, and means this component holds no state of its own.
+
+    Which glyph shows is decided purely by CSS off <html data-theme> (see site.css), so the
+    markup is identical in both appearances and needs nothing from the circuit.
+*@
+<a href="@ToggleHref"
+   class="midss-theme-toggle"
+   title="@L["Nav.ToggleTheme"]"
+   aria-label="@L["Nav.ToggleTheme"]">
+    <RadzenIcon Icon="light_mode" class="midss-theme-icon midss-theme-icon-light" />
+    <RadzenIcon Icon="dark_mode" class="midss-theme-icon midss-theme-icon-dark" />
+</a>
+
+@code {
+    // The switcher lives in the layout, which Blazor keeps alive across route changes and does
+    // NOT re-render on its own. Without this subscription the href keeps whatever URL was
+    // current when the layout first rendered, so toggling the theme from any later page bounced
+    // the user back to that first one.
+    protected override void OnInitialized() =>
+        Navigation.LocationChanged += OnLocationChanged;
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e) =>
+        InvokeAsync(StateHasChanged);
+
+    private string ToggleHref
+    {
+        get
+        {
+            var returnTo = new Uri(Navigation.Uri).PathAndQuery;
+            return $"theme/toggle?redirectUri={Uri.EscapeDataString(returnTo)}";
+        }
+    }
+
+    public void Dispose() =>
+        Navigation.LocationChanged -= OnLocationChanged;
+}

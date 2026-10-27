@@ -1,0 +1,230 @@
+@page "/analysis/{JobIdStr}"
+@attribute [Authorize]
+@inject MidssApiClient Api
+@inject NavigationManager Navigation
+@inject NotificationService Notification
+@inject IStringLocalizer<SharedResource> L
+@using System.Timers
+
+<PageTitle>@L["Progress.PageTitle"]</PageTitle>
+
+<RadzenStack Gap="1rem">
+    @if (isLoading)
+    {
+        <RadzenProgressBarCircular ProgressBarStyle="ProgressBarStyle.Primary" Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
+    }
+    else if (job == null)
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Warning" Shade="Shade.Dark" AllowClose="false">
+            @L["Progress.JobNotFound"]
+        </RadzenAlert>
+    }
+    else
+    {
+        <RadzenRow AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+            <RadzenColumn>
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                    <RadzenButton Icon="arrow_back" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" Size="ButtonSize.Small"
+                                  Click="@NavigateToStudy" title="@L["Progress.BackToStudy"]" />
+                    <RadzenText Text="@L["Progress.Title"]" TextStyle="TextStyle.DisplayH5" class="rz-mb-0" />
+                </RadzenStack>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenBadge BadgeStyle="@GetStatusBadgeStyle(job.Status)" Text="@job.Status" />
+            </RadzenColumn>
+        </RadzenRow>
+
+        <RadzenCard>
+            <RadzenStack Gap="1rem">
+                <RadzenText Text="@GetStatusMessage(job.Status)" TextStyle="TextStyle.Body1" />
+                <RadzenProgressBar Value="@GetProgressValue(job.Status)" ShowValue="false" />
+            </RadzenStack>
+        </RadzenCard>
+
+        <RadzenRow Gap="1rem">
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenCard>
+                    <RadzenStack Gap="0.5rem">
+                        <RadzenText Text="@L["Common.Model"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                        <RadzenText Text="@(job.ModelName ?? "—")" TextStyle="TextStyle.Body1" />
+                    </RadzenStack>
+                </RadzenCard>
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenCard>
+                    <RadzenStack Gap="0.5rem">
+                        <RadzenText Text="@L["Common.CreatedAt"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                        <RadzenText Text="@FormatDateTime(job.CreatedAt)" TextStyle="TextStyle.Body1" />
+                    </RadzenStack>
+                </RadzenCard>
+            </RadzenColumn>
+        </RadzenRow>
+
+        <RadzenRow Gap="1rem">
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenCard>
+                    <RadzenStack Gap="0.5rem">
+                        <RadzenText Text="@L["Progress.StartedAt"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                        <RadzenText Text="@(job.StartedAt.HasValue ? FormatDateTime(job.StartedAt.Value) : "—")" TextStyle="TextStyle.Body1" />
+                    </RadzenStack>
+                </RadzenCard>
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenCard>
+                    <RadzenStack Gap="0.5rem">
+                        <RadzenText Text="@L["Common.ProcessingTime"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                        <LiveDurationTimer StartedAtUtc="@job.StartedAt"
+                                           FinishedAtUtc="@job.FinishedAt"
+                                           ProcessingTimeMs="@job.ProcessingTimeMs"
+                                           CssClass="rz-text-body1 midss-duration-mono" />
+                    </RadzenStack>
+                </RadzenCard>
+            </RadzenColumn>
+        </RadzenRow>
+
+        @if (job.Status == "Completed" && job.PredictionClass.HasValue)
+        {
+            <RadzenCard>
+                <RadzenStack Gap="1rem">
+                    <RadzenText Text="@L["Progress.Finished"]" TextStyle="TextStyle.Body1" />
+                    <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem">
+                        <RadzenText Text="@L["Progress.Class", job.PredictionClass!]" TextStyle="TextStyle.Body2" />
+                        <RadzenText Text="@L["Progress.Confidence", job.Confidence?.ToString("P2") ?? "—"]" TextStyle="TextStyle.Body2" />
+                    </RadzenStack>
+                    <RadzenButton Text="@L["Progress.SeeResultDetails"]" Icon="zoom_in" ButtonStyle="ButtonStyle.Info" Size="ButtonSize.Small"
+                                  Click="@ShowResultDetails" />
+                </RadzenStack>
+            </RadzenCard>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(job.ErrorMessage))
+        {
+            <RadzenAlert AlertStyle="AlertStyle.Danger" Shade="Shade.Light" AllowClose="false">
+                <RadzenText Text="@L["Progress.Error", job.ErrorMessage]" />
+            </RadzenAlert>
+        }
+
+        @if (job.Status == "Queued" || job.Status == "Running")
+        {
+            <RadzenRow AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End">
+                <RadzenColumn Size="12" SizeMD="6" class="rz-text-align-end">
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.75rem" AlignItems="AlignItems.Center">
+                        <RadzenText Text="@L["Common.AutoRefresh5s"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                        <RadzenButton Text="@L["Common.Reload"]" Icon="refresh" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small"
+                                      Click="@RefreshStatus" />
+                    </RadzenStack>
+                </RadzenColumn>
+            </RadzenRow>
+        }
+    }
+</RadzenStack>
+
+@code {
+    [Parameter]
+    public string JobIdStr { get; set; } = "";
+
+    private Guid JobId;
+    private AIAnalysisJobStatusDto? job;
+    private bool isLoading = true;
+    private Timer? refreshTimer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Guid.TryParse(JobIdStr, out var parsedJobId))
+        {
+            JobId = parsedJobId;
+            await LoadJobStatus();
+            StartAutoRefresh();
+        }
+    }
+
+    private async Task LoadJobStatus()
+    {
+        isLoading = true;
+        try
+        {
+            job = await Api.GetAnalysisJobAsync(JobId);
+        }
+        catch (Exception ex)
+        {
+            Notification.Notify(NotificationSeverity.Error, L["Common.Error"], ex.Message);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task RefreshStatus()
+    {
+        await LoadJobStatus();
+        StateHasChanged();
+    }
+
+    private void StartAutoRefresh()
+    {
+        refreshTimer = new Timer(5000);
+        refreshTimer.Elapsed += (s, e) =>
+        {
+            // Auto-refresh runs unconditionally for active jobs.
+            // Finished jobs are skipped to avoid hammering the API for static data.
+            if (job?.Status != "Queued" && job?.Status != "Running")
+                return;
+
+            _ = InvokeAsync(RefreshStatus);
+        };
+        refreshTimer.AutoReset = true;
+        refreshTimer.Start();
+    }
+
+    private void ShowResultDetails()
+    {
+        if (job != null)
+            Navigation.NavigateTo($"/analysis/{JobId}/results");
+    }
+
+    private void NavigateToStudy()
+    {
+        if (!string.IsNullOrWhiteSpace(job?.OrthancStudyId))
+        {
+            Navigation.NavigateTo($"/studies/{job.OrthancStudyId}");
+            return;
+        }
+
+        Navigation.NavigateTo("/studies");
+    }
+
+    private static BadgeStyle GetStatusBadgeStyle(string status) => status switch
+    {
+        "Queued" => BadgeStyle.Warning,
+        "Running" => BadgeStyle.Info,
+        "Completed" => BadgeStyle.Success,
+        "Failed" => BadgeStyle.Danger,
+        _ => BadgeStyle.Light
+    };
+
+    private string GetStatusMessage(string status) => status switch
+    {
+        "Queued" => L["Progress.StatusQueued"],
+        "Running" => L["Progress.StatusRunning"],
+        "Completed" => L["Progress.StatusCompleted"],
+        "Failed" => L["Progress.StatusFailed"],
+        _ => $"Status: {status}"
+    };
+
+    private static double GetProgressValue(string status) => status switch
+    {
+        "Queued" => 20,
+        "Running" => 60,
+        "Completed" => 100,
+        "Failed" => 100,
+        _ => 0
+    };
+
+    private static string FormatDateTime(DateTime dt) => dt.ToString("yyyy-MM-dd HH:mm:ss");
+
+    public async ValueTask DisposeAsync()
+    {
+        refreshTimer?.Dispose();
+    }
+}

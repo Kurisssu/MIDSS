@@ -1,4 +1,4 @@
-# SITIM Federated Learning Runbook (E2E)
+# MIDSS Federated Learning Runbook (E2E)
 
 > **Model:** ResNet-18 antrenat federat (fine-tuning ImageNet), 5 clase APTOS, 512×512,
 > aceeași arhitectură ca modelul de inferință. Export ONNX cu **logits** (softmax aplicat o
@@ -6,7 +6,7 @@
 > (FedAvg). BatchNorm: agregat ca orice parametru (varianta simplă; FedBN = direcție viitoare).
 
 ## 1. Prerequisites
-- 3 instituții active în SITIM (cu `InstitutionId` GUID real).
+- 3 instituții active în MIDSS (cu `InstitutionId` GUID real).
 - Orthanc per instituție disponibil și accesibil din containerele FL.
 - Dataset APTOS 2019 local pentru seeding: `data/raw/train.csv` + `data/raw/train_images/*.png`.
 - Labels CSV populate per instituție (regenerate de seeder — vezi §1.1):
@@ -20,7 +20,7 @@ fizic la seeding (Dirichlet pe etichete). Rulează:
 # opțional, parametrizează partiția:
 $env:FL_NONIID_ALPHA = "0.5"     # mic ⇒ puternic non-IID; mare ⇒ aproape IID
 $env:FL_SEED_MAX_PER_CLASS = "40" # cap/clasă (CPU 512×512 e lent)
-python D:\University\SITIM\scripts\seed_orthanc_fl.py
+python D:\University\MIDSS\scripts\seed_orthanc_fl.py
 ```
 Seederul: curăță Orthanc-urile, alege imagini din toate cele 5 clase, le împarte non-IID pe
 cele 3 instituții (fără overlap), reîncarcă DICOM-uri RGB 512×512, regenerează CSV-urile și
@@ -39,7 +39,7 @@ Optional:
 Imaginile includ acum PyTorch + torchvision (mult mai mari; primul build durează). Contextul de
 build este rădăcina `FederatedLearning/` (ca modulul comun `fl_common/` să ajungă în ambele imagini).
 ```powershell
-docker compose -f D:\University\SITIM\FederatedLearning\docker-compose.fl.yml up --build
+docker compose -f D:\University\MIDSS\FederatedLearning\docker-compose.fl.yml up --build
 ```
 
 Variabile noi / modificate (vezi `docker-compose.fl.yml`):
@@ -60,8 +60,8 @@ atașează GPU-ul la clienți; serverul rămâne pe CPU — face doar export ONN
 docker run --rm --gpus all nvidia/cuda:12.4.1-base-ubuntu22.04 nvidia-smi
 
 # pornire pe GPU:
-docker compose -f D:\University\SITIM\FederatedLearning\docker-compose.fl.yml `
-               -f D:\University\SITIM\FederatedLearning\docker-compose.gpu.yml up --build
+docker compose -f D:\University\MIDSS\FederatedLearning\docker-compose.fl.yml `
+               -f D:\University\MIDSS\FederatedLearning\docker-compose.gpu.yml up --build
 ```
 
 Necesită driver NVIDIA + NVIDIA Container Toolkit (runtime `nvidia` în Docker).
@@ -74,8 +74,8 @@ $env:FL_BATCH_SIZE = "6"   # trimis clienților prin fit_config; scade la 4 dac�
 Confirmă că rulează pe GPU în loguri: `nvidia-smi` arată 3 procese python, iar containerele NU
 loghează `device=cpu`.
 
-## 4. Start SITIM API/Web
-Pornește aplicația SITIM normal (API + Web).  
+## 4. Start MIDSS API/Web
+Pornește aplicația MIDSS normal (API + Web).  
 API rulează monitorizare FL automată prin Hangfire (`fl-session-monitor`).
 
 ## 5. Start and complete session from UI

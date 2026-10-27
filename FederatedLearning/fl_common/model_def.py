@@ -1,4 +1,4 @@
-"""Definiția comună a modelului pentru Federated Learning SITIM.
+"""Definiția comună a modelului pentru Federated Learning MIDSS.
 
 Acest modul este importat ATÂT de clientul Flower (`fl-client`) CÂT și de planul de
 control al serverului (`fl-server`), ca să existe o singură sursă de adevăr pentru:

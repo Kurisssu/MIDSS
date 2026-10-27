@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Midss.Api/Midss.Api.csproj" />
+  <Project Path="Midss.Core/Midss.Core.csproj" />
+  <Project Path="Midss.Infrastructure/Midss.Infrastructure.csproj" />
+  <Project Path="Midss.Web/Midss.Web.csproj" />
+</Solution>

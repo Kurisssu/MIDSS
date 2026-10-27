@@ -1,5 +1,5 @@
 """
-SITIM AI Module - Diabetic Retinopathy Training Script
+MIDSS AI Module - Diabetic Retinopathy Training Script
 Training ResNet18 on APTOS 2019 dataset for 5-class classification
 """
 
@@ -180,7 +180,7 @@ def validate(model, dataloader, criterion, device):
 # ==================== Main Training Loop ====================
 def main():
     print("=" * 60)
-    print("SITIM AI Module - Diabetic Retinopathy Training")
+    print("MIDSS AI Module - Diabetic Retinopathy Training")
     print("=" * 60)
     
     # Set random seed
@@ -367,7 +367,7 @@ def main():
     print(f"   ✅ Training report saved: {report_path}")
     
     print("\n" + "=" * 60)
-    print("✅ All done! Model ready for deployment in SITIM.")
+    print("✅ All done! Model ready for deployment in MIDSS.")
     print("=" * 60)
 
 if __name__ == '__main__':

@@ -4,12 +4,12 @@ Ghidul de instalare și pornire este în [`README.md`](../README.md) de la răd�
 
 ## Arhitectură
 
-Soluția .NET 10 (`src/Sitim/`) are patru proiecte, cu dependențe strict pe straturi (Clean Architecture):
+Soluția .NET 10 (`src/Midss/`) are patru proiecte, cu dependențe strict pe straturi (Clean Architecture):
 
-- **Sitim.Core** — entități de domeniu și interfețe de servicii; fără dependențe de infrastructură.
-- **Sitim.Infrastructure** — implementează interfețele din Core: EF Core (`AppDbContext`, PostgreSQL), clientul HTTP Orthanc, inferența ONNX, stocarea modelelor în MinIO, orchestrarea Federated Learning.
-- **Sitim.Api** — ASP.NET Core Web API: înregistrează DI, găzduiește dashboard-ul Hangfire, face seed-ul de roluri și super-admin la pornire.
-- **Sitim.Web** — Blazor Server (componente Radzen); vorbește cu API-ul doar prin `SitimApiClient`.
+- **Midss.Core** — entități de domeniu și interfețe de servicii; fără dependențe de infrastructură.
+- **Midss.Infrastructure** — implementează interfețele din Core: EF Core (`AppDbContext`, PostgreSQL), clientul HTTP Orthanc, inferența ONNX, stocarea modelelor în MinIO, orchestrarea Federated Learning.
+- **Midss.Api** — ASP.NET Core Web API: înregistrează DI, găzduiește dashboard-ul Hangfire, face seed-ul de roluri și super-admin la pornire.
+- **Midss.Web** — Blazor Server (componente Radzen); vorbește cu API-ul doar prin `MidssApiClient`.
 
 ### Multi-tenancy
 
@@ -55,7 +55,7 @@ Modelul de referință: ResNet-18 antrenat pe APTOS 2019, 5 clase (No DR / Mild 
 
 Secretele nu se pun în fișiere versionate; vezi §5.1 din `README.md`.
 
-**CORS:** politica `"SitimWeb"` permite doar `http://localhost:5000` și `https://localhost:5001`. Pentru alt origin, actualizează `Sitim.Api/Program.cs`.
+**CORS:** politica `"MidssWeb"` permite doar `http://localhost:5000` și `https://localhost:5001`. Pentru alt origin, actualizează `Midss.Api/Program.cs`.
 
 **Roluri:** `SuperAdmin` (toate instituțiile) și `InstitutionAdmin` (o singură instituție), create la pornire; verificate cu `[Authorize(Roles = "...")]`.
 

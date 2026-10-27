@@ -1,5 +1,5 @@
-// Read the viewer token injected in the URL by SITIM (e.g. ?viewerToken=xxx)
-const _sitimViewerToken = (new URLSearchParams(window.location.search)).get('viewerToken') || '';
+// Read the viewer token injected in the URL by MIDSS (e.g. ?viewerToken=xxx)
+const _midssViewerToken = (new URLSearchParams(window.location.search)).get('viewerToken') || '';
 
 window.config = {
   routerBasename: '/ohif',
@@ -17,14 +17,14 @@ window.config = {
 
   dataSources: [
     {
-      friendlyName: 'SITIM',
+      friendlyName: 'MIDSS',
       namespace: '@ohif/extension-default.dataSourcesModule.dicomweb',
       sourceName: 'dicomweb',
       configuration: {
-        name: 'sitim',
-        qidoRoot: '/sitim-dicomweb',
-        wadoRoot: '/sitim-dicomweb',
-        wadoUriRoot: '/sitim-dicomweb',
+        name: 'midss',
+        qidoRoot: '/midss-dicomweb',
+        wadoRoot: '/midss-dicomweb',
+        wadoUriRoot: '/midss-dicomweb',
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
         enableStudyLazyLoad: true,
@@ -35,7 +35,7 @@ window.config = {
         // Pass the short-lived viewer token to the API DICOMweb proxy.
         requestOptions: {
           headers: {
-            'X-Viewer-Token': _sitimViewerToken,
+            'X-Viewer-Token': _midssViewerToken,
           },
         },
       },

@@ -1,4 +1,4 @@
-# SITIM AI Model Training - Ghid Complet Pas cu Pas
+# MIDSS AI Model Training - Ghid Complet Pas cu Pas
 
 ## 📋 Overview
 Acest ghid te va ajuta să antrenezi un model AI pentru detectarea retinopatiei diabetice pe dataset-ul APTOS 2019.
@@ -19,7 +19,7 @@ Dacă nu ai Python instalat:
 
 ### 1.2 Creează virtual environment (RECOMANDAT)
 ```powershell
-cd D:\University\SITIM\scripts
+cd D:\University\MIDSS\scripts
 
 # Crează venv
 python -m venv venv
@@ -86,7 +86,7 @@ ONNX Runtime: 1.x.x
 **Opțiunea A: Manual (SIMPLU)**
 1. Pe pagina Data, click pe **"Download All"**
 2. Va descărca `aptos2019-blindness-detection.zip` (~4 GB)
-3. **Salvează în**: `D:\University\SITIM\data\raw\`
+3. **Salvează în**: `D:\University\MIDSS\data\raw\`
 
 **Opțiunea B: Kaggle CLI (pentru automatizare)**
 ```powershell
@@ -99,7 +99,7 @@ pip install kaggle
 # 3. Mută în: C:\Users\<username>\.kaggle\kaggle.json
 
 # Download cu CLI
-cd D:\University\SITIM\data\raw
+cd D:\University\MIDSS\data\raw
 kaggle competitions download -c aptos2019-blindness-detection
 ```
 
@@ -107,7 +107,7 @@ kaggle competitions download -c aptos2019-blindness-detection
 
 ### 2.4 Extract ZIP
 ```powershell
-cd D:\University\SITIM\data\raw
+cd D:\University\MIDSS\data\raw
 
 # Extract cu PowerShell
 Expand-Archive -Path aptos2019-blindness-detection.zip -DestinationPath . -Force
@@ -120,7 +120,7 @@ Expand-Archive -Path aptos2019-blindness-detection.zip -DestinationPath . -Force
 
 ### 2.5 Verifică structura
 ```powershell
-cd D:\University\SITIM\data\raw
+cd D:\University\MIDSS\data\raw
 
 # Count imagini
 (Get-ChildItem -Path "train_images" -Filter *.png).Count
@@ -150,7 +150,7 @@ data/
 
 ### 3.1 Pregătire
 ```powershell
-cd D:\University\SITIM\scripts
+cd D:\University\MIDSS\scripts
 
 # Verifică că venv e activ
 # Prompt should show: (venv) PS D:\...
@@ -190,7 +190,7 @@ python train_retinopathy.py
 **Output esperiat**:
 ```
 ============================================================
-SITIM AI Module - Diabetic Retinopathy Training
+MIDSS AI Module - Diabetic Retinopathy Training
 ============================================================
 
 🖥️  Device: cuda (sau cpu)
@@ -261,7 +261,7 @@ Confusion Matrix:
    ✅ Training report saved: ..\models\training_report.json
 
 ============================================================
-✅ All done! Model ready for deployment in SITIM.
+✅ All done! Model ready for deployment in MIDSS.
 ============================================================
 ```
 
@@ -287,7 +287,7 @@ Confusion Matrix:
 
 ### 4.1 Verifică output
 ```powershell
-cd D:\University\SITIM\models
+cd D:\University\MIDSS\models
 
 # Verifică că fișierele există
 Get-Item retinopathy_pretrained_v1.onnx
@@ -301,7 +301,7 @@ Get-Item retinopathy_pretrained_v1.onnx | Select-Object Length
 
 ### 4.2 Rulează test script
 ```powershell
-cd D:\University\SITIM\scripts
+cd D:\University\MIDSS\scripts
 
 python test_onnx_model.py
 ```
@@ -309,7 +309,7 @@ python test_onnx_model.py
 **Expected output**:
 ```
 ============================================================
-SITIM AI Module - ONNX Model Testing
+MIDSS AI Module - ONNX Model Testing
 ============================================================
 
 ✅ Model found: ..\models\retinopathy_pretrained_v1.onnx
@@ -347,7 +347,7 @@ Running inference on sample images...
 ✅ Testing completed!
 
 Next steps:
-1. Copy retinopathy_pretrained_v1.onnx to SITIM API project
+1. Copy retinopathy_pretrained_v1.onnx to MIDSS API project
 2. Implement AIInferenceService in backend
 3. Test with real DICOM studies
 ============================================================
@@ -355,20 +355,20 @@ Next steps:
 
 ---
 
-## PASUL 5: Integrare în SITIM
+## PASUL 5: Integrare în MIDSS
 
-### 5.1 Copy model la SITIM API
+### 5.1 Copy model la MIDSS API
 ```powershell
 # Crează folder models în API project
-New-Item -ItemType Directory -Path "D:\University\SITIM\src\Sitim\Sitim.Api\models" -Force
+New-Item -ItemType Directory -Path "D:\University\MIDSS\src\Midss\Midss.Api\models" -Force
 
 # Copy ONNX model
 Copy-Item `
-  -Path "D:\University\SITIM\models\retinopathy_pretrained_v1.onnx" `
-  -Destination "D:\University\SITIM\src\Sitim\Sitim.Api\models\"
+  -Path "D:\University\MIDSS\models\retinopathy_pretrained_v1.onnx" `
+  -Destination "D:\University\MIDSS\src\Midss\Midss.Api\models\"
 
 # Verifică
-Get-Item "D:\University\SITIM\src\Sitim\Sitim.Api\models\retinopathy_pretrained_v1.onnx"
+Get-Item "D:\University\MIDSS\src\Midss\Midss.Api\models\retinopathy_pretrained_v1.onnx"
 ```
 
 ### 5.2 Anunță-mă când e gata
@@ -376,7 +376,7 @@ Get-Item "D:\University\SITIM\src\Sitim\Sitim.Api\models\retinopathy_pretrained_
 ✅ Training completed
 ✅ Model ONNX exportat (44.85 MB)
 ✅ Test inference OK (5 imagini sample)
-✅ Model copiat în Sitim.Api/models/
+✅ Model copiat în Midss.Api/models/
 
 ➡️ READY pentru backend integration!
 ```
@@ -411,8 +411,8 @@ python train_retinopathy.py --device cpu
 **Solution**:
 ```powershell
 # Verifică paths:
-Get-Item D:\University\SITIM\data\raw\train_images
-Get-Item D:\University\SITIM\data\raw\train.csv
+Get-Item D:\University\MIDSS\data\raw\train_images
+Get-Item D:\University\MIDSS\data\raw\train.csv
 ```
 
 ### Problem: ModuleNotFoundError
@@ -458,7 +458,7 @@ După training, verifică `training_report.json`:
 - [ ] Training completed (10 epochs, ~87% accuracy)
 - [ ] ONNX model exportat (~45 MB)
 - [ ] Test inference OK (5 sample images)
-- [ ] Model copiat în `Sitim.Api/models/`
+- [ ] Model copiat în `Midss.Api/models/`
 - [ ] Training report salvat (JSON)
 
 **Când toate sunt ✅, anunță-mă și trecem la backend integration!**
