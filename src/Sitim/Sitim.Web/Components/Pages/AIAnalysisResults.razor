@@ -1,0 +1,227 @@
+@page "/analysis/{JobIdStr}/results"
+@attribute [Authorize]
+@inject SitimApiClient Api
+@inject NavigationManager Navigation
+@inject NotificationService Notification
+@inject IStringLocalizer<SharedResource> L
+
+<PageTitle>@L["Results.PageTitle"]</PageTitle>
+
+<RadzenStack Gap="1rem">
+    @if (isLoading)
+    {
+        <RadzenProgressBarCircular ProgressBarStyle="ProgressBarStyle.Primary" Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
+    }
+    else if (job == null)
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Warning" Shade="Shade.Dark" AllowClose="false">
+            @L["Results.NotFound"]
+        </RadzenAlert>
+    }
+    else
+    {
+        <RadzenRow AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+            <RadzenColumn>
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                    <RadzenButton Icon="arrow_back" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" Size="ButtonSize.Small"
+                                  Click="@NavigateToStudy" title="@L["Progress.BackToStudy"]" />
+                    <RadzenText Text="@L["Results.Title"]" TextStyle="TextStyle.DisplayH5" class="rz-mb-0" />
+                </RadzenStack>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenBadge BadgeStyle="@GetStatusBadgeStyle(job.Status)" Text="@job.Status" />
+            </RadzenColumn>
+        </RadzenRow>
+
+        @if (job.Status != "Completed")
+        {
+            <RadzenAlert AlertStyle="AlertStyle.Info" Shade="Shade.Light" AllowClose="false">
+                @L["Results.NotFinishedYet"] @job.Status
+            </RadzenAlert>
+            <RadzenButton Text="@L["Results.SeeProgress"]" Icon="monitoring" ButtonStyle="ButtonStyle.Info" Size="ButtonSize.Small"
+                          Click="@(() => Navigation.NavigateTo($"/analysis/{JobId}"))" />
+        }
+        else
+        {
+            <RadzenRow Gap="1rem">
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenCard>
+                        <RadzenStack Gap="0.5rem">
+                            <RadzenText Text="@L["Common.Model"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                            <RadzenText Text="@(job.ModelName ?? "—")" TextStyle="TextStyle.Body1" />
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenCard>
+                        <RadzenStack Gap="0.5rem">
+                            <RadzenText Text="@L["Results.FinishedAt"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                            <RadzenText Text="@(job.FinishedAt.HasValue ? FormatDateTime(job.FinishedAt.Value) : "—")" TextStyle="TextStyle.Body1" />
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenColumn>
+            </RadzenRow>
+
+            <RadzenRow Gap="1rem">
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenCard>
+                        <RadzenStack Gap="0.5rem">
+                            <RadzenText Text="@L["Common.Confidence"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                            <RadzenText Text="@(job.Confidence?.ToString("P2") ?? "—")" TextStyle="TextStyle.Body1" />
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenCard>
+                        <RadzenStack Gap="0.5rem">
+                            <RadzenText Text="@L["Common.ProcessingTime"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                            <LiveDurationTimer StartedAtUtc="@job.StartedAt"
+                                               FinishedAtUtc="@job.FinishedAt"
+                                               ProcessingTimeMs="@job.ProcessingTimeMs"
+                                               CssClass="rz-text-body1 sitim-duration-mono" />
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenColumn>
+            </RadzenRow>
+
+            @if (job.PredictionClass.HasValue && analysisResult != null)
+            {
+                <RadzenCard>
+                    <RadzenStack Gap="1rem">
+                        <RadzenText Text="@L["Results.ClinicalInterpretation"]" TextStyle="TextStyle.H6" />
+                        <RadzenRow Gap="1rem">
+                            <RadzenColumn Size="12" SizeMD="4">
+                                <RadzenText Text="@L["Results.Diagnosis"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                <RadzenText Text="@analysisResult.Diagnosis" TextStyle="TextStyle.Body1" />
+                            </RadzenColumn>
+                            <RadzenColumn Size="12" SizeMD="4">
+                                <RadzenText Text="@L["Results.Severity"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                <RadzenBadge BadgeStyle="@GetSeverityBadgeStyle(analysisResult.Severity)" Text="@analysisResult.Severity" />
+                            </RadzenColumn>
+                            <RadzenColumn Size="12" SizeMD="4">
+                                <RadzenText Text="@L["Results.PredictionClass"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                <RadzenText Text="@L["Results.ClassNo", job.PredictionClass!]" TextStyle="TextStyle.Body1" />
+                            </RadzenColumn>
+                        </RadzenRow>
+                    </RadzenStack>
+                </RadzenCard>
+
+                @if (analysisResult.AllProbabilities != null && analysisResult.AllProbabilities.Any())
+                {
+                    <RadzenCard>
+                        <RadzenStack Gap="1rem">
+                            <RadzenText Text="@L["Panel.ClassProbabilities"]" TextStyle="TextStyle.H6" />
+                            @foreach (var prob in analysisResult.AllProbabilities)
+                            {
+                                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem">
+                                    <RadzenText Text="@prob.ClassName" TextStyle="TextStyle.Body2" Style="min-width: 160px;" />
+                                    <RadzenProgressBar Value="@((double)(prob.Probability * 100))" ShowValue="false" Style="flex:1;" />
+                                    <RadzenText Text="@prob.Probability.ToString("P1")" TextStyle="TextStyle.Body2" Style="min-width: 64px; text-align:right;" />
+                                </RadzenStack>
+                            }
+                        </RadzenStack>
+                    </RadzenCard>
+                }
+
+                @if (analysisResult.Recommendations != null && analysisResult.Recommendations.Any())
+                {
+                    <RadzenCard>
+                        <RadzenStack Gap="1rem">
+                            <RadzenText Text="@L["Results.Recommendations"]" TextStyle="TextStyle.H6" />
+                            @foreach (var recommendation in analysisResult.Recommendations)
+                            {
+                                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="0.5rem">
+                                    <RadzenIcon Icon="check_circle" Style="color: var(--rz-info); font-size: 1.1rem;" />
+                                    <RadzenText Text="@recommendation" TextStyle="TextStyle.Body2" />
+                                </RadzenStack>
+                            }
+                        </RadzenStack>
+                    </RadzenCard>
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(job.ErrorMessage))
+            {
+                <RadzenAlert AlertStyle="AlertStyle.Danger" Shade="Shade.Light" AllowClose="false">
+                    <RadzenText Text="@L["Progress.Error", job.ErrorMessage]" />
+                </RadzenAlert>
+            }
+
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                <RadzenButton Text="@L["Progress.BackToStudy"]" Icon="arrow_back" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                              Click="@NavigateToStudy" />
+                <RadzenButton Text="@L["Results.NewAnalysis"]" Icon="refresh" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat"
+                              Click="@NavigateToStudy" />
+            </RadzenStack>
+        }
+    }
+</RadzenStack>
+
+@code {
+    [Parameter]
+    public string JobIdStr { get; set; } = "";
+
+    private Guid JobId;
+    private AIAnalysisJobStatusDto? job;
+    private AIAnalysisResultDto? analysisResult;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Guid.TryParse(JobIdStr, out var parsedJobId))
+        {
+            JobId = parsedJobId;
+            await LoadJobStatus();
+        }
+    }
+
+    private async Task LoadJobStatus()
+    {
+        isLoading = true;
+        try
+        {
+            job = await Api.GetAnalysisJobAsync(JobId);
+            if (job?.Status == "Completed" && job.PredictionClass.HasValue)
+                analysisResult = await Api.GetAnalysisResultsAsync(JobId);
+        }
+        catch (Exception ex)
+        {
+            Notification.Notify(NotificationSeverity.Error, L["Common.Error"], ex.Message);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void NavigateToStudy()
+    {
+        if (!string.IsNullOrWhiteSpace(job?.OrthancStudyId))
+        {
+            Navigation.NavigateTo($"/studies/{job.OrthancStudyId}");
+            return;
+        }
+
+        Navigation.NavigateTo("/studies");
+    }
+
+    private static string FormatDateTime(DateTime dt) => dt.ToString("yyyy-MM-dd HH:mm:ss");
+
+    private static BadgeStyle GetStatusBadgeStyle(string status) => status switch
+    {
+        "Queued" => BadgeStyle.Warning,
+        "Running" => BadgeStyle.Info,
+        "Completed" => BadgeStyle.Success,
+        "Failed" => BadgeStyle.Danger,
+        _ => BadgeStyle.Light
+    };
+
+    private static BadgeStyle GetSeverityBadgeStyle(string? severity) => severity?.ToLowerInvariant() switch
+    {
+        "none" => BadgeStyle.Success,
+        "mild" => BadgeStyle.Info,
+        "moderate" => BadgeStyle.Warning,
+        "severe" => BadgeStyle.Danger,
+        "proliferative" => BadgeStyle.Danger,
+        _ => BadgeStyle.Light
+    };
+}

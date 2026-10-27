@@ -1,0 +1,1308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="App.Title" xml:space="preserve">
+    <value>SITIM — Medical Imaging Diagnostics</value>
+  </data>
+  <data name="Common.Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Common.Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="Common.Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Common.Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Common.Saving" xml:space="preserve">
+    <value>Saving...</value>
+  </data>
+  <data name="Common.Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Common.Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Common.Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Common.Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Common.Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Common.Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Common.No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Common.Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="Common.Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Common.Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="Common.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Common.Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Common.Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Common.CreatedAt" xml:space="preserve">
+    <value>Created at</value>
+  </data>
+  <data name="Common.Patient" xml:space="preserve">
+    <value>Patient</value>
+  </data>
+  <data name="Common.Study" xml:space="preserve">
+    <value>Study</value>
+  </data>
+  <data name="Common.Confidence" xml:space="preserve">
+    <value>Confidence</value>
+  </data>
+  <data name="Nav.Logout" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="Nav.ToggleTheme" xml:space="preserve">
+    <value>Switch between light and dark theme</value>
+  </data>
+  <data name="Nav.Tagline" xml:space="preserve">
+    <value>Imaging diagnostics support</value>
+  </data>
+  <data name="Nav.Welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="Nav.Studies" xml:space="preserve">
+    <value>Study list</value>
+  </data>
+  <data name="Nav.Import" xml:space="preserve">
+    <value>Import studies</value>
+  </data>
+  <data name="Nav.AIAnalyses" xml:space="preserve">
+    <value>AI Analyses</value>
+  </data>
+  <data name="Nav.Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Nav.Admin" xml:space="preserve">
+    <value>Administration</value>
+  </data>
+  <data name="Nav.Institutions" xml:space="preserve">
+    <value>Institutions</value>
+  </data>
+  <data name="Nav.AIModels" xml:space="preserve">
+    <value>AI Models</value>
+  </data>
+  <data name="Footer.Tagline" xml:space="preserve">
+    <value>Intelligent medical imaging platform — DICOM management, AI-assisted analysis and cross-institution federated learning, all in one place.</value>
+  </data>
+  <data name="Footer.AllSystemsOperational" xml:space="preserve">
+    <value>All systems operational</value>
+  </data>
+  <data name="Footer.Resources" xml:space="preserve">
+    <value>Resources</value>
+  </data>
+  <data name="Footer.Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Footer.SourceCode" xml:space="preserve">
+    <value>Source code</value>
+  </data>
+  <data name="Footer.Issues" xml:space="preserve">
+    <value>Issues &amp; suggestions</value>
+  </data>
+  <data name="Footer.AllRightsReserved" xml:space="preserve">
+    <value>All rights reserved.</value>
+  </data>
+  <data name="Footer.Terms" xml:space="preserve">
+    <value>Terms</value>
+  </data>
+  <data name="Footer.Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="Common.ProcessingTime" xml:space="preserve">
+    <value>Processing time</value>
+  </data>
+  <data name="Panel.AIAnalysis" xml:space="preserve">
+    <value>AI Analysis</value>
+  </data>
+  <data name="Panel.RunAnalysis" xml:space="preserve">
+    <value>Run Analysis</value>
+  </data>
+  <data name="Panel.NoModelsAvailable" xml:space="preserve">
+    <value>No AI models are available. Upload a model first from the "AI Models" page.</value>
+  </data>
+  <data name="Panel.AIModel" xml:space="preserve">
+    <value>AI Model</value>
+  </data>
+  <data name="Panel.RunningAnalysis" xml:space="preserve">
+    <value>Running AI analysis... (approximately 30-60 seconds)</value>
+  </data>
+  <data name="Panel.LastResult" xml:space="preserve">
+    <value>Latest Result</value>
+  </data>
+  <data name="Panel.Prediction" xml:space="preserve">
+    <value>Prediction</value>
+  </data>
+  <data name="Panel.ClassProbabilities" xml:space="preserve">
+    <value>Per-Class Probabilities</value>
+  </data>
+  <data name="Panel.LoadModelsFailed" xml:space="preserve">
+    <value>Failed to load AI models: {0}</value>
+  </data>
+  <data name="Panel.SelectModel" xml:space="preserve">
+    <value>Select an AI model.</value>
+  </data>
+  <data name="Panel.AnalysisComplete" xml:space="preserve">
+    <value>AI analysis completed successfully. Prediction: {0} ({1})</value>
+  </data>
+  <data name="Panel.RunAnalysisError" xml:space="preserve">
+    <value>Failed to run the AI analysis.</value>
+  </data>
+  <data name="Panel.RunAnalysisFailed" xml:space="preserve">
+    <value>AI analysis failed: {0}</value>
+  </data>
+  <data name="Login.PageTitle" xml:space="preserve">
+    <value>SITIM — Sign in</value>
+  </data>
+  <data name="Login.Tagline" xml:space="preserve">
+    <value>Medical Imaging Diagnostics Platform</value>
+  </data>
+  <data name="Login.Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Login.SignIn" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="Login.SigningIn" xml:space="preserve">
+    <value>Signing in...</value>
+  </data>
+  <data name="Login.ConnectionError" xml:space="preserve">
+    <value>Connection error: {0}</value>
+  </data>
+  <data name="Login.InvalidCredentials" xml:space="preserve">
+    <value>Incorrect email or password.</value>
+  </data>
+  <data name="Login.UserFetchFailed" xml:space="preserve">
+    <value>Could not retrieve user details.</value>
+  </data>
+  <data name="SetPassword.PageTitle" xml:space="preserve">
+    <value>Set password — SITIM</value>
+  </data>
+  <data name="SetPassword.Subtitle" xml:space="preserve">
+    <value>New account activation</value>
+  </data>
+  <data name="SetPassword.PreviousSessionClosed" xml:space="preserve">
+    <value>The previous session was closed. Continue activating the new account below.</value>
+  </data>
+  <data name="SetPassword.Success" xml:space="preserve">
+    <value>The password was set successfully. You can now sign in.</value>
+  </data>
+  <data name="SetPassword.GoToLogin" xml:space="preserve">
+    <value>Go to sign in</value>
+  </data>
+  <data name="SetPassword.InvalidLink" xml:space="preserve">
+    <value>The invitation link is invalid or has expired. Request a new link from your administrator.</value>
+  </data>
+  <data name="SetPassword.NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="SetPassword.MinChars" xml:space="preserve">
+    <value>At least 8 characters</value>
+  </data>
+  <data name="SetPassword.ConfirmPassword" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="SetPassword.RepeatPassword" xml:space="preserve">
+    <value>Repeat the password</value>
+  </data>
+  <data name="SetPassword.SetPasswordButton" xml:space="preserve">
+    <value>Set password</value>
+  </data>
+  <data name="SetPassword.Processing" xml:space="preserve">
+    <value>Processing...</value>
+  </data>
+  <data name="SetPassword.TooShort" xml:space="preserve">
+    <value>The password must be at least 8 characters long.</value>
+  </data>
+  <data name="SetPassword.Mismatch" xml:space="preserve">
+    <value>The passwords do not match.</value>
+  </data>
+  <data name="SetPassword.SubmitFailed" xml:space="preserve">
+    <value>The link has expired or the password does not meet the requirements (at least 8 characters, an uppercase letter, a digit, a special character).</value>
+  </data>
+  <data name="Welcome.PageTitle" xml:space="preserve">
+    <value>Welcome — SITIM</value>
+  </data>
+  <data name="Welcome.GoodMorning" xml:space="preserve">
+    <value>Good morning</value>
+  </data>
+  <data name="Welcome.GoodAfternoon" xml:space="preserve">
+    <value>Good afternoon</value>
+  </data>
+  <data name="Welcome.GoodEvening" xml:space="preserve">
+    <value>Good evening</value>
+  </data>
+  <data name="Welcome.GoodNight" xml:space="preserve">
+    <value>Good night</value>
+  </data>
+  <data name="Welcome.StudiesThisMonth" xml:space="preserve">
+    <value>Studies this month</value>
+  </data>
+  <data name="Welcome.AIAnalysesThisMonth" xml:space="preserve">
+    <value>AI analyses this month</value>
+  </data>
+  <data name="Welcome.InProgressNow" xml:space="preserve">
+    <value>Processing now</value>
+  </data>
+  <data name="Welcome.ActiveUsers" xml:space="preserve">
+    <value>Active users</value>
+  </data>
+  <data name="Welcome.RecentStudies" xml:space="preserve">
+    <value>Recently imported studies</value>
+  </data>
+  <data name="Welcome.SeeAllStudies" xml:space="preserve">
+    <value>See all studies</value>
+  </data>
+  <data name="Welcome.NoStudiesYet" xml:space="preserve">
+    <value>No studies imported yet.</value>
+  </data>
+  <data name="Welcome.ImportFirstStudy" xml:space="preserve">
+    <value>Import your first study</value>
+  </data>
+  <data name="Welcome.RecentAnalyses" xml:space="preserve">
+    <value>Recent AI analyses</value>
+  </data>
+  <data name="Welcome.SeeAllAnalyses" xml:space="preserve">
+    <value>See all analyses</value>
+  </data>
+  <data name="Welcome.NoAnalysesYet" xml:space="preserve">
+    <value>No analyses performed yet.</value>
+  </data>
+  <data name="Welcome.StartAnalysis" xml:space="preserve">
+    <value>Start an analysis</value>
+  </data>
+  <data name="Welcome.SearchStudy" xml:space="preserve">
+    <value>Find a study</value>
+  </data>
+  <data name="Welcome.SystemOperational" xml:space="preserve">
+    <value>System operational</value>
+  </data>
+  <data name="Welcome.PACSConnected" xml:space="preserve">
+    <value>PACS connected</value>
+  </data>
+  <data name="Welcome.AIServiceActive" xml:space="preserve">
+    <value>AI Service active</value>
+  </data>
+  <data name="Welcome.AdminSections" xml:space="preserve">
+    <value>Administrative sections</value>
+  </data>
+  <data name="Welcome.ConfidencePct" xml:space="preserve">
+    <value>{0}% confidence</value>
+  </data>
+  <data name="Welcome.DemoCTChest" xml:space="preserve">
+    <value>Chest CT</value>
+  </data>
+  <data name="Welcome.DemoBrainMRI" xml:space="preserve">
+    <value>Brain MRI</value>
+  </data>
+  <data name="Welcome.DemoUltrasound" xml:space="preserve">
+    <value>Ultrasound</value>
+  </data>
+  <data name="Welcome.DemoXRay" xml:space="preserve">
+    <value>X-ray</value>
+  </data>
+  <data name="Welcome.PatientNo" xml:space="preserve">
+    <value>Patient #{0}</value>
+  </data>
+  <data name="Welcome.StudyNo" xml:space="preserve">
+    <value>Study #{0}</value>
+  </data>
+  <data name="Welcome.HoursAgo" xml:space="preserve">
+    <value>{0} hours ago</value>
+  </data>
+  <data name="Welcome.YesterdayAt" xml:space="preserve">
+    <value>yesterday, {0}</value>
+  </data>
+  <data name="Welcome.ImagesCount" xml:space="preserve">
+    <value>{0} images</value>
+  </data>
+  <data name="Welcome.Retinopathy" xml:space="preserve">
+    <value>Retinopathy</value>
+  </data>
+  <data name="Common.Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="Studies.PageTitle" xml:space="preserve">
+    <value>Study list — SITIM</value>
+  </data>
+  <data name="Studies.SyncOrthanc" xml:space="preserve">
+    <value>Sync Orthanc</value>
+  </data>
+  <data name="Studies.Syncing" xml:space="preserve">
+    <value>Syncing...</value>
+  </data>
+  <data name="Studies.Empty" xml:space="preserve">
+    <value>There are no studies. Press "Sync Orthanc" or import new studies.</value>
+  </data>
+  <data name="Studies.PatientId" xml:space="preserve">
+    <value>Patient ID</value>
+  </data>
+  <data name="Studies.StudyDate" xml:space="preserve">
+    <value>Study date</value>
+  </data>
+  <data name="Studies.Modalities" xml:space="preserve">
+    <value>Modalities</value>
+  </data>
+  <data name="Studies.StudyDetails" xml:space="preserve">
+    <value>Study details</value>
+  </data>
+  <data name="Studies.DeleteStudy" xml:space="preserve">
+    <value>Delete study</value>
+  </data>
+  <data name="Studies.ConfirmDeleteTitle" xml:space="preserve">
+    <value>Confirm study deletion</value>
+  </data>
+  <data name="Studies.ConfirmDeleteQuestion" xml:space="preserve">
+    <value>Are you sure you want to permanently delete the study of patient {0} from {1}?</value>
+  </data>
+  <data name="Studies.ConfirmDeleteWarning" xml:space="preserve">
+    <value>The study will be removed from Orthanc and from the database. This action cannot be undone.</value>
+  </data>
+  <data name="Studies.UnknownPatient" xml:space="preserve">
+    <value>unknown</value>
+  </data>
+  <data name="Studies.DeletePermanently" xml:space="preserve">
+    <value>Delete permanently</value>
+  </data>
+  <data name="Studies.ApiConnectionError" xml:space="preserve">
+    <value>Could not connect to the API. Check that the API server is running.</value>
+  </data>
+  <data name="Studies.NoNewStudies" xml:space="preserve">
+    <value>There are no new studies for this institution in Orthanc.</value>
+  </data>
+  <data name="Studies.SyncedOne" xml:space="preserve">
+    <value>1 study synced from Orthanc.</value>
+  </data>
+  <data name="Studies.SyncedMany" xml:space="preserve">
+    <value>{0} studies synced from Orthanc.</value>
+  </data>
+  <data name="Studies.SyncComplete" xml:space="preserve">
+    <value>Sync complete</value>
+  </data>
+  <data name="Studies.SyncError" xml:space="preserve">
+    <value>Sync error</value>
+  </data>
+  <data name="Studies.Deleted" xml:space="preserve">
+    <value>Study deleted</value>
+  </data>
+  <data name="Studies.DeletedDetail" xml:space="preserve">
+    <value>The study of patient {0} was permanently deleted.</value>
+  </data>
+  <data name="Studies.DeleteFailed" xml:space="preserve">
+    <value>Could not delete the study. Check the Orthanc connection.</value>
+  </data>
+  <data name="Import.PageTitle" xml:space="preserve">
+    <value>Import studies — SITIM</value>
+  </data>
+  <data name="Import.Title" xml:space="preserve">
+    <value>Import DICOM studies</value>
+  </data>
+  <data name="Import.FileField" xml:space="preserve">
+    <value>Archive file (.zip) or DICOM files</value>
+  </data>
+  <data name="Import.FilesSelected" xml:space="preserve">
+    <value>{0} file(s) selected — {1}</value>
+  </data>
+  <data name="Import.ImportButton" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Import.Importing" xml:space="preserve">
+    <value>Importing...</value>
+  </data>
+  <data name="Import.Result" xml:space="preserve">
+    <value>Import result</value>
+  </data>
+  <data name="Import.UploadedInstances" xml:space="preserve">
+    <value>Uploaded instances</value>
+  </data>
+  <data name="Import.DetectedStudies" xml:space="preserve">
+    <value>Detected studies</value>
+  </data>
+  <data name="Import.SyncedStudies" xml:space="preserve">
+    <value>Synced studies</value>
+  </data>
+  <data name="Import.Warnings" xml:space="preserve">
+    <value>Warnings</value>
+  </data>
+  <data name="Import.GoHome" xml:space="preserve">
+    <value>Go to the main page</value>
+  </data>
+  <data name="Import.OpenStudy" xml:space="preserve">
+    <value>Open the study</value>
+  </data>
+  <data name="Import.ReadingArchive" xml:space="preserve">
+    <value>Reading archive {0}...</value>
+  </data>
+  <data name="Import.SendingToServer" xml:space="preserve">
+    <value>Sending to the server...</value>
+  </data>
+  <data name="Import.ReadingFile" xml:space="preserve">
+    <value>Reading file {0} of {1}: {2}</value>
+  </data>
+  <data name="Import.ReadProgress" xml:space="preserve">
+    <value>Read {0} of {1} files ({2} / {3})</value>
+  </data>
+  <data name="Import.SyncingStudies" xml:space="preserve">
+    <value>Syncing studies...</value>
+  </data>
+  <data name="Import.Succeeded" xml:space="preserve">
+    <value>Import successful</value>
+  </data>
+  <data name="Import.SucceededDetail" xml:space="preserve">
+    <value>{0} instances imported, {1} studies synced.</value>
+  </data>
+  <data name="Import.Error" xml:space="preserve">
+    <value>Import error</value>
+  </data>
+  <data name="Import.NoServerResult" xml:space="preserve">
+    <value>The server did not return a result.</value>
+  </data>
+  <data name="StudyDetails.PageTitle" xml:space="preserve">
+    <value>Study — SITIM</value>
+  </data>
+  <data name="StudyDetails.NotFound" xml:space="preserve">
+    <value>The study was not found.</value>
+  </data>
+  <data name="StudyDetails.BackToWorklist" xml:space="preserve">
+    <value>Back to worklist</value>
+  </data>
+  <data name="StudyDetails.Title" xml:space="preserve">
+    <value>Study: {0}</value>
+  </data>
+  <data name="StudyDetails.Sync" xml:space="preserve">
+    <value>Sync</value>
+  </data>
+  <data name="StudyDetails.Analyze" xml:space="preserve">
+    <value>Analyze</value>
+  </data>
+  <data name="StudyDetails.SeriesCount" xml:space="preserve">
+    <value>Series: {0}</value>
+  </data>
+  <data name="StudyDetails.OHIFViewer" xml:space="preserve">
+    <value>OHIF Viewer</value>
+  </data>
+  <data name="StudyDetails.OpenNewTab" xml:space="preserve">
+    <value>Open in a new tab</value>
+  </data>
+  <data name="StudyDetails.RetryViewer" xml:space="preserve">
+    <value>Retry viewer</value>
+  </data>
+  <data name="StudyDetails.LoadViewer" xml:space="preserve">
+    <value>Load viewer</value>
+  </data>
+  <data name="StudyDetails.PACSUnavailable" xml:space="preserve">
+    <value>The PACS server (Orthanc) is currently unavailable. The OHIF viewer cannot be opened.</value>
+  </data>
+  <data name="StudyDetails.PACSUnavailableShort" xml:space="preserve">
+    <value>The PACS server (Orthanc) is currently unavailable.</value>
+  </data>
+  <data name="StudyDetails.PressLoadViewer" xml:space="preserve">
+    <value>Press 'Load viewer' to open the OHIF viewer.</value>
+  </data>
+  <data name="StudyDetails.AnalysesOnStudy" xml:space="preserve">
+    <value>Analyses on this study</value>
+  </data>
+  <data name="StudyDetails.NoAnalysesYet" xml:space="preserve">
+    <value>There are no analyses for this study yet.</value>
+  </data>
+  <data name="StudyDetails.OpenAnalysis" xml:space="preserve">
+    <value>Open the analysis</value>
+  </data>
+  <data name="StudyDetails.ViewerUnavailable" xml:space="preserve">
+    <value>Viewer unavailable</value>
+  </data>
+  <data name="StudyDetails.ViewerError" xml:space="preserve">
+    <value>Viewer error</value>
+  </data>
+  <data name="StudyDetails.Synced" xml:space="preserve">
+    <value>Synced</value>
+  </data>
+  <data name="StudyDetails.SyncedDetail" xml:space="preserve">
+    <value>The study was synced from Orthanc.</value>
+  </data>
+  <data name="StudyDetails.NoDbId" xml:space="preserve">
+    <value>The study does not have a database ID.</value>
+  </data>
+  <data name="StudyDetails.NoModelAvailable" xml:space="preserve">
+    <value>No model available</value>
+  </data>
+  <data name="StudyDetails.NoCompatibleModels" xml:space="preserve">
+    <value>There are no models compatible with this study's modality ({0}).</value>
+  </data>
+  <data name="StudyDetails.SelectModelTitle" xml:space="preserve">
+    <value>Select a Model for Analysis</value>
+  </data>
+  <data name="StudyDetails.AnalysisStarted" xml:space="preserve">
+    <value>Analysis started</value>
+  </data>
+  <data name="StudyDetails.AnalysisQueued" xml:space="preserve">
+    <value>The analysis was added to the queue (Job ID: {0}).</value>
+  </data>
+  <data name="StudyDetails.AnalysisStartError" xml:space="preserve">
+    <value>Error starting the analysis</value>
+  </data>
+  <data name="StudyDetails.AnalysesError" xml:space="preserve">
+    <value>Analyses error</value>
+  </data>
+  <data name="AIAnalyses.PageTitle" xml:space="preserve">
+    <value>AI Analyses — SITIM</value>
+  </data>
+  <data name="AIAnalyses.Subtitle" xml:space="preserve">
+    <value>Analyses in progress and completed analyses</value>
+  </data>
+  <data name="AIAnalyses.Empty" xml:space="preserve">
+    <value>There are no AI analyses for the current institution.</value>
+  </data>
+  <data name="Common.AutoRefresh5s" xml:space="preserve">
+    <value>Auto-refresh every 5 sec</value>
+  </data>
+  <data name="Progress.PageTitle" xml:space="preserve">
+    <value>Analysis progress — SITIM</value>
+  </data>
+  <data name="Progress.JobNotFound" xml:space="preserve">
+    <value>The analysis job was not found.</value>
+  </data>
+  <data name="Progress.BackToStudy" xml:space="preserve">
+    <value>Back to the study</value>
+  </data>
+  <data name="Progress.Title" xml:space="preserve">
+    <value>Analysis progress</value>
+  </data>
+  <data name="Progress.StartedAt" xml:space="preserve">
+    <value>Started at</value>
+  </data>
+  <data name="Progress.Finished" xml:space="preserve">
+    <value>The analysis is complete.</value>
+  </data>
+  <data name="Progress.Class" xml:space="preserve">
+    <value>Class: {0}</value>
+  </data>
+  <data name="Progress.Confidence" xml:space="preserve">
+    <value>Confidence: {0}</value>
+  </data>
+  <data name="Progress.SeeResultDetails" xml:space="preserve">
+    <value>See Result Details</value>
+  </data>
+  <data name="Progress.Error" xml:space="preserve">
+    <value>Error: {0}</value>
+  </data>
+  <data name="Progress.StatusQueued" xml:space="preserve">
+    <value>The analysis is queued and about to start.</value>
+  </data>
+  <data name="Progress.StatusRunning" xml:space="preserve">
+    <value>The analysis is running right now.</value>
+  </data>
+  <data name="Progress.StatusCompleted" xml:space="preserve">
+    <value>The analysis completed successfully.</value>
+  </data>
+  <data name="Progress.StatusFailed" xml:space="preserve">
+    <value>The analysis failed. Check the error message.</value>
+  </data>
+  <data name="Results.PageTitle" xml:space="preserve">
+    <value>Analysis result — SITIM</value>
+  </data>
+  <data name="Results.NotFound" xml:space="preserve">
+    <value>The analysis result was not found.</value>
+  </data>
+  <data name="Results.Title" xml:space="preserve">
+    <value>Analysis result</value>
+  </data>
+  <data name="Results.NotFinishedYet" xml:space="preserve">
+    <value>The analysis is not finished yet. Status:</value>
+  </data>
+  <data name="Results.SeeProgress" xml:space="preserve">
+    <value>See progress</value>
+  </data>
+  <data name="Results.FinishedAt" xml:space="preserve">
+    <value>Finished at</value>
+  </data>
+  <data name="Results.ClinicalInterpretation" xml:space="preserve">
+    <value>Clinical interpretation</value>
+  </data>
+  <data name="Results.Diagnosis" xml:space="preserve">
+    <value>Diagnosis</value>
+  </data>
+  <data name="Results.Severity" xml:space="preserve">
+    <value>Severity</value>
+  </data>
+  <data name="Results.PredictionClass" xml:space="preserve">
+    <value>Prediction class</value>
+  </data>
+  <data name="Results.ClassNo" xml:space="preserve">
+    <value>Class {0}</value>
+  </data>
+  <data name="Results.Recommendations" xml:space="preserve">
+    <value>Recommendations</value>
+  </data>
+  <data name="Results.NewAnalysis" xml:space="preserve">
+    <value>New Analysis</value>
+  </data>
+  <data name="AIModels.PageTitle" xml:space="preserve">
+    <value>AI Models — SITIM</value>
+  </data>
+  <data name="AIModels.Subtitle" xml:space="preserve">
+    <value>Manage the artificial intelligence models for medical analysis</value>
+  </data>
+  <data name="AIModels.UploadNew" xml:space="preserve">
+    <value>Upload New Model</value>
+  </data>
+  <data name="AIModels.LoadingModels" xml:space="preserve">
+    <value>Loading models...</value>
+  </data>
+  <data name="AIModels.Empty" xml:space="preserve">
+    <value>No AI models uploaded</value>
+  </data>
+  <data name="AIModels.EmptyHint" xml:space="preserve">
+    <value>Start by uploading a trained model in ONNX format</value>
+  </data>
+  <data name="AIModels.ModelName" xml:space="preserve">
+    <value>Model name</value>
+  </data>
+  <data name="AIModels.Accuracy" xml:space="preserve">
+    <value>Accuracy</value>
+  </data>
+  <data name="AIModels.UploadDate" xml:space="preserve">
+    <value>Upload date</value>
+  </data>
+  <data name="AIModels.EditClasses" xml:space="preserve">
+    <value>Edit classes and recommendations</value>
+  </data>
+  <data name="AIModels.Deactivate" xml:space="preserve">
+    <value>Deactivate</value>
+  </data>
+  <data name="AIModels.Activate" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="AIModels.UploadDialogTitle" xml:space="preserve">
+    <value>Upload AI Model</value>
+  </data>
+  <data name="AIModels.DetailsDialogTitle" xml:space="preserve">
+    <value>AI Model Details</value>
+  </data>
+  <data name="AIModels.EditDialogTitle" xml:space="preserve">
+    <value>Edit AI Model</value>
+  </data>
+  <data name="AIModels.ConfirmDeactivate" xml:space="preserve">
+    <value>Are you sure you want to deactivate the model '{0}'?</value>
+  </data>
+  <data name="AIModels.ConfirmActivate" xml:space="preserve">
+    <value>Are you sure you want to activate the model '{0}'?</value>
+  </data>
+  <data name="AIModels.ConfirmTitle" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="AIModels.Deactivated" xml:space="preserve">
+    <value>The model was deactivated</value>
+  </data>
+  <data name="AIModels.Activated" xml:space="preserve">
+    <value>The model was activated</value>
+  </data>
+  <data name="AIModels.ToggleFailed" xml:space="preserve">
+    <value>Could not change the status</value>
+  </data>
+  <data name="AIModels.ToggleFailedDetail" xml:space="preserve">
+    <value>Could not change the status: {0}</value>
+  </data>
+  <data name="AIModels.ConfirmDelete" xml:space="preserve">
+    <value>Are you sure you want to delete the model '{0}' v{1}? This action is irreversible.</value>
+  </data>
+  <data name="AIModels.ConfirmDeleteTitle" xml:space="preserve">
+    <value>Confirm Deletion</value>
+  </data>
+  <data name="AIModels.Deleted" xml:space="preserve">
+    <value>The model was deleted</value>
+  </data>
+  <data name="AIModels.DeleteFailed" xml:space="preserve">
+    <value>Could not delete the model</value>
+  </data>
+  <data name="AIModels.DeleteFailedDetail" xml:space="preserve">
+    <value>Could not delete the model: {0}</value>
+  </data>
+  <data name="NotFoundPage.PageTitle" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="NotFoundPage.Title" xml:space="preserve">
+    <value>The page isn't available. Sorry about that.</value>
+  </data>
+  <data name="NotFoundPage.Subtitle" xml:space="preserve">
+    <value>We can't find a page with the URL you entered.</value>
+  </data>
+  <data name="NotFoundPage.GoHome" xml:space="preserve">
+    <value>Go to homepage</value>
+  </data>
+  <data name="ModelPicker.Title" xml:space="preserve">
+    <value>Select the AI model for the analysis</value>
+  </data>
+  <data name="ModelPicker.CompatibleCount" xml:space="preserve">
+    <value>{0} compatible models</value>
+  </data>
+  <data name="ModelPicker.NoModels" xml:space="preserve">
+    <value>There are no models available for this DICOM modality.</value>
+  </data>
+  <data name="ModelPicker.SelectForDetails" xml:space="preserve">
+    <value>Select a model from the list for details.</value>
+  </data>
+  <data name="ModelPicker.AnyModality" xml:space="preserve">
+    <value>Any modality</value>
+  </data>
+  <data name="ModelPicker.AccuracyNA" xml:space="preserve">
+    <value>Accuracy n/a</value>
+  </data>
+  <data name="ModelPicker.NoDescription" xml:space="preserve">
+    <value>No description.</value>
+  </data>
+  <data name="ModelPicker.StartAnalysis" xml:space="preserve">
+    <value>Start the analysis</value>
+  </data>
+  <data name="Users.PageTitle" xml:space="preserve">
+    <value>Users — SITIM</value>
+  </data>
+  <data name="Users.Subtitle" xml:space="preserve">
+    <value>Account management: doctors, technicians and administrators.</value>
+  </data>
+  <data name="Users.Invite" xml:space="preserve">
+    <value>Invite user</value>
+  </data>
+  <data name="Users.Empty" xml:space="preserve">
+    <value>There are no users.</value>
+  </data>
+  <data name="Users.Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Users.Institution" xml:space="preserve">
+    <value>Institution</value>
+  </data>
+  <data name="Users.Created" xml:space="preserve">
+    <value>Created</value>
+  </data>
+  <data name="Users.Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Users.DeleteUser" xml:space="preserve">
+    <value>Delete the user</value>
+  </data>
+  <data name="Users.InviteNew" xml:space="preserve">
+    <value>Invite a new user</value>
+  </data>
+  <data name="Users.FullName" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="Users.SelectInstitution" xml:space="preserve">
+    <value>Select the institution</value>
+  </data>
+  <data name="Users.SendInvite" xml:space="preserve">
+    <value>Send invitation</value>
+  </data>
+  <data name="Users.InviteSent" xml:space="preserve">
+    <value>Invitation sent</value>
+  </data>
+  <data name="Users.InviteSentDetail" xml:space="preserve">
+    <value>We sent an email with an activation link to</value>
+  </data>
+  <data name="Users.InviteLinkHint" xml:space="preserve">
+    <value>The link is valid for 2 hours and can be used only once. If the user does not receive it, check the Spam folder or send the invitation again.</value>
+  </data>
+  <data name="Users.EmailUnavailable" xml:space="preserve">
+    <value>Email unavailable</value>
+  </data>
+  <data name="Users.EmailFailed" xml:space="preserve">
+    <value>Sending the email failed. The new account was automatically withdrawn.</value>
+  </data>
+  <data name="Users.DevModeHint" xml:space="preserve">
+    <value>Development mode: you can use the link below manually.</value>
+  </data>
+  <data name="Users.FallbackLink" xml:space="preserve">
+    <value>Fallback link (DEV)</value>
+  </data>
+  <data name="Users.EditUser" xml:space="preserve">
+    <value>Edit user</value>
+  </data>
+  <data name="Users.ActiveAccount" xml:space="preserve">
+    <value>Active account</value>
+  </data>
+  <data name="Users.ConfirmDeleteTitle" xml:space="preserve">
+    <value>Confirm deletion</value>
+  </data>
+  <data name="Users.ConfirmDeleteQuestion" xml:space="preserve">
+    <value>Are you sure you want to permanently delete the user {0}?</value>
+  </data>
+  <data name="Users.ConfirmDeleteWarning" xml:space="preserve">
+    <value>This action cannot be undone.</value>
+  </data>
+  <data name="Users.EmailRequired" xml:space="preserve">
+    <value>Email is required.</value>
+  </data>
+  <data name="Users.InviteError" xml:space="preserve">
+    <value>Invitation error. Check that the email is not already registered.</value>
+  </data>
+  <data name="Users.InviteEmailSentTo" xml:space="preserve">
+    <value>Invitation email sent to {0}.</value>
+  </data>
+  <data name="Users.InviteEmailFailed" xml:space="preserve">
+    <value>Sending the email failed. See the details in the dialog.</value>
+  </data>
+  <data name="Users.UpdateError" xml:space="preserve">
+    <value>Update error.</value>
+  </data>
+  <data name="Users.Updated" xml:space="preserve">
+    <value>The user was updated.</value>
+  </data>
+  <data name="Users.DeletedDetail" xml:space="preserve">
+    <value>The user {0} was permanently deleted.</value>
+  </data>
+  <data name="Users.DeleteError" xml:space="preserve">
+    <value>Deletion error. You cannot delete SuperAdmin accounts or your own account.</value>
+  </data>
+  <data name="Institutions.PageTitle" xml:space="preserve">
+    <value>Institution Management — SITIM</value>
+  </data>
+  <data name="Institutions.Subtitle" xml:space="preserve">
+    <value>Management of the institutions registered on the platform.</value>
+  </data>
+  <data name="Institutions.New" xml:space="preserve">
+    <value>New institution</value>
+  </data>
+  <data name="Institutions.Empty" xml:space="preserve">
+    <value>There are no registered institutions.</value>
+  </data>
+  <data name="Institutions.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Institutions.OrthancUrl" xml:space="preserve">
+    <value>Orthanc URL</value>
+  </data>
+  <data name="Institutions.CreatedAt" xml:space="preserve">
+    <value>Created at</value>
+  </data>
+  <data name="Institutions.NamePlaceholder" xml:space="preserve">
+    <value>e.g. Cluj County Clinical Hospital</value>
+  </data>
+  <data name="Institutions.SlugPlaceholder" xml:space="preserve">
+    <value>e.g. scj-cluj</value>
+  </data>
+  <data name="Institutions.OrthancUrlPlaceholder" xml:space="preserve">
+    <value>e.g. http://orthanc-scj-cluj:8042</value>
+  </data>
+  <data name="Institutions.OrthancUrlHint" xml:space="preserve">
+    <value>The address of the Orthanc server dedicated to this institution (Docker hostname or external URL)</value>
+  </data>
+  <data name="Institutions.OrthancUser" xml:space="preserve">
+    <value>Orthanc user</value>
+  </data>
+  <data name="Institutions.OrthancPassword" xml:space="preserve">
+    <value>Orthanc password</value>
+  </data>
+  <data name="Institutions.NoAuthPlaceholder" xml:space="preserve">
+    <value>Leave empty if no authentication</value>
+  </data>
+  <data name="Institutions.Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Institutions.Edit" xml:space="preserve">
+    <value>Edit institution</value>
+  </data>
+  <data name="Institutions.EmptyNoAuth" xml:space="preserve">
+    <value>Empty = no authentication</value>
+  </data>
+  <data name="Institutions.EmptyKeepPassword" xml:space="preserve">
+    <value>Empty = keep the current password</value>
+  </data>
+  <data name="Institutions.FillRequired" xml:space="preserve">
+    <value>Fill in all the required fields.</value>
+  </data>
+  <data name="Institutions.CreatedDetail" xml:space="preserve">
+    <value>The institution '{0}' was created.</value>
+  </data>
+  <data name="Institutions.CreateError" xml:space="preserve">
+    <value>Error creating the institution. Check that the slug is unique.</value>
+  </data>
+  <data name="Institutions.Updated" xml:space="preserve">
+    <value>The institution was updated.</value>
+  </data>
+  <data name="Institutions.UpdateError" xml:space="preserve">
+    <value>Error updating the institution.</value>
+  </data>
+  <data name="Admin.PageTitle" xml:space="preserve">
+    <value>Administration — SITIM</value>
+  </data>
+  <data name="Admin.SystemStatus" xml:space="preserve">
+    <value>System status</value>
+  </data>
+  <data name="Admin.Unchecked" xml:space="preserve">
+    <value>Unchecked</value>
+  </data>
+  <data name="Admin.Check" xml:space="preserve">
+    <value>Check</value>
+  </data>
+  <data name="Admin.Checking" xml:space="preserve">
+    <value>Checking...</value>
+  </data>
+  <data name="Admin.QuickActions" xml:space="preserve">
+    <value>Quick actions</value>
+  </data>
+  <data name="Admin.FullSync" xml:space="preserve">
+    <value>Full sync Orthanc → DB</value>
+  </data>
+  <data name="Admin.FullSyncHint" xml:space="preserve">
+    <value>Syncs all the studies from Orthanc into the local database.</value>
+  </data>
+  <data name="Admin.SyncingAll" xml:space="preserve">
+    <value>Syncing...</value>
+  </data>
+  <data name="Admin.ExternalLinks" xml:space="preserve">
+    <value>External links</value>
+  </data>
+  <data name="Admin.ApiOnline" xml:space="preserve">
+    <value>The API is online.</value>
+  </data>
+  <data name="Admin.ApiNotResponding" xml:space="preserve">
+    <value>The API is not responding.</value>
+  </data>
+  <data name="FL.Subtitle" xml:space="preserve">
+    <value>Active FL sessions and training round history</value>
+  </data>
+  <data name="FL.NewSession" xml:space="preserve">
+    <value>New session</value>
+  </data>
+  <data name="FL.ConnectedClients" xml:space="preserve">
+    <value>Connected FL clients (institution handshake)</value>
+  </data>
+  <data name="FL.NoClientsOnline" xml:space="preserve">
+    <value>There are no FL clients online. Configure each container with</value>
+  </data>
+  <data name="FL.NoSessions" xml:space="preserve">
+    <value>There are no FL sessions created.</value>
+  </data>
+  <data name="FL.Rounds" xml:space="preserve">
+    <value>Rounds</value>
+  </data>
+  <data name="FL.Participants" xml:space="preserve">
+    <value>Participants</value>
+  </data>
+  <data name="FL.SessionDetails" xml:space="preserve">
+    <value>Session details</value>
+  </data>
+  <data name="FL.StopSession" xml:space="preserve">
+    <value>Stop the session</value>
+  </data>
+  <data name="FL.NewFLSession" xml:space="preserve">
+    <value>New FL session</value>
+  </data>
+  <data name="FL.ModelKey" xml:space="preserve">
+    <value>Model key</value>
+  </data>
+  <data name="FL.Architecture" xml:space="preserve">
+    <value>Network architecture</value>
+  </data>
+  <data name="FL.TotalRounds" xml:space="preserve">
+    <value>Total number of rounds</value>
+  </data>
+  <data name="FL.ParticipatingInstitutions" xml:space="preserve">
+    <value>Participating institutions</value>
+  </data>
+  <data name="FL.NoActiveInstitutions" xml:space="preserve">
+    <value>There are no active institutions.</value>
+  </data>
+  <data name="FL.ClientConnected" xml:space="preserve">
+    <value>FL client connected</value>
+  </data>
+  <data name="FL.ClientDisconnected" xml:space="preserve">
+    <value>FL client disconnected</value>
+  </data>
+  <data name="FL.SelectionHint" xml:space="preserve">
+    <value>Select at least one active institution. Only institutions with a connected FL client can start the session.</value>
+  </data>
+  <data name="FL.Selected" xml:space="preserve">
+    <value>Selected:</value>
+  </data>
+  <data name="FL.Connected" xml:space="preserve">
+    <value>Connected:</value>
+  </data>
+  <data name="FL.StartSession" xml:space="preserve">
+    <value>Start the session</value>
+  </data>
+  <data name="FL.Validation" xml:space="preserve">
+    <value>Validation</value>
+  </data>
+  <data name="FL.ModelKeyRequired" xml:space="preserve">
+    <value>Fill in the model key.</value>
+  </data>
+  <data name="FL.RoundsPositive" xml:space="preserve">
+    <value>The number of rounds must be greater than 0.</value>
+  </data>
+  <data name="FL.SelectOneInstitution" xml:space="preserve">
+    <value>Select at least one participating institution.</value>
+  </data>
+  <data name="FL.MissingClient" xml:space="preserve">
+    <value>Missing FL client</value>
+  </data>
+  <data name="FL.MissingClientDetail" xml:space="preserve">
+    <value>Institutions without an online FL client: {0}</value>
+  </data>
+  <data name="FL.StartFailed" xml:space="preserve">
+    <value>Could not start the FL session.</value>
+  </data>
+  <data name="FL.SessionStarted" xml:space="preserve">
+    <value>The FL session {0} was started.</value>
+  </data>
+  <data name="FL.StopFailed" xml:space="preserve">
+    <value>Could not stop the FL session.</value>
+  </data>
+  <data name="FL.SessionStopped" xml:space="preserve">
+    <value>Session stopped</value>
+  </data>
+  <data name="FL.SessionStoppedDetail" xml:space="preserve">
+    <value>The session {0} was stopped.</value>
+  </data>
+  <data name="FLDetails.PageTitle" xml:space="preserve">
+    <value>FL session details — SITIM</value>
+  </data>
+  <data name="FLDetails.BackToDashboard" xml:space="preserve">
+    <value>Back to the dashboard</value>
+  </data>
+  <data name="FLDetails.Title" xml:space="preserve">
+    <value>FL session details</value>
+  </data>
+  <data name="FLDetails.NotFound" xml:space="preserve">
+    <value>The FL session was not found.</value>
+  </data>
+  <data name="FLDetails.CurrentRound" xml:space="preserve">
+    <value>Current round</value>
+  </data>
+  <data name="FLDetails.ModelOutput" xml:space="preserve">
+    <value>Model output</value>
+  </data>
+  <data name="FLDetails.LastError" xml:space="preserve">
+    <value>Last error</value>
+  </data>
+  <data name="FLDetails.PublishedModel" xml:space="preserve">
+    <value>Model published in the registry</value>
+  </data>
+  <data name="FLDetails.NotPublishedYet" xml:space="preserve">
+    <value>The model is not yet published in the registry.</value>
+  </data>
+  <data name="FLDetails.ModelActiveInference" xml:space="preserve">
+    <value>Model active in inference</value>
+  </data>
+  <data name="FLDetails.ActivateModel" xml:space="preserve">
+    <value>Activate the FL model</value>
+  </data>
+  <data name="FLDetails.NoParticipants" xml:space="preserve">
+    <value>There are no registered participants.</value>
+  </data>
+  <data name="FLDetails.MetricsEvolution" xml:space="preserve">
+    <value>Metrics evolution (loss/accuracy)</value>
+  </data>
+  <data name="FLDetails.NoRoundsYet" xml:space="preserve">
+    <value>There are no completed rounds yet.</value>
+  </data>
+  <data name="FLDetails.Round" xml:space="preserve">
+    <value>Round</value>
+  </data>
+  <data name="FLDetails.MetricValue" xml:space="preserve">
+    <value>Metric value</value>
+  </data>
+  <data name="FLDetails.AggregatedLoss" xml:space="preserve">
+    <value>Aggregated loss</value>
+  </data>
+  <data name="FLDetails.AggregatedAccuracy" xml:space="preserve">
+    <value>Aggregated accuracy</value>
+  </data>
+  <data name="FLDetails.AggregatedF1" xml:space="preserve">
+    <value>Aggregated macro F1</value>
+  </data>
+  <data name="FLDetails.CommunicationCost" xml:space="preserve">
+    <value>Communication cost</value>
+  </data>
+  <data name="FLDetails.CommunicationCostHint" xml:space="preserve">
+    <value>The volume of parameters transmitted by the clients.</value>
+  </data>
+  <data name="FLDetails.SessionTotal" xml:space="preserve">
+    <value>Session total</value>
+  </data>
+  <data name="FLDetails.AvgPerClientRound" xml:space="preserve">
+    <value>Average / client / round</value>
+  </data>
+  <data name="FLDetails.MbPerRound" xml:space="preserve">
+    <value>MB / round</value>
+  </data>
+  <data name="FLDetails.MbTransferred" xml:space="preserve">
+    <value>MB transferred</value>
+  </data>
+  <data name="FLDetails.NoCommunicationData" xml:space="preserve">
+    <value>There is no communication cost data yet.</value>
+  </data>
+  <data name="FLDetails.ClassDistribution" xml:space="preserve">
+    <value>Class distribution across institutions (non-IID)</value>
+  </data>
+  <data name="FLDetails.NoClassDistribution" xml:space="preserve">
+    <value>The class distribution has not been reported by the clients yet.</value>
+  </data>
+  <data name="FLDetails.Class" xml:space="preserve">
+    <value>Class</value>
+  </data>
+  <data name="FLDetails.SampleCount" xml:space="preserve">
+    <value>Number of samples</value>
+  </data>
+  <data name="FLDetails.ActivateFailed" xml:space="preserve">
+    <value>Could not activate the FL model.</value>
+  </data>
+  <data name="FLDetails.ActivatedDetail" xml:space="preserve">
+    <value>The FL model was activated for inference.</value>
+  </data>
+  <data name="ModelDialog.Classes" xml:space="preserve">
+    <value>Classes</value>
+  </data>
+  <data name="ModelDialog.TrainingSource" xml:space="preserve">
+    <value>Training source</value>
+  </data>
+  <data name="ModelDialog.StorageFile" xml:space="preserve">
+    <value>Storage file</value>
+  </data>
+  <data name="ModelDialog.InternalId" xml:space="preserve">
+    <value>Internal ID</value>
+  </data>
+  <data name="EditModel.Title" xml:space="preserve">
+    <value>Edit the model interpretation</value>
+  </data>
+  <data name="EditModel.TargetModality" xml:space="preserve">
+    <value>Target modality (DICOM, e.g. OP, CR,DX)</value>
+  </data>
+  <data name="EditModel.NameRequired" xml:space="preserve">
+    <value>The model name is required.</value>
+  </data>
+  <data name="EditModel.Updated" xml:space="preserve">
+    <value>The model metadata was updated.</value>
+  </data>
+  <data name="EditModel.SaveFailed" xml:space="preserve">
+    <value>Saving failed: {0}</value>
+  </data>
+  <data name="ClassEditor.Title" xml:space="preserve">
+    <value>Class interpretation (severity + recommendations)</value>
+  </data>
+  <data name="ClassEditor.Hint1" xml:space="preserve">
+    <value>One entry for each output class of the model, in index order (0, 1, 2…).</value>
+  </data>
+  <data name="ClassEditor.Hint2" xml:space="preserve">
+    <value>Recommended severities for correct coloring:</value>
+  </data>
+  <data name="ClassEditor.Hint3" xml:space="preserve">
+    <value>Recommendations: one per line.</value>
+  </data>
+  <data name="ClassEditor.NoClasses" xml:space="preserve">
+    <value>No class defined. Press "Add class" to start.</value>
+  </data>
+  <data name="ClassEditor.RemoveClass" xml:space="preserve">
+    <value>Remove the class</value>
+  </data>
+  <data name="ClassEditor.ClassName" xml:space="preserve">
+    <value>Class name</value>
+  </data>
+  <data name="ClassEditor.Recommendations" xml:space="preserve">
+    <value>Recommendations (one per line)</value>
+  </data>
+  <data name="ClassEditor.RecommendationsPlaceholder" xml:space="preserve">
+    <value>Ophthalmologist appointment in 3 months&#10;Strict glycemic control</value>
+  </data>
+  <data name="ClassEditor.AddClass" xml:space="preserve">
+    <value>Add class</value>
+  </data>
+  <data name="Upload.Title" xml:space="preserve">
+    <value>Upload New AI Model</value>
+  </data>
+  <data name="Upload.ModelFile" xml:space="preserve">
+    <value>Model File (ONNX)</value>
+  </data>
+  <data name="Upload.SelectOnnx" xml:space="preserve">
+    <value>Select the trained .onnx file</value>
+  </data>
+  <data name="Upload.DescriptionPlaceholder" xml:space="preserve">
+    <value>Detailed description of the model and its usage...</value>
+  </data>
+  <data name="Upload.TaskType" xml:space="preserve">
+    <value>Analysis Type</value>
+  </data>
+  <data name="Upload.SelectTaskType" xml:space="preserve">
+    <value>Select the analysis type</value>
+  </data>
+  <data name="Upload.Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Upload.AccuracyPct" xml:space="preserve">
+    <value>Accuracy (%)</value>
+  </data>
+  <data name="Upload.NumClasses" xml:space="preserve">
+    <value>Number of Classes</value>
+  </data>
+  <data name="Upload.InputShape" xml:space="preserve">
+    <value>Input Shape</value>
+  </data>
+  <data name="Upload.ActiveImmediately" xml:space="preserve">
+    <value>Activated immediately after upload</value>
+  </data>
+  <data name="Upload.SaveInactive" xml:space="preserve">
+    <value>Save as inactive</value>
+  </data>
+  <data name="Upload.UploadButton" xml:space="preserve">
+    <value>Upload Model</value>
+  </data>
+  <data name="Upload.TaskRetinopathy" xml:space="preserve">
+    <value>Diabetic Retinopathy</value>
+  </data>
+  <data name="Upload.TaskChestXray" xml:space="preserve">
+    <value>Chest X-ray</value>
+  </data>
+  <data name="Upload.TaskBrainTumor" xml:space="preserve">
+    <value>Brain Tumor</value>
+  </data>
+  <data name="Upload.TaskSkinLesion" xml:space="preserve">
+    <value>Skin Lesion</value>
+  </data>
+  <data name="Upload.TaskPneumonia" xml:space="preserve">
+    <value>Pneumonia</value>
+  </data>
+  <data name="Upload.TaskOther" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Upload.SelectFile" xml:space="preserve">
+    <value>Select a model file</value>
+  </data>
+  <data name="Upload.Succeeded" xml:space="preserve">
+    <value>The model was uploaded successfully!</value>
+  </data>
+  <data name="Upload.Failed" xml:space="preserve">
+    <value>Upload failed: {0}</value>
+  </data>
+</root>

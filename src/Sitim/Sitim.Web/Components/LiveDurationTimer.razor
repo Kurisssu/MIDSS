@@ -1,0 +1,49 @@
+@using Sitim.Web.Services
+@implements IDisposable
+
+<span class="@CssClass">@DurationFormatter.FormatLive(StartedAtUtc, FinishedAtUtc, ProcessingTimeMs)</span>
+
+@code {
+    // Note on lifecycle:
+    //  - If the job hasn't started   → renders "—", no timer needed.
+    //  - If the job is running       → ticks once per second, re-renders the live elapsed.
+    //  - If the job has finished     → renders the recorded ProcessingTimeMs (server truth);
+    //                                  any active ticker is stopped to avoid wasted work.
+    //  Disposing the component (page navigation, parent re-render) tears the timer down.
+
+    [Parameter] public DateTime? StartedAtUtc { get; set; }
+    [Parameter] public DateTime? FinishedAtUtc { get; set; }
+    [Parameter] public int? ProcessingTimeMs { get; set; }
+    [Parameter] public string? CssClass { get; set; }
+
+    private System.Timers.Timer? _tick;
+
+    protected override void OnParametersSet()
+    {
+        // Tick only while running: started + not yet finished.
+        var shouldTick = StartedAtUtc.HasValue && !FinishedAtUtc.HasValue;
+
+        if (shouldTick && _tick is null)
+            StartTicking();
+        else if (!shouldTick && _tick is not null)
+            StopTicking();
+    }
+
+    private void StartTicking()
+    {
+        _tick = new System.Timers.Timer(1000);
+        _tick.Elapsed += async (_, _) => await InvokeAsync(StateHasChanged);
+        _tick.AutoReset = true;
+        _tick.Start();
+    }
+
+    private void StopTicking()
+    {
+        if (_tick is null) return;
+        _tick.Stop();
+        _tick.Dispose();
+        _tick = null;
+    }
+
+    public void Dispose() => StopTicking();
+}

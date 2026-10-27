@@ -1,0 +1,6 @@
+# torch/torchvision se instalează în Dockerfile prin build-args (implicit CPU, GPU prin
+# docker-compose.gpu.yml). Nu le pune aici ca să putem comuta CPU/GPU fără a edita requirements.
+flwr==1.9.0
+numpy==1.26.4
+pillow==10.4.0
+scikit-learn==1.5.1

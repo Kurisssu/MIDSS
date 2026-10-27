@@ -1,0 +1,114 @@
+@inject DialogService DialogService
+@implements IDisposable
+
+@*
+    Thin wrapper around Radzen's DialogService that keeps the simple
+    `<SitimModal Show="..." OnClose="...">@content</SitimModal>` calling
+    convention used throughout the app.
+
+    Why DialogService instead of a native <dialog> element:
+      • Radzen renders dialogs at <RadzenComponents/> in MainLayout, which
+        sits ABOVE the .sitim-app-shell wrapper. That escapes any ancestor
+        with transform / backdrop-filter that would otherwise hijack the
+        backdrop's position:fixed (the original "backdrop ends mid-page" bug).
+      • Radzen popups (dropdowns, datepickers, ...) inside the dialog stay in
+        the regular flow — no top-layer fight, no positioning hacks needed.
+
+    Public API unchanged:
+      <SitimModal Show="@_open" OnClose="@OnDialogClosed">
+          ...content...
+      </SitimModal>
+*@
+
+@code {
+    [Parameter] public bool Show { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? CssClass { get; set; }
+    [Parameter] public bool CloseOnEscape { get; set; } = true;
+    [Parameter] public bool CloseOnBackdropClick { get; set; } = true;
+
+    private bool _isOpen;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Show && !_isOpen)
+        {
+            await OpenAsync();
+        }
+        else if (!Show && _isOpen)
+        {
+            DialogService.Close();
+        }
+    }
+
+    /// <summary>
+    /// Radzen renders the dialog's <c>ChildContent</c> RenderFragment ONCE — it
+    /// doesn't automatically re-invoke it when the parent's state changes. Custom
+    /// markup inside the modal (institution picker, multi-select cards, etc.)
+    /// would visually stick to the initial state even though data updates correctly
+    /// behind it. Pulse <c>Refresh()</c> after every parent re-render so the
+    /// dialog tree mirrors the latest closure values from the host page.
+    /// </summary>
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender || !_isOpen) return;
+
+        try
+        {
+            DialogService.Refresh();
+        }
+        catch
+        {
+            // Dialog may be in the process of closing — Refresh on a closed dialog
+            // is a no-op anyway. Swallow to keep the parent render path clean.
+        }
+    }
+
+    private async Task OpenAsync()
+    {
+        _isOpen = true;
+
+        // The lambda is invoked on every dialog re-render, so it always reflects
+        // the *current* ChildContent — bindings inside the dialog stay live.
+        var content = ChildContent;
+
+        var options = new DialogOptions
+        {
+            ShowTitle = false,
+            ShowClose = false,
+            CloseDialogOnEsc = CloseOnEscape,
+            CloseDialogOnOverlayClick = CloseOnBackdropClick,
+            Width = "auto",
+            Resizable = false,
+            Draggable = false,
+            CssClass = string.IsNullOrWhiteSpace(CssClass)
+                ? "sitim-modal-wrap"
+                : $"sitim-modal-wrap {CssClass}"
+        };
+
+        try
+        {
+            await DialogService.OpenAsync(
+                title: string.Empty,
+                childContent: _ => content,
+                options: options);
+        }
+        finally
+        {
+            _isOpen = false;
+            // Notify the caller that the user closed the dialog (ESC, backdrop, etc.)
+            // so they can sync their _showXxxDialog flag without an infinite loop.
+            if (Show)
+                await OnClose.InvokeAsync();
+        }
+    }
+
+    public void Dispose()
+    {
+        if (_isOpen)
+        {
+            try { DialogService.Close(); } catch { /* already closed */ }
+        }
+    }
+}

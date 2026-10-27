@@ -1,0 +1,14 @@
+@inherits LayoutComponentBase
+
+@*
+    Standalone shell for unauthenticated pages: login, set-password, forgot-password.
+    Deliberately excludes RadzenLayout / header / sidebar / AuthorizeView — those leak
+    in-app identity & navigation that a brand-new invitee MUST NOT see.
+
+    Each auth page handles its own full-viewport centering and ambient styling so
+    this file stays a pure pass-through (just Radzen notifications + body).
+*@
+
+<RadzenComponents />
+
+@Body

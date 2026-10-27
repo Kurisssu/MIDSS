@@ -1,0 +1,210 @@
+@using Sitim.Core.Models
+@using Sitim.Web.Services
+@using System.Diagnostics
+@inject SitimApiClient Api
+@inject NotificationService Notification
+@inject DialogService Dialog
+@inject IStringLocalizer<SharedResource> L
+
+<RadzenCard>
+    <RadzenRow AlignItems="AlignItems.Center">
+        <RadzenColumn Size="12" SizeMD="8">
+            <RadzenText Text="@L["Panel.AIAnalysis"]" TextStyle="TextStyle.H6" class="rz-mb-0" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="4">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                <RadzenButton Text="@L["Panel.RunAnalysis"]" Icon="psychology" ButtonStyle="ButtonStyle.Success" Size="ButtonSize.Small"
+                              Disabled="@(isRunningAnalysis || AvailableModels.Count == 0)"
+                              Click="@OnRunAnalysis" />
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+
+    @if (isLoadingModels)
+    {
+        <RadzenProgressBarCircular ProgressBarStyle="ProgressBarStyle.Primary" Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" class="rz-mt-3" />
+    }
+    else if (AvailableModels.Count == 0)
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Warning" Shade="Shade.Dark" AllowClose="false" class="rz-mt-3">
+            @L["Panel.NoModelsAvailable"]
+        </RadzenAlert>
+    }
+    else
+    {
+        <RadzenStack Gap="1rem" class="rz-mt-3">
+            <RadzenFormField Text="@L["Panel.AIModel"]" Variant="Variant.Text">
+                <ChildContent>
+                    <RadzenDropDown @bind-Value="@SelectedModelId" Data="@AvailableModels" 
+                                   TextProperty="Name" ValueProperty="Id" Style="width: 100%;" />
+                </ChildContent>
+            </RadzenFormField>
+
+            @if (isRunningAnalysis)
+            {
+                <RadzenAlert AlertStyle="AlertStyle.Info" Shade="Shade.Dark" AllowClose="false">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                        <RadzenProgressBarCircular ProgressBarStyle="ProgressBarStyle.Info" Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Small" />
+                        <span>@L["Panel.RunningAnalysis"]</span>
+                    </RadzenStack>
+                </RadzenAlert>
+            }
+
+            @if (LastAnalysisResult != null && !isRunningAnalysis)
+            {
+                <RadzenCard style="background-color: var(--rz-state-light-color);">
+                    <RadzenText Text="@L["Panel.LastResult"]" TextStyle="TextStyle.Subtitle2" class="rz-mb-2" />
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="6">
+                            <RadzenFormField Text="@L["Panel.Prediction"]" Variant="Variant.Text">
+                                <ChildContent>
+                                    <RadzenTextBox ReadOnly="true" 
+                                                 Value="@GetDiagnosisText(LastAnalysisResult.PredictionClass)" 
+                                                 Style="width: 100%;" />
+                                </ChildContent>
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="6">
+                            <RadzenFormField Text="@L["Common.Confidence"]" Variant="Variant.Text">
+                                <ChildContent>
+                                    <RadzenTextBox ReadOnly="true" 
+                                                 Value="@($"{LastAnalysisResult.Confidence:P2}")" 
+                                                 Style="width: 100%;" />
+                                </ChildContent>
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+                    <RadzenRow class="rz-mt-2">
+                        <RadzenColumn Size="12" SizeMD="6">
+                            <RadzenFormField Text="@L["Common.Model"]" Variant="Variant.Text">
+                                <ChildContent>
+                                    <RadzenTextBox ReadOnly="true" 
+                                                 Value="@($"{LastAnalysisResult.ModelName} v{LastAnalysisResult.ModelVersion}")" 
+                                                 Style="width: 100%;" />
+                                </ChildContent>
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="6">
+                            <RadzenFormField Text="@L["Common.ProcessingTime"]" Variant="Variant.Text">
+                                <ChildContent>
+                                    <RadzenTextBox ReadOnly="true"
+                                                 Value="@Sitim.Web.Services.DurationFormatter.Format(LastAnalysisResult.ProcessingTimeMs)"
+                                                 Style="width: 100%;" />
+                                </ChildContent>
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+                    <RadzenRow class="rz-mt-2">
+                        <RadzenColumn Size="12">
+                            <RadzenText Text="@L["Panel.ClassProbabilities"]" TextStyle="TextStyle.Caption" class="rz-mb-2" style="color: var(--rz-text-tertiary-color);" />
+                            <RadzenRow class="rz-mt-1">
+                                @foreach (var prob in LastAnalysisResult.AllProbabilities)
+                                {
+                                    <RadzenColumn Size="12" SizeMD="6" LG="4">
+                                        <div style="padding: 0.5rem; background-color: var(--rz-alt-background-color); border-radius: 4px;">
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                                                <small>@prob.ClassName</small>
+                                                <small><strong>@prob.Probability.ToString("P1")</strong></small>
+                                            </div>
+                                            <RadzenProgressBar Value="@((double)prob.Probability * 100)" Style="height: 6px;" />
+                                        </div>
+                                    </RadzenColumn>
+                                }
+                            </RadzenRow>
+                        </RadzenColumn>
+                    </RadzenRow>
+                </RadzenCard>
+            }
+        </RadzenStack>
+    }
+</RadzenCard>
+
+@code {
+    [Parameter]
+    public Guid StudyId { get; set; }
+
+    private List<AIModelDto> AvailableModels = [];
+    private Guid SelectedModelId = Guid.Empty;
+    private AIAnalysisResultDto? LastAnalysisResult;
+    private bool isLoadingModels = true;
+    private bool isRunningAnalysis = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAvailableModels();
+    }
+
+    private async Task LoadAvailableModels()
+    {
+        try
+        {
+            isLoadingModels = true;
+            var models = await Api.GetActiveModelsAsync();
+            if (models != null)
+            {
+                AvailableModels = models.ToList();
+                if (AvailableModels.Count > 0)
+                {
+                    SelectedModelId = AvailableModels.First().Id;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Notification.Notify(NotificationSeverity.Error, L["Common.Error"], L["Panel.LoadModelsFailed", ex.Message]);
+        }
+        finally
+        {
+            isLoadingModels = false;
+        }
+    }
+
+    private async Task OnRunAnalysis()
+    {
+        if (SelectedModelId == Guid.Empty)
+        {
+            Notification.Notify(NotificationSeverity.Warning, L["Common.Warning"], L["Panel.SelectModel"]);
+            return;
+        }
+
+        try
+        {
+            isRunningAnalysis = true;
+            StateHasChanged();
+
+            var result = await Api.RunAIAnalysisAsync(StudyId, SelectedModelId);
+            if (result != null)
+            {
+                LastAnalysisResult = result;
+                Notification.Notify(NotificationSeverity.Success, L["Common.Success"],
+                    L["Panel.AnalysisComplete", GetDiagnosisText(result.PredictionClass), $"{result.Confidence:P2}"]);
+            }
+            else
+            {
+                Notification.Notify(NotificationSeverity.Error, L["Common.Error"], L["Panel.RunAnalysisError"]);
+            }
+        }
+        catch (Exception ex)
+        {
+            Notification.Notify(NotificationSeverity.Error, L["Common.Error"], L["Panel.RunAnalysisFailed", ex.Message]);
+        }
+        finally
+        {
+            isRunningAnalysis = false;
+            StateHasChanged();
+        }
+    }
+
+    private string GetDiagnosisText(int? predictionClass)
+    {
+        return predictionClass switch
+        {
+            0 => "No DR (No Diabetic Retinopathy)",
+            1 => "Mild DR (Mild Diabetic Retinopathy)",
+            2 => "Moderate DR (Moderate Diabetic Retinopathy)",
+            3 => "Severe DR (Severe Diabetic Retinopathy)",
+            4 => "Proliferative DR (Proliferative Diabetic Retinopathy)",
+            _ => "Unknown"
+        };
+    }
+}

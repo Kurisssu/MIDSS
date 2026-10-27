@@ -1,0 +1,17 @@
+{
+  "Name": "OVISUS-Orthanc",
+  "HttpPort": 8042,
+  "DicomPort": 4242,
+  "DicomAet": "OVISUSORTHANC",
+  "AuthenticationEnabled": false,
+  "RemoteAccessAllowed": true,
+  "DicomWeb": {
+    "Enable": true,
+    "Root": "/dicom-web/",
+    "PublicRoot": "/dicom-web/",
+    "EnableWado": true,
+    "WadoRoot": "/wado"
+  },
+  "StorageDirectory": "/var/lib/orthanc/db",
+  "Verbose": true
+}

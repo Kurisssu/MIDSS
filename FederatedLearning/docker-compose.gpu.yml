@@ -1,0 +1,70 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Override pentru rulare pe GPU NVIDIA. Se folosește ÎMPREUNĂ cu fișierul de bază:
+#
+#   docker compose -f docker-compose.fl.yml -f docker-compose.gpu.yml up --build
+#
+# Necesită pe host: driver NVIDIA + NVIDIA Container Toolkit (runtime "nvidia" în Docker).
+# Verificare rapidă:
+#   docker run --rm --gpus all nvidia/cuda:12.4.1-base-ubuntu22.04 nvidia-smi
+#
+# ATENȚIE (VRAM partajat): în FedAvg cei 3 clienți se antrenează SIMULTAN per rundă. Pe un
+# singur GPU de 8 GB (RTX 4060 Laptop) ei împart memoria → ține FL_BATCH_SIZE mic (4–8) ca să
+# nu dea CUDA out-of-memory. Mărește-l doar dacă ai mai mult VRAM sau reduci nr. de clienți.
+# Suprascrie batch-ul la runtime: $env:FL_BATCH_SIZE="6"  (serverul îl trimite prin fit_config).
+#
+# Serverul rămâne pe CPU intenționat (face doar export ONNX) — nu i se atașează GPU.
+# ─────────────────────────────────────────────────────────────────────────────
+services:
+  fl-client-inst1:
+    build:
+      args:
+        TORCH_INDEX_URL: "https://download.pytorch.org/whl/cu121"
+        TORCH_PACKAGES: "torch==2.3.1+cu121 torchvision==0.18.1+cu121"
+    environment:
+      # num_workers=0 OBLIGATORIU pe GPU: modelul inițializează CUDA în procesul părinte,
+      # iar DataLoader cu workeri>0 forkează → deadlock CUDA+fork (fit-ul atârnă la primul batch).
+      # Datasetul e mic (zeci de imagini), deci single-process nu costă nimic.
+      FL_DATALOADER_WORKERS: "${FL_DATALOADER_WORKERS:-0}"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  fl-client-inst2:
+    build:
+      args:
+        TORCH_INDEX_URL: "https://download.pytorch.org/whl/cu121"
+        TORCH_PACKAGES: "torch==2.3.1+cu121 torchvision==0.18.1+cu121"
+    environment:
+      # num_workers=0 OBLIGATORIU pe GPU: modelul inițializează CUDA în procesul părinte,
+      # iar DataLoader cu workeri>0 forkează → deadlock CUDA+fork (fit-ul atârnă la primul batch).
+      # Datasetul e mic (zeci de imagini), deci single-process nu costă nimic.
+      FL_DATALOADER_WORKERS: "${FL_DATALOADER_WORKERS:-0}"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  fl-client-inst3:
+    build:
+      args:
+        TORCH_INDEX_URL: "https://download.pytorch.org/whl/cu121"
+        TORCH_PACKAGES: "torch==2.3.1+cu121 torchvision==0.18.1+cu121"
+    environment:
+      # num_workers=0 OBLIGATORIU pe GPU: modelul inițializează CUDA în procesul părinte,
+      # iar DataLoader cu workeri>0 forkează → deadlock CUDA+fork (fit-ul atârnă la primul batch).
+      # Datasetul e mic (zeci de imagini), deci single-process nu costă nimic.
+      FL_DATALOADER_WORKERS: "${FL_DATALOADER_WORKERS:-0}"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

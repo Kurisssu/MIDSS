@@ -1,0 +1,177 @@
+services:
+  fl-server:
+    build:
+      context: .
+      dockerfile: fl-server/Dockerfile
+    container_name: sitim-fl-server
+    environment:
+      PYTHONUNBUFFERED: "1"
+      FL_SERVER_ADDRESS: 0.0.0.0:8080
+      FL_NUM_ROUNDS: "10"
+      FL_MIN_AVAILABLE_CLIENTS: "${FL_MIN_AVAILABLE_CLIENTS:-3}"
+      FL_MIN_FIT_CLIENTS: "${FL_MIN_FIT_CLIENTS:-3}"
+      FL_MIN_EVALUATE_CLIENTS: "${FL_MIN_EVALUATE_CLIENTS:-3}"
+      # fit_config trimis clienților per rundă (suprascrie valorile locale ale clientului).
+      FL_LOCAL_EPOCHS: "${FL_LOCAL_EPOCHS:-2}"
+      FL_BATCH_SIZE: "${FL_BATCH_SIZE:-8}"
+      FL_LEARNING_RATE: "${FL_LEARNING_RATE:-0.01}"
+      FL_PREPROCESSING_IMAGE_SIZE: "512"
+      FL_NUM_CLASSES: "5"
+      # Arhitectura antrenata. TREBUIE identica pe toate serviciile: fl-server o refoloseste
+      # la exportul ONNX, iar o nepotrivire iese la iveala abia atunci, dupa toate rundele.
+      FL_ARCHITECTURE: "${FL_ARCHITECTURE:-resnet18}"
+      FL_ONNX_OPSET: "${FL_ONNX_OPSET:-17}"
+      FL_CLIENT_STALE_SECONDS: "20"
+    ports:
+      - "${FL_SERVER_PUBLISHED_PORT:-18080}:8080"
+      - "${FL_CONTROL_API_PUBLISHED_PORT:-18081}:8081"
+    networks:
+      - sitim-fl-net
+
+  fl-client-inst1:
+    build:
+      context: .
+      dockerfile: fl-client/Dockerfile
+    container_name: sitim-fl-client-inst1
+    depends_on:
+      - fl-server
+    environment:
+      FL_SERVER_ADDRESS: fl-server:8080
+      FL_CLIENT_ID: institution-1
+      FL_INSTITUTION_ID: "${FL_INST1_INSTITUTION_ID:-6c0ef9a0-e216-44c5-87c8-fe7c500af092}"
+      FL_CONTROL_API_URL: "http://fl-server:8081"
+      FL_HEARTBEAT_SECONDS: "5"
+      FL_ORTHANC_BASE_URL: "${FL_INST1_ORTHANC_BASE_URL:-http://host.docker.internal:8042}"
+      FL_LABELS_CSV_PATH: "/labels/inst1-labels.csv"
+      # Plafonul acoperă întregul APTOS (3662) chiar dacă o instituție ar primi tot.
+      FL_MAX_TRAINING_SAMPLES: "${FL_MAX_TRAINING_SAMPLES:-4000}"
+      FL_TEST_RATIO: "0.2"
+      FL_NUM_CLASSES: "5"
+      # Arhitectura antrenata. TREBUIE identica pe toate serviciile: fl-server o refoloseste
+      # la exportul ONNX, iar o nepotrivire iese la iveala abia atunci, dupa toate rundele.
+      FL_ARCHITECTURE: "${FL_ARCHITECTURE:-resnet18}"
+      FL_PREPROCESSING_IMAGE_SIZE: "512"
+      FL_PREPROCESSING_MEAN: "[0.485, 0.456, 0.406]"
+      FL_PREPROCESSING_STD: "[0.229, 0.224, 0.225]"
+      PYTHONUNBUFFERED: "1"
+      FL_AUGMENT: "${FL_AUGMENT:-true}"
+      FL_BATCH_SIZE: "${FL_BATCH_SIZE:-8}"
+      FL_DATALOADER_WORKERS: "${FL_DATALOADER_WORKERS:-0}"
+      FL_LOCAL_EPOCHS: "2"
+      FL_LEARNING_RATE: "0.01"
+      FL_RUN_ONCE: "false"
+      FL_RECONNECT_DELAY_SECONDS: "5"
+      FL_MIN_LABELED_SAMPLES: "${FL_MIN_LABELED_SAMPLES:-6}"
+      FL_MIN_SAMPLES_PER_CLASS: "${FL_MIN_SAMPLES_PER_CLASS:-2}"
+      FL_ORTHANC_USERNAME: "${FL_ORTHANC_USERNAME:-}"
+      FL_ORTHANC_PASSWORD: "${FL_ORTHANC_PASSWORD:-}"
+      # La încărcarea întregului APTOS, Orthanc poate răspunde lent la /rendered.
+      FL_ORTHANC_TIMEOUT_SECONDS: "${FL_ORTHANC_TIMEOUT_SECONDS:-120}"
+      FL_ORTHANC_MAX_RETRIES: "${FL_ORTHANC_MAX_RETRIES:-5}"
+    volumes:
+      - ./labels:/labels:ro
+    # /dev/shm implicit Docker = 64 MB → DataLoader cu num_workers>0 (batch-uri 512×512)
+    # epuizează memoria partajată și worker-ul moare cu „Bus error". 2 GB e suficient.
+    shm_size: "2gb"
+    networks:
+      - sitim-fl-net
+
+  fl-client-inst2:
+    build:
+      context: .
+      dockerfile: fl-client/Dockerfile
+    container_name: sitim-fl-client-inst2
+    depends_on:
+      - fl-server
+    environment:
+      FL_SERVER_ADDRESS: fl-server:8080
+      FL_CLIENT_ID: institution-2
+      FL_INSTITUTION_ID: "${FL_INST2_INSTITUTION_ID:-d778ca23-70bf-4cfa-b014-def0ec7e19ad}"
+      FL_CONTROL_API_URL: "http://fl-server:8081"
+      FL_HEARTBEAT_SECONDS: "5"
+      FL_ORTHANC_BASE_URL: "${FL_INST2_ORTHANC_BASE_URL:-http://host.docker.internal:8043}"
+      FL_LABELS_CSV_PATH: "/labels/inst2-labels.csv"
+      # Plafonul acoperă întregul APTOS (3662) chiar dacă o instituție ar primi tot.
+      FL_MAX_TRAINING_SAMPLES: "${FL_MAX_TRAINING_SAMPLES:-4000}"
+      FL_TEST_RATIO: "0.2"
+      FL_NUM_CLASSES: "5"
+      # Arhitectura antrenata. TREBUIE identica pe toate serviciile: fl-server o refoloseste
+      # la exportul ONNX, iar o nepotrivire iese la iveala abia atunci, dupa toate rundele.
+      FL_ARCHITECTURE: "${FL_ARCHITECTURE:-resnet18}"
+      FL_PREPROCESSING_IMAGE_SIZE: "512"
+      FL_PREPROCESSING_MEAN: "[0.485, 0.456, 0.406]"
+      FL_PREPROCESSING_STD: "[0.229, 0.224, 0.225]"
+      PYTHONUNBUFFERED: "1"
+      FL_AUGMENT: "${FL_AUGMENT:-true}"
+      FL_BATCH_SIZE: "${FL_BATCH_SIZE:-8}"
+      FL_DATALOADER_WORKERS: "${FL_DATALOADER_WORKERS:-0}"
+      FL_LOCAL_EPOCHS: "2"
+      FL_LEARNING_RATE: "0.01"
+      FL_RUN_ONCE: "false"
+      FL_RECONNECT_DELAY_SECONDS: "5"
+      FL_MIN_LABELED_SAMPLES: "${FL_MIN_LABELED_SAMPLES:-6}"
+      FL_MIN_SAMPLES_PER_CLASS: "${FL_MIN_SAMPLES_PER_CLASS:-2}"
+      FL_ORTHANC_USERNAME: "${FL_ORTHANC_USERNAME:-}"
+      FL_ORTHANC_PASSWORD: "${FL_ORTHANC_PASSWORD:-}"
+      # La încărcarea întregului APTOS, Orthanc poate răspunde lent la /rendered.
+      FL_ORTHANC_TIMEOUT_SECONDS: "${FL_ORTHANC_TIMEOUT_SECONDS:-120}"
+      FL_ORTHANC_MAX_RETRIES: "${FL_ORTHANC_MAX_RETRIES:-5}"
+    volumes:
+      - ./labels:/labels:ro
+    # /dev/shm implicit Docker = 64 MB → DataLoader cu num_workers>0 (batch-uri 512×512)
+    # epuizează memoria partajată și worker-ul moare cu „Bus error". 2 GB e suficient.
+    shm_size: "2gb"
+    networks:
+      - sitim-fl-net
+
+  fl-client-inst3:
+    build:
+      context: .
+      dockerfile: fl-client/Dockerfile
+    container_name: sitim-fl-client-inst3
+    depends_on:
+      - fl-server
+    environment:
+      FL_SERVER_ADDRESS: fl-server:8080
+      FL_CLIENT_ID: institution-3
+      FL_INSTITUTION_ID: "${FL_INST3_INSTITUTION_ID:-80322948-c769-498d-8def-256b7d7d6e88}"
+      FL_CONTROL_API_URL: "http://fl-server:8081"
+      FL_HEARTBEAT_SECONDS: "5"
+      FL_ORTHANC_BASE_URL: "${FL_INST3_ORTHANC_BASE_URL:-http://host.docker.internal:8044}"
+      FL_LABELS_CSV_PATH: "/labels/inst3-labels.csv"
+      # Plafonul acoperă întregul APTOS (3662) chiar dacă o instituție ar primi tot.
+      FL_MAX_TRAINING_SAMPLES: "${FL_MAX_TRAINING_SAMPLES:-4000}"
+      FL_TEST_RATIO: "0.2"
+      FL_NUM_CLASSES: "5"
+      # Arhitectura antrenata. TREBUIE identica pe toate serviciile: fl-server o refoloseste
+      # la exportul ONNX, iar o nepotrivire iese la iveala abia atunci, dupa toate rundele.
+      FL_ARCHITECTURE: "${FL_ARCHITECTURE:-resnet18}"
+      FL_PREPROCESSING_IMAGE_SIZE: "512"
+      FL_PREPROCESSING_MEAN: "[0.485, 0.456, 0.406]"
+      FL_PREPROCESSING_STD: "[0.229, 0.224, 0.225]"
+      PYTHONUNBUFFERED: "1"
+      FL_AUGMENT: "${FL_AUGMENT:-true}"
+      FL_BATCH_SIZE: "${FL_BATCH_SIZE:-8}"
+      FL_DATALOADER_WORKERS: "${FL_DATALOADER_WORKERS:-0}"
+      FL_LOCAL_EPOCHS: "2"
+      FL_LEARNING_RATE: "0.01"
+      FL_RUN_ONCE: "false"
+      FL_RECONNECT_DELAY_SECONDS: "5"
+      FL_MIN_LABELED_SAMPLES: "${FL_MIN_LABELED_SAMPLES:-6}"
+      FL_MIN_SAMPLES_PER_CLASS: "${FL_MIN_SAMPLES_PER_CLASS:-2}"
+      FL_ORTHANC_USERNAME: "${FL_ORTHANC_USERNAME:-}"
+      FL_ORTHANC_PASSWORD: "${FL_ORTHANC_PASSWORD:-}"
+      # La încărcarea întregului APTOS, Orthanc poate răspunde lent la /rendered.
+      FL_ORTHANC_TIMEOUT_SECONDS: "${FL_ORTHANC_TIMEOUT_SECONDS:-120}"
+      FL_ORTHANC_MAX_RETRIES: "${FL_ORTHANC_MAX_RETRIES:-5}"
+    volumes:
+      - ./labels:/labels:ro
+    # /dev/shm implicit Docker = 64 MB → DataLoader cu num_workers>0 (batch-uri 512×512)
+    # epuizează memoria partajată și worker-ul moare cu „Bus error". 2 GB e suficient.
+    shm_size: "2gb"
+    networks:
+      - sitim-fl-net
+
+networks:
+  sitim-fl-net:
+    driver: bridge

@@ -1,0 +1,2639 @@
+/* ====================================================================
+   Blazor infrastructure styles (unchanged)
+   ==================================================================== */
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+:root {
+    font-size: var(--rz-root-font-size);
+}
+
+.rz-body {
+    --rz-body-padding: 0;
+}
+
+html,
+body,
+.rz-layout,
+.rz-body,
+.rz-main {
+    min-height: 100%;
+}
+
+.rz-layout,
+.rz-body,
+.rz-main {
+    background: transparent !important;
+}
+
+a {
+    color: var(--rz-link-color);
+}
+
+a:hover,
+a:focus {
+    color: var(--rz-link-hover-color);
+}
+
+.blazor-error-boundary {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbmssImh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMzUgLTUxKSI+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA5NC4wODE1IDI5MSA5NC42NzgyIDI5MSA5Ny4wNjUxIDI4OS4wMzggOTkgMjg2LjYxNyA5OUwyNDAuMzgzIDk5QzIzNy45NjMgOTkgMjM2IDk3LjA2NTEgMjM2IDk0LjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMuNTA2IDUxWk0yNjMuNTg2IDY2LjAxODNDMjYwLjczNyA2Ni4wMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDggNjYuMDE4MyAyNjMuNTg2IDY2LjAxODNaTTI2My41NzYgODYuMDU0N0MyNjEuMDQ5IDg2LjA1NDcgMjU5Ljc4NiA4Ny4zMDA1IDI1OS43ODYgODkuNzkyMSAyNTkuNzg2IDkyLjI4MzcgMjYxLjA0OSA5My41Mjk1IDI2My41NzYgOTMuNTI5NSAyNjYuMTE2IDkzLjUyOTUgMjY3LjM4NyA5Mi4yODM3IDI2Ny4zODcgODkuNzkyMSAyNjcuMzg3IDg3LjMwMDUgMjY2LjExNiA4Ni4wNTQ3IDI2My41NzYgODYuMDU0N1oiIGZpbGw9IiNGRkU1MDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvZz48L3N2Zz4=) no-repeat 1rem/1.8rem, #b32121;
+    padding: 1rem 1rem 1rem 3.7rem;
+    color: white;
+}
+
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
+
+.loading-progress {
+    position: relative;
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    margin: 20vh auto 1rem auto;
+}
+
+.loading-progress circle {
+    fill: none;
+    stroke: #e0e0e0;
+    stroke-width: 0.6rem;
+    transform-origin: 50% 50%;
+    transform: rotate(-90deg);
+}
+
+.loading-progress circle:last-child {
+    stroke: #1b6ec2;
+    stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+    transition: stroke-dasharray 0.05s ease-in-out;
+}
+
+.loading-progress-text {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
+}
+
+.loading-progress-text:after {
+    content: var(--blazor-load-percentage-text, "Loading");
+}
+
+/* DataGrid border visibility */
+.rz-grid-table td,
+.rz-grid-table th {
+    border-bottom: 1px solid var(--rz-border-color) !important;
+}
+
+.rz-grid-table {
+    border-collapse: collapse;
+}
+
+
+/* ====================================================================
+   SITIM — Liquid Glass Design System
+   ==================================================================== */
+
+/* --- Design tokens --------------------------------------------------
+   Every value that differs between the dark and light appearance lives
+   here. Rules below must never hardcode a themed colour — they consume
+   a token, so the light theme is a single override block (further down)
+   rather than a parallel stylesheet.
+
+   Two "channel" tokens carry the bulk of the work:
+     --sitim-ink-rgb      text and icons   (white on dark → slate on light)
+     --sitim-overlay-rgb  hairlines, recessed tints, separators
+
+   Both are raw "r, g, b" triplets so call sites keep their own alpha:
+   rgba(var(--sitim-ink-rgb), 0.62). Flipping the channel inverts every
+   translucent value at once while preserving the alpha ramp as authored.
+   ==================================================================== */
+:root {
+    /* Theme channels */
+    --sitim-ink-rgb:             255, 255, 255;
+    --sitim-overlay-rgb:         255, 255, 255;
+
+    /* Accent palette — medical teal */
+    --sitim-accent:              #00b8a9;
+    --sitim-accent-dim:          rgba(0, 184, 169, 0.13);
+    --sitim-accent-glow:         rgba(0, 184, 169, 0.28);
+    --sitim-accent-border:       rgba(0, 184, 169, 0.22);
+    --sitim-cyan:                #0ea5e9;
+    --sitim-cyan-dim:            rgba(14, 165, 233, 0.13);
+
+    /* Semantic palette — tuned per theme for contrast on the page ground */
+    --sitim-success:             #10b981;
+    --sitim-success-soft:        #34d399;
+    --sitim-warn:                #f59e0b;
+    --sitim-danger:              #f43f5e;
+    --sitim-violet:              #a78bfa;
+    --sitim-violet-2:            #818cf8;
+
+    /* Page canvas */
+    --sitim-page-bg:             #0b0f16;
+    --sitim-page-glow-1:         rgba(0, 184, 169, 0.18);
+    --sitim-page-glow-2:         rgba(14, 165, 233, 0.14);
+    --sitim-page-glow-3:         rgba(16, 185, 129, 0.10);
+
+    /* Chrome — header / sidebar / footer share one surface */
+    --sitim-chrome-bg:           rgba(10, 14, 20, 0.80);
+    --sitim-chrome-border:       rgba(255, 255, 255, 0.07);
+
+    /* Floating surfaces */
+    --sitim-dialog-bg:           rgba(12, 16, 22, 0.88);
+    --sitim-panel-bg:            rgba(10, 16, 26, 0.92);
+    --sitim-metric-bg:           rgba(10, 14, 20, 0.55);
+    --sitim-notif-bg:            linear-gradient(135deg,
+                                     rgba(255, 255, 255, 0.14) 0%,
+                                     rgba(255, 255, 255, 0.07) 55%,
+                                     rgba(255, 255, 255, 0.05) 100%);
+    /* Opaque colour that "cuts" the outlined-field border behind a floating
+       label — must match whatever surface the field sits on. */
+    --sitim-notch-bg:            rgb(12, 16, 22);
+
+    /* Glass surface system */
+    --sitim-glass-bg:            rgba(255, 255, 255, 0.05);
+    --sitim-glass-bg-hover:      rgba(255, 255, 255, 0.08);
+    --sitim-glass-bg-strong:     rgba(255, 255, 255, 0.08);
+    --sitim-glass-bg-elevated:   rgba(255, 255, 255, 0.07);
+    --sitim-glass-border:        rgba(255, 255, 255, 0.09);
+    --sitim-glass-border-hover:  rgba(0, 184, 169, 0.22);
+    --sitim-glass-blur:          blur(22px) saturate(180%);
+    --sitim-sidebar-blur:        blur(28px) saturate(200%);
+    --sitim-glass-highlight:     inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    /* Form fields */
+    --sitim-field-bg:            rgba(255, 255, 255, 0.05);
+    --sitim-field-border:        rgba(255, 255, 255, 0.12);
+    --sitim-field-border-hover:  rgba(255, 255, 255, 0.22);
+
+    /* Elevation */
+    --sitim-elev-1:              0 1px 3px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.18);
+    --sitim-elev-hover:          0 4px 8px rgba(0,0,0,0.15), 0 12px 32px rgba(0,0,0,0.28);
+    --sitim-elev-card:           0 2px 4px rgba(0, 0, 0, 0.12),
+                                 0 16px 48px rgba(0, 0, 0, 0.34),
+                                 inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    --sitim-elev-dialog:         0 24px 64px rgba(0, 0, 0, 0.55),
+                                 0 0 0 1px rgba(255, 255, 255, 0.04);
+    --sitim-elev-panel:          0 8px 32px rgba(0, 0, 0, 0.45),
+                                 inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    --sitim-elev-notif:          0 12px 36px rgba(0, 0, 0, 0.38),
+                                 0 1px 3px rgba(0, 0, 0, 0.18),
+                                 inset 0 1px 0 rgba(255, 255, 255, 0.16),
+                                 inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+    --sitim-elev-notif-hover:    0 18px 48px rgba(0, 0, 0, 0.45),
+                                 0 2px 4px rgba(0, 0, 0, 0.20),
+                                 inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                                 inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+
+    /* Motion */
+    --sitim-ease:                cubic-bezier(0.4, 0, 0.2, 1);
+    --sitim-duration:            220ms;
+}
+
+/* --- Light theme ----------------------------------------------------
+   Set by <html data-theme="light">, written server-side from the
+   Sitim.WebTheme cookie so the first paint is already correct.
+
+   Glass does not invert mechanically: a 5 % white veil that reads as a
+   raised card on near-black is invisible on near-white. The light
+   surfaces are therefore *opaque-leaning white* over a tinted page
+   ground — raised, not recessed — while hairlines and separators do
+   flip to slate via the channel tokens. Shadows lose most of their
+   weight: on a light ground the same alpha reads as dirt, not depth.
+   ==================================================================== */
+:root[data-theme="light"] {
+    --sitim-ink-rgb:             15, 23, 42;
+    --sitim-overlay-rgb:         15, 23, 42;
+
+    /* Teal at full brightness fails contrast on white — darken the tone
+       used for text, icons and indicators. The tints keep their alphas. */
+    --sitim-accent:              #00897f;
+    --sitim-accent-dim:          rgba(0, 137, 127, 0.11);
+    --sitim-accent-glow:         rgba(0, 137, 127, 0.22);
+    --sitim-accent-border:       rgba(0, 137, 127, 0.28);
+    --sitim-cyan:                #0277b6;
+    --sitim-cyan-dim:            rgba(2, 119, 182, 0.10);
+
+    --sitim-success:             #059669;
+    --sitim-success-soft:        #047857;
+    --sitim-warn:                #b45309;
+    --sitim-danger:              #e11d48;
+    --sitim-violet:              #7c3aed;
+    --sitim-violet-2:            #4f46e5;
+
+    --sitim-page-bg:             #eef2f7;
+    --sitim-page-glow-1:         rgba(0, 184, 169, 0.16);
+    --sitim-page-glow-2:         rgba(14, 165, 233, 0.13);
+    --sitim-page-glow-3:         rgba(16, 185, 129, 0.09);
+
+    --sitim-chrome-bg:           rgba(255, 255, 255, 0.82);
+    --sitim-chrome-border:       rgba(15, 23, 42, 0.09);
+
+    --sitim-dialog-bg:           rgba(255, 255, 255, 0.93);
+    --sitim-panel-bg:            rgba(255, 255, 255, 0.97);
+    --sitim-metric-bg:           rgba(255, 255, 255, 0.72);
+    --sitim-notif-bg:            linear-gradient(135deg,
+                                     rgba(255, 255, 255, 0.96) 0%,
+                                     rgba(255, 255, 255, 0.90) 55%,
+                                     rgba(255, 255, 255, 0.88) 100%);
+    --sitim-notch-bg:            #f8fafc;
+
+    --sitim-glass-bg:            rgba(255, 255, 255, 0.72);
+    --sitim-glass-bg-hover:      rgba(255, 255, 255, 0.90);
+    --sitim-glass-bg-strong:     rgba(255, 255, 255, 0.86);
+    --sitim-glass-bg-elevated:   rgba(255, 255, 255, 0.82);
+    --sitim-glass-border:        rgba(15, 23, 42, 0.10);
+    --sitim-glass-border-hover:  rgba(0, 137, 127, 0.38);
+    --sitim-glass-highlight:     inset 0 1px 0 rgba(255, 255, 255, 0.90);
+
+    --sitim-field-bg:            rgba(255, 255, 255, 0.78);
+    --sitim-field-border:        rgba(15, 23, 42, 0.14);
+    --sitim-field-border-hover:  rgba(15, 23, 42, 0.28);
+
+    --sitim-elev-1:              0 1px 2px rgba(15, 23, 42, 0.04),
+                                 0 4px 16px rgba(15, 23, 42, 0.07);
+    --sitim-elev-hover:          0 4px 8px rgba(15, 23, 42, 0.06),
+                                 0 12px 32px rgba(15, 23, 42, 0.11);
+    --sitim-elev-card:           0 2px 4px rgba(15, 23, 42, 0.05),
+                                 0 16px 48px rgba(15, 23, 42, 0.12),
+                                 inset 0 1px 0 rgba(255, 255, 255, 0.90);
+    --sitim-elev-dialog:         0 24px 64px rgba(15, 23, 42, 0.18),
+                                 0 0 0 1px rgba(15, 23, 42, 0.05);
+    --sitim-elev-panel:          0 8px 32px rgba(15, 23, 42, 0.14),
+                                 inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    --sitim-elev-notif:          0 12px 36px rgba(15, 23, 42, 0.14),
+                                 0 1px 3px rgba(15, 23, 42, 0.07),
+                                 inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    --sitim-elev-notif-hover:    0 18px 48px rgba(15, 23, 42, 0.18),
+                                 0 2px 4px rgba(15, 23, 42, 0.09),
+                                 inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+    /* Radzen's standard-light link blue (#5d89f7) measures ~3.3:1 against the
+       page ground — under AA for body text. Darkened here only; the dark
+       theme's own link colour already clears the threshold. */
+    --rz-link-color:             #2563eb;
+    --rz-link-hover-color:       #1d4ed8;
+
+    /* Radzen's light theme ships a DARK sidebar (--rz-sidebar-background-color
+       is base-900) and therefore hardcodes white menu text and icons. SITIM
+       replaces that sidebar with light glass, so the white text disappeared
+       against it. Point them at the page text colour instead.
+       Only needed in light: the dark theme's sidebar really is dark. */
+    --rz-sidebar-color:          var(--rz-text-color);
+    --rz-panel-menu-item-color:  var(--rz-text-color);
+    --rz-panel-menu-icon-color:  var(--rz-text-color);
+}
+
+/* --- Background — teal/cyan replaces purple/orange ----------------- */
+body {
+    font-family: var(--rz-text-font-family);
+    color: var(--rz-text-color);
+    font-size: var(--rz-body-font-size);
+    line-height: var(--rz-body-line-height);
+    background-color: var(--sitim-page-bg);
+    background-image:
+        radial-gradient(110% 80% at 80% 75%, var(--sitim-page-glow-1) 0%, transparent 60%),
+        radial-gradient(90% 65% at 20% 30%, var(--sitim-page-glow-2) 0%, transparent 55%),
+        radial-gradient(65% 50% at 90% 5%,  var(--sitim-page-glow-3) 0%, transparent 52%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+
+/* === Header =========================================================
+   Exact same glass values as sidebar — no visible horizontal junction.
+   ==================================================================== */
+.rz-header {
+    background: var(--sitim-chrome-bg) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(var(--sitim-overlay-rgb), 0.07) !important;
+    box-shadow: none !important;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+
+    /* Sidebar toggle button — inherit header glass, no opaque background */
+    --rz-sidebar-toggle-background-color:       transparent;
+    --rz-sidebar-toggle-hover-background-color: rgba(var(--sitim-overlay-rgb), 0.06);
+    --rz-sidebar-toggle-border:                 none;
+    --rz-sidebar-toggle-hover-border-radius:    8px;
+}
+
+/* Belt-and-suspenders: direct override in case variables don't cascade */
+.rz-sidebar-toggle {
+    background: transparent !important;
+    border: none !important;
+}
+
+.rz-sidebar-toggle:hover,
+.rz-sidebar-toggle:focus-visible {
+    background: rgba(var(--sitim-overlay-rgb), 0.06) !important;
+    border-radius: 8px !important;
+}
+
+/* SITIM brand text in header */
+.sitim-brand-text {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--sitim-accent) !important;
+}
+
+
+/* === Sidebar =======================================================
+   Exact same glass values as header.
+   Radzen panel-menu CSS variables are overridden here and cascade
+   to all descendant .rz-navigation-item-* elements automatically.
+   ==================================================================== */
+.rz-sidebar {
+    background: var(--sitim-chrome-bg) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-right: 1px solid rgba(var(--sitim-overlay-rgb), 0.07) !important;
+    box-shadow: none !important;
+
+    /* Override Radzen's opaque base-700/base-800 palette with glass values */
+    --rz-panel-menu-item-background-color:              transparent;
+    --rz-panel-menu-item-border:                        none;
+    --rz-panel-menu-item-hover-background-color:        rgba(var(--sitim-overlay-rgb), 0.04);
+    --rz-panel-menu-item-hover-color:                   inherit;
+    --rz-panel-menu-item-active-background-color:       transparent;
+    --rz-panel-menu-item-active-color:                  inherit;
+    --rz-panel-menu-item-active-indicator:              var(--sitim-accent);
+    --rz-panel-menu-item-2nd-level-background-color:    transparent;
+    --rz-panel-menu-item-2nd-level-hover-background-color: rgba(var(--sitim-overlay-rgb), 0.04);
+    --rz-panel-menu-item-2nd-level-active-background-color: transparent;
+    --rz-panel-menu-item-3rd-level-background-color:    transparent;
+    --rz-panel-menu-item-3rd-level-hover-background-color: rgba(var(--sitim-overlay-rgb), 0.04);
+    --rz-panel-menu-item-3rd-level-active-background-color: transparent;
+}
+
+/* Sidebar logo icon — very subtle teal glow */
+.sitim-sidebar-logo {
+    color: var(--sitim-accent) !important;
+    filter: drop-shadow(0 0 5px rgba(0, 184, 169, 0.18));
+    transition: filter var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-sidebar-logo:hover {
+    filter: drop-shadow(0 0 9px rgba(0, 184, 169, 0.30));
+}
+
+/* Wrapper transition */
+.rz-panel-menu .rz-navigation-item-wrapper {
+    transition:
+        background-color var(--sitim-duration) var(--sitim-ease),
+        color var(--sitim-duration) var(--sitim-ease) !important;
+}
+
+/* Active wrapper: subtle teal glass tint.
+   The <li>.rz-navigation-item-active has transparent bg (via variable above).
+   Only the wrapper carries the visible tint — no alpha doubling. */
+.rz-panel-menu .rz-navigation-item-wrapper-active {
+    background-color: rgba(0, 184, 169, 0.08) !important;
+}
+
+/* Radzen renders a ::before bar (4 px wide) for the active indicator.
+   Override its color from Radzen default blue to our accent teal. */
+.rz-panel-menu .rz-navigation-item-active::before,
+.rz-panel-menu .rz-navigation-item-wrapper-active::before {
+    background-color: var(--sitim-accent) !important;
+}
+
+/* Menu icons: 70 % opacity at rest, full opacity + teal on hover / active */
+.rz-panel-menu .rz-navigation-item-icon {
+    opacity: 0.70;
+    transition:
+        opacity var(--sitim-duration) var(--sitim-ease),
+        color   var(--sitim-duration) var(--sitim-ease);
+}
+
+.rz-panel-menu .rz-navigation-item-wrapper:hover .rz-navigation-item-icon,
+.rz-panel-menu .rz-navigation-item-wrapper-active .rz-navigation-item-icon {
+    opacity: 1;
+    color: var(--sitim-accent) !important;
+}
+
+
+/* === Cards ========================================================= */
+.rz-card {
+    background: var(--sitim-glass-bg) !important;
+    backdrop-filter: var(--sitim-glass-blur) !important;
+    -webkit-backdrop-filter: var(--sitim-glass-blur) !important;
+    border: 1px solid var(--sitim-glass-border) !important;
+    border-radius: 16px !important;
+    box-shadow: var(--sitim-elev-1), var(--sitim-glass-highlight) !important;
+    transition:
+        transform var(--sitim-duration) var(--sitim-ease),
+        box-shadow var(--sitim-duration) var(--sitim-ease),
+        border-color var(--sitim-duration) var(--sitim-ease) !important;
+}
+
+.rz-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sitim-elev-hover), var(--sitim-glass-highlight) !important;
+    border-color: var(--sitim-glass-border-hover) !important;
+}
+
+/* Shortcut cards — full-card clickable feel */
+.sitim-shortcut-card {
+    cursor: pointer;
+}
+
+/* Icon glow per card accent color — very subtle */
+.sitim-card-primary .rz-icon {
+    color: var(--sitim-accent) !important;
+    filter: drop-shadow(0 0 4px rgba(0, 184, 169, 0.18));
+}
+
+.sitim-card-info .rz-icon {
+    color: var(--sitim-cyan) !important;
+    filter: drop-shadow(0 0 4px rgba(14, 165, 233, 0.18));
+}
+
+.sitim-card-success .rz-icon {
+    color: var(--sitim-success) !important;
+    filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.18));
+}
+
+
+/* === Headings typography =========================================== */
+h1, h2, h3, h4, h5, h6,
+.rz-display-h1, .rz-display-h2, .rz-display-h3,
+.rz-display-h4, .rz-display-h5, .rz-display-h6 {
+    letter-spacing: -0.02em;
+}
+
+
+/* === Buttons ======================================================= */
+.rz-button {
+    border-radius: 10px !important;
+    font-weight: 500 !important;
+    transition:
+        background var(--sitim-duration) var(--sitim-ease),
+        box-shadow var(--sitim-duration) var(--sitim-ease),
+        transform var(--sitim-duration) var(--sitim-ease),
+        border-color var(--sitim-duration) var(--sitim-ease) !important;
+}
+
+/* Primary — solid teal gradient */
+.rz-button.rz-primary {
+    background: linear-gradient(135deg, #00c8b8, #0096c7) !important;
+    border-color: transparent !important;
+    box-shadow: 0 2px 10px var(--sitim-accent-glow) !important;
+}
+
+.rz-button.rz-primary:hover {
+    background: linear-gradient(135deg, #00dac9, #00b8a9) !important;
+    box-shadow: 0 4px 18px rgba(0, 184, 169, 0.42) !important;
+    transform: translateY(-1px);
+}
+
+/* Light / Secondary — glass ghost */
+/* These two lose their solid Radzen fill and become neutral glass, so their
+   label must follow the page text colour. Radzen leaves .rz-secondary on
+   --rz-on-secondary (white in BOTH themes, sized for the blue fill it no
+   longer has) — which rendered white-on-white once the light theme landed.
+   --rz-text-color is what .rz-light already used, so this also makes the two
+   variants finally agree. */
+.rz-button.rz-light,
+.rz-button.rz-secondary {
+    background: var(--sitim-glass-bg) !important;
+    border: 1px solid var(--sitim-glass-border) !important;
+    color: var(--rz-text-color) !important;
+    backdrop-filter: blur(12px) !important;
+}
+
+/* Icons inside a button inherit the label colour rather than --rz-on-*. */
+.rz-button.rz-light .rz-button-icon-left,
+.rz-button.rz-light .rz-button-icon-right,
+.rz-button.rz-secondary .rz-button-icon-left,
+.rz-button.rz-secondary .rz-button-icon-right {
+    color: inherit !important;
+}
+
+.rz-button.rz-light:hover,
+.rz-button.rz-secondary:hover {
+    background: var(--sitim-glass-bg-hover) !important;
+    border-color: var(--sitim-glass-border-hover) !important;
+}
+
+/* Success */
+.rz-button.rz-success {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    border-color: transparent !important;
+    box-shadow: 0 2px 10px rgba(16, 185, 129, 0.28) !important;
+}
+
+.rz-button.rz-success:hover {
+    box-shadow: 0 4px 18px rgba(16, 185, 129, 0.40) !important;
+    transform: translateY(-1px);
+}
+
+
+/* === Form fields =================================================== */
+
+/* Outlined variant — glass lives on the wrapper, not the inner input */
+.rz-form-field.rz-variant-outlined .rz-form-field-content {
+    background: var(--sitim-field-bg) !important;
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.12) !important;
+    border-radius: 10px !important;
+    transition: border-color var(--sitim-duration) var(--sitim-ease),
+                box-shadow   var(--sitim-duration) var(--sitim-ease) !important;
+}
+
+.rz-form-field.rz-variant-outlined:hover .rz-form-field-content {
+    border-color: rgba(var(--sitim-overlay-rgb), 0.22) !important;
+    box-shadow: none !important;
+}
+
+.rz-form-field.rz-variant-outlined.rz-state-focused .rz-form-field-content {
+    border-color: var(--sitim-accent) !important;
+    box-shadow: 0 0 0 3px var(--sitim-accent-dim) !important;
+}
+
+/* Floating label notch — needs a solid background to "cut" the border */
+.rz-form-field.rz-variant-outlined .rz-form-field-label {
+    --rz-form-field-label-floating-background-color: var(--sitim-notch-bg);
+    z-index: 2;
+}
+
+/* Inner inputs inside any form field — transparent; wrapper owns the look */
+.rz-form-field .rz-form-field-content .rz-textbox,
+.rz-form-field .rz-form-field-content .rz-input-password,
+.rz-form-field .rz-form-field-content input {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Standalone textboxes / password inputs (outside a form field) */
+.rz-textbox,
+.rz-input-password {
+    background: var(--sitim-field-bg) !important;
+    border-radius: 8px !important;
+    transition: border-color var(--sitim-duration) var(--sitim-ease) !important;
+}
+
+.rz-textbox:focus,
+.rz-input-password:focus {
+    border-color: var(--sitim-accent) !important;
+}
+
+/* Text variant — remove the bottom-border underline drawn by ::after/::before */
+.rz-form-field.rz-variant-text .rz-form-field-content::after,
+.rz-form-field.rz-variant-text .rz-form-field-content::before {
+    display: none !important;
+}
+
+
+/* === DataGrid glass rows =========================================== */
+.rz-data-grid {
+    background: transparent !important;
+    border: 1px solid var(--sitim-glass-border) !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    backdrop-filter: var(--sitim-glass-blur) !important;
+    -webkit-backdrop-filter: var(--sitim-glass-blur) !important;
+}
+
+.rz-data-grid .rz-grid-table {
+    background: transparent !important;
+}
+
+/* Header row */
+.rz-data-grid .rz-grid-table thead th {
+    background: var(--sitim-glass-bg-strong) !important;
+    text-transform: uppercase !important;
+    font-size: 0.685rem !important;
+    letter-spacing: 0.05em !important;
+    opacity: 0.75;
+    border-bottom: 1px solid var(--sitim-glass-border) !important;
+}
+
+/* Data rows */
+.rz-data-grid .rz-grid-table tbody tr:nth-child(even) td {
+    background: rgba(var(--sitim-overlay-rgb), 0.015) !important;
+}
+
+.rz-data-grid .rz-grid-table tbody tr:hover td {
+    background: var(--sitim-glass-bg-hover) !important;
+    cursor: pointer;
+}
+
+/* Row border hairlines */
+.rz-grid-table td {
+    border-bottom: 1px solid rgba(var(--sitim-overlay-rgb), 0.045) !important;
+}
+
+.rz-grid-table th {
+    border-bottom: 1px solid var(--sitim-glass-border) !important;
+}
+
+
+/* === Progress bar ================================================== */
+.rz-progressbar-value {
+    background: linear-gradient(90deg, var(--sitim-accent), var(--sitim-cyan)) !important;
+    border-radius: inherit !important;
+}
+
+
+/* === Notifications =================================================
+   Pure Liquid Glass surface. No icon glyphs, no color halos, no accent
+   bars — the per-type difference is conveyed ONLY by the border color.
+   ================================================================== */
+
+/* Stack container — force top-center placement regardless of which
+   NotificationPosition was passed to NotificationService.Notify(). */
+.rz-notification {
+    position: fixed !important;
+    top: 1rem !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translateX(-50%) !important;
+    padding: 0.75rem !important;
+    gap: 0.625rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: auto !important;
+    max-width: min(640px, calc(100vw - 2rem)) !important;
+    z-index: 2000 !important;
+    pointer-events: none;  /* let clicks fall through gaps between items */
+}
+
+.rz-notification-item-wrapper {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 0 0.5rem 0 !important;
+    animation: sitim-notif-in 380ms var(--sitim-ease) both;
+    pointer-events: auto;  /* but the cards themselves stay interactive */
+    min-width: 340px;
+}
+
+@keyframes sitim-notif-in {
+    0%   { opacity: 0; transform: translateY(-18px) scale(0.985); filter: blur(6px); }
+    60%  { opacity: 1; filter: blur(0); }
+    100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* Base card — true frosted glass with a soft top-left highlight that
+   suggests light passing through. Light translucent white instead of
+   dark navy — matches the Liquid Glass card surface, not the dialog
+   surface. Strong backdrop blur keeps content legible regardless of
+   what sits behind it. */
+.rz-notification-item {
+    position: relative !important;
+    background: var(--sitim-notif-bg) !important;
+    backdrop-filter: blur(32px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+    border: 1.5px solid rgba(var(--sitim-overlay-rgb), 0.18) !important;
+    border-radius: 14px !important;
+    box-shadow: var(--sitim-elev-notif) !important;
+    color: rgba(var(--sitim-ink-rgb), 0.96) !important;
+    padding: 0.85rem 1rem 0.85rem 1rem !important;
+    overflow: hidden !important;
+    isolation: isolate;
+    transition:
+        transform var(--sitim-duration) var(--sitim-ease),
+        box-shadow var(--sitim-duration) var(--sitim-ease),
+        border-color var(--sitim-duration) var(--sitim-ease) !important;
+}
+
+.rz-notification-item:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--sitim-elev-notif-hover) !important;
+}
+
+/* --- Per-type difference: ONLY the border color ----------------- */
+.rz-notification-success .rz-notification-item { border-color: var(--sitim-success) !important; }
+.rz-notification-warn    .rz-notification-item { border-color: var(--sitim-warn) !important; }
+.rz-notification-error   .rz-notification-item { border-color: var(--sitim-danger) !important; }
+.rz-notification-info    .rz-notification-item { border-color: var(--sitim-cyan) !important; }
+
+/* --- Content typography & layout ------------------------------- */
+.rz-notification-content {
+    position: relative;
+    padding: 0 1.25rem 0 0 !important;
+    min-height: 1.5rem;
+}
+
+.rz-notification-message {
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    letter-spacing: -0.005em !important;
+    line-height: 1.35 !important;
+    color: rgba(var(--sitim-ink-rgb), 0.96) !important;
+    margin: 0 0 0.2rem 0 !important;
+}
+
+.rz-notification-detail {
+    font-size: 0.8125rem !important;
+    line-height: 1.5 !important;
+    color: rgba(var(--sitim-ink-rgb), 0.66) !important;
+    letter-spacing: 0.005em !important;
+}
+
+/* --- Icons removed: hide all icon variants ---------------------- */
+.rz-notification-icon,
+.rz-notification .notranslate.rzi,
+.rz-notification i.notranslate {
+    display: none !important;
+}
+
+/* --- Close button: subtle, matches dialog close affordance ----- */
+.rz-notification-close {
+    position: absolute !important;
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+    width: 22px !important;
+    height: 22px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: rgba(var(--sitim-ink-rgb), 0.40) !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 6px !important;
+    opacity: 1 !important;
+    cursor: pointer !important;
+    transition:
+        color var(--sitim-duration) var(--sitim-ease),
+        background var(--sitim-duration) var(--sitim-ease) !important;
+}
+
+.rz-notification-close:hover {
+    color: rgba(var(--sitim-ink-rgb), 0.92) !important;
+    background: rgba(var(--sitim-overlay-rgb), 0.07) !important;
+}
+
+/* Close button retains its own glyph (different selector) */
+.rz-notification-close .notranslate,
+.rz-notification-close i {
+    display: inline-flex !important;
+    font-size: 16px !important;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .rz-notification-item-wrapper { animation: none !important; }
+    .rz-notification-item:hover { transform: none !important; }
+}
+
+
+/* === DropDown / Select ============================================
+   Panel appended to <body> — needs its own glass surface.
+   Trigger inside .rz-form-field-content is transparent (wrapper owns it).
+   ================================================================== */
+
+/* Standalone trigger (not nested inside a form field wrapper) */
+.rz-dropdown {
+    background: var(--sitim-field-bg) !important;
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.12) !important;
+    border-radius: 10px !important;
+    color: rgba(var(--sitim-ink-rgb), 0.85) !important;
+    transition: border-color var(--sitim-duration) var(--sitim-ease),
+                box-shadow   var(--sitim-duration) var(--sitim-ease) !important;
+}
+
+.rz-dropdown:hover {
+    border-color: rgba(var(--sitim-overlay-rgb), 0.22) !important;
+}
+
+.rz-dropdown.rz-state-focused,
+.rz-dropdown:focus-within {
+    border-color: var(--sitim-accent) !important;
+    box-shadow: 0 0 0 3px var(--sitim-accent-dim) !important;
+    outline: none !important;
+}
+
+/* Inside a form field — transparent; wrapper owns the border/bg */
+.rz-form-field-content .rz-dropdown {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.rz-form-field-content .rz-dropdown:hover,
+.rz-form-field-content .rz-dropdown.rz-state-focused {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Floating panel — glass dark-navy (similar to dialog) */
+.rz-dropdown-panel {
+    background: var(--sitim-panel-bg) !important;
+    backdrop-filter: blur(28px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.09) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--sitim-elev-panel) !important;
+    overflow: hidden !important;
+    margin-top: 4px !important;
+}
+
+/* Filter row (search inside dropdown) */
+.rz-dropdown-filter-container {
+    padding: 0.5rem 0.6rem !important;
+    border-bottom: 1px solid rgba(var(--sitim-overlay-rgb), 0.07) !important;
+    background: rgba(var(--sitim-overlay-rgb), 0.025) !important;
+}
+
+.rz-dropdown-filter {
+    background: var(--sitim-field-bg) !important;
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.10) !important;
+    border-radius: 7px !important;
+    color: rgba(var(--sitim-ink-rgb), 0.85) !important;
+    width: 100% !important;
+    padding: 0.35rem 0.6rem !important;
+}
+
+.rz-dropdown-filter:focus {
+    border-color: var(--sitim-accent) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px var(--sitim-accent-dim) !important;
+}
+
+/* Items list */
+.rz-dropdown-items-wrapper {
+    background: transparent !important;
+}
+
+.rz-dropdown-items {
+    padding: 0.3rem 0 !important;
+    background: transparent !important;
+    margin: 0 !important;
+}
+
+/* Each option */
+.rz-dropdown-item {
+    border-radius: 7px !important;
+    margin: 1px 5px !important;
+    padding: 0.5rem 0.9rem !important;
+    color: rgba(var(--sitim-ink-rgb), 0.72) !important;
+    font-size: 0.875rem !important;
+    cursor: pointer !important;
+    transition: background var(--sitim-duration) var(--sitim-ease),
+                color     var(--sitim-duration) var(--sitim-ease) !important;
+    list-style: none !important;
+}
+
+.rz-dropdown-item:hover,
+.rz-dropdown-item.rz-state-highlight {
+    background: rgba(var(--sitim-overlay-rgb), 0.07) !important;
+    color: rgba(var(--sitim-ink-rgb), 0.95) !important;
+}
+
+.rz-dropdown-item.rz-state-selected {
+    background: var(--sitim-accent-dim) !important;
+    color: var(--sitim-accent) !important;
+    font-weight: 500 !important;
+}
+
+.rz-dropdown-item.rz-state-selected:hover,
+.rz-dropdown-item.rz-state-selected.rz-state-highlight {
+    background: rgba(0, 184, 169, 0.18) !important;
+}
+
+/* Trigger label & placeholder text */
+.rz-dropdown-label {
+    color: rgba(var(--sitim-ink-rgb), 0.85) !important;
+}
+
+.rz-dropdown .rz-placeholder {
+    color: rgba(var(--sitim-ink-rgb), 0.32) !important;
+}
+
+/* Trigger caret icon */
+.rz-dropdown-trigger {
+    color: rgba(var(--sitim-ink-rgb), 0.45) !important;
+}
+
+/* Panel scrollbar */
+.rz-dropdown-items-wrapper::-webkit-scrollbar {
+    width: 4px;
+}
+.rz-dropdown-items-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+.rz-dropdown-items-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(var(--sitim-overlay-rgb), 0.14);
+    border-radius: 2px;
+}
+
+/* Multiselect chips (Chips="true") */
+.rz-chip {
+    background: var(--sitim-accent-dim) !important;
+    border: 1px solid var(--sitim-accent-border) !important;
+    border-radius: 20px !important;
+    color: var(--sitim-accent) !important;
+    font-size: 0.775rem !important;
+    font-weight: 500 !important;
+    padding: 2px 8px 2px 10px !important;
+}
+
+.rz-chip-remove-icon,
+.rz-chip button {
+    color: var(--sitim-accent) !important;
+    opacity: 0.60 !important;
+}
+
+.rz-chip-remove-icon:hover,
+.rz-chip button:hover {
+    opacity: 1 !important;
+}
+
+
+/* === Badges ======================================================== */
+.rz-badge {
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+}
+
+
+/* === Radzen Dialog glass shell ===================================== */
+.rz-dialog {
+    background: var(--sitim-dialog-bg) !important;
+    backdrop-filter: blur(28px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.09) !important;
+    border-radius: 18px !important;
+    box-shadow: var(--sitim-elev-dialog) !important;
+    overflow: hidden !important;
+}
+
+.rz-dialog-titlebar {
+    background: rgba(var(--sitim-overlay-rgb), 0.035) !important;
+    border-bottom: 1px solid rgba(var(--sitim-overlay-rgb), 0.07) !important;
+    border-radius: 0 !important;
+    padding: 0.875rem 1.25rem !important;
+}
+
+.rz-dialog-title {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em !important;
+    color: rgba(var(--sitim-ink-rgb), 0.75) !important;
+    text-transform: uppercase !important;
+}
+
+.rz-dialog-close-button {
+    color: rgba(var(--sitim-ink-rgb), 0.45) !important;
+    opacity: 1 !important;
+}
+
+.rz-dialog-close-button:hover {
+    color: rgba(var(--sitim-ink-rgb), 0.85) !important;
+    background: rgba(var(--sitim-overlay-rgb), 0.06) !important;
+    border-radius: 6px !important;
+}
+
+.rz-dialog-content {
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+/* Radzen built-in Confirm dialog (.rz-dialog-confirm) — restore padding zeroed by parent */
+.rz-dialog-confirm .rz-dialog-content {
+    padding: 1.5rem 1.75rem 1.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.25rem !important;
+}
+
+.rz-dialog-confirm .rz-dialog-content p {
+    margin: 0 !important;
+    color: rgba(var(--sitim-ink-rgb), 0.82) !important;
+    font-size: 0.925rem !important;
+    line-height: 1.6 !important;
+}
+
+/* Generic custom dialogs (e.g. UploadModelDialog) that render a RadzenStack directly */
+.rz-dialog-content > .rz-stack {
+    padding: 1.5rem 1.75rem !important;
+}
+
+
+/* === AI Model Details Dialog ======================================= */
+.sitim-model-dialog-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1.5rem 1.25rem;
+    border-bottom: 1px solid rgba(var(--sitim-overlay-rgb), 0.07);
+}
+
+.sitim-model-dialog-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--sitim-accent-dim);
+    border: 1px solid var(--sitim-accent-border);
+    color: var(--sitim-accent);
+    font-size: 1.75rem;
+    flex-shrink: 0;
+}
+
+.sitim-model-dialog-name {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(var(--sitim-ink-rgb), 0.92);
+    line-height: 1.3;
+}
+
+.sitim-model-dialog-version {
+    font-size: 0.78rem;
+    color: rgba(var(--sitim-ink-rgb), 0.38);
+    margin-top: 0.2rem;
+    display: block;
+}
+
+.sitim-model-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: rgba(var(--sitim-overlay-rgb), 0.04);
+    border-bottom: 1px solid rgba(var(--sitim-overlay-rgb), 0.07);
+    gap: 1px;
+}
+
+.sitim-model-metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.1rem 0.75rem;
+    background: var(--sitim-metric-bg);
+    gap: 0.3rem;
+    text-align: center;
+}
+
+.sitim-model-metric-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--sitim-accent), var(--sitim-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+}
+
+.sitim-model-metric-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(var(--sitim-ink-rgb), 0.35);
+}
+
+.sitim-model-details-grid {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    border-bottom: 1px solid rgba(var(--sitim-overlay-rgb), 0.07);
+}
+
+.sitim-model-detail-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    align-items: baseline;
+    gap: 0.75rem;
+}
+
+.sitim-model-detail-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(var(--sitim-ink-rgb), 0.35);
+    flex-shrink: 0;
+}
+
+.sitim-model-detail-value {
+    font-size: 0.875rem;
+    color: rgba(var(--sitim-ink-rgb), 0.80);
+    word-break: break-all;
+}
+
+.sitim-mono {
+    font-family: "Cascadia Code", "JetBrains Mono", "Fira Code", monospace;
+    font-size: 0.78rem !important;
+}
+
+.sitim-model-id-text {
+    color: rgba(var(--sitim-ink-rgb), 0.38) !important;
+    font-size: 0.72rem !important;
+}
+
+.sitim-model-description-block {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(var(--sitim-overlay-rgb), 0.07);
+}
+
+.sitim-model-description-text {
+    margin: 0.5rem 0 0;
+    font-size: 0.875rem;
+    color: rgba(var(--sitim-ink-rgb), 0.65);
+    line-height: 1.65;
+}
+
+.sitim-model-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem 1.5rem;
+}
+
+
+/* === Login page ==================================================== */
+.sitim-login-wrapper {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Animated ambient blobs — very slow, GPU-only (transform) */
+.sitim-login-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 720px;
+    height: 720px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 184, 169, 0.16) 0%, transparent 68%);
+    top: -18%;
+    left: -20%;
+    animation: sitim-blob-a 52s ease-in-out infinite;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.sitim-login-wrapper::after {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, transparent 65%);
+    bottom: -12%;
+    right: -16%;
+    animation: sitim-blob-b 68s ease-in-out infinite;
+    pointer-events: none;
+    will-change: transform;
+}
+
+@keyframes sitim-blob-a {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    34%       { transform: translate(38px, -22px) scale(1.06); }
+    67%       { transform: translate(-18px, 32px) scale(0.96); }
+}
+
+@keyframes sitim-blob-b {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    34%       { transform: translate(-30px, 18px) scale(1.05); }
+    67%       { transform: translate(22px, -28px) scale(0.97); }
+}
+
+/* Login card — stronger glass than regular cards */
+.sitim-login-card {
+    background: var(--sitim-glass-bg-elevated) !important;
+    backdrop-filter: blur(28px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+    border-color: rgba(var(--sitim-overlay-rgb), 0.12) !important;
+    box-shadow: var(--sitim-elev-card) !important;
+    position: relative;
+    z-index: 1;
+}
+
+.sitim-login-card:hover {
+    transform: none !important; /* login card doesn't lift on hover */
+}
+
+/* Login logo icon — subtle teal glow */
+.sitim-login-logo {
+    color: var(--sitim-accent) !important;
+    filter: drop-shadow(0 0 8px rgba(0, 184, 169, 0.22));
+}
+
+
+/* === Generic auth wrapper (Set-Password & similar) ================
+   Reuses the login full-screen shell so every unauthenticated page
+   sits on the same ambient gradient and centered card. */
+
+.sitim-auth-wrapper {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 1.5rem;
+}
+
+.sitim-auth-wrapper::before {
+    content: '';
+    position: absolute;
+    width: 720px;
+    height: 720px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 184, 169, 0.16) 0%, transparent 68%);
+    top: -18%;
+    left: -20%;
+    animation: sitim-blob-a 52s ease-in-out infinite;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.sitim-auth-wrapper::after {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, transparent 65%);
+    bottom: -12%;
+    right: -16%;
+    animation: sitim-blob-b 68s ease-in-out infinite;
+    pointer-events: none;
+    will-change: transform;
+}
+
+/* Auth card — same glass treatment as login (kept consistent for brand recognition) */
+.sitim-auth-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 2.25rem !important;
+    background: var(--sitim-glass-bg-elevated) !important;
+    backdrop-filter: blur(28px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.12) !important;
+    border-radius: 18px !important;
+    box-shadow: var(--sitim-elev-card) !important;
+    position: relative;
+    z-index: 1;
+}
+
+.sitim-auth-card:hover { transform: none !important; }
+
+.sitim-auth-logo {
+    font-size: 56px !important;
+    color: var(--sitim-accent) !important;
+    filter: drop-shadow(0 0 10px rgba(0, 184, 169, 0.28));
+}
+
+.sitim-auth-title {
+    color: rgba(var(--sitim-ink-rgb), 0.96);
+    letter-spacing: -0.02em;
+}
+
+.sitim-auth-subtitle {
+    color: rgba(var(--sitim-ink-rgb), 0.58);
+    letter-spacing: 0.005em;
+}
+
+/* Respect reduced motion — kill the floating ambient blobs */
+@media (prefers-reduced-motion: reduce) {
+    .sitim-auth-wrapper::before,
+    .sitim-auth-wrapper::after {
+        animation: none !important;
+    }
+}
+
+
+/* ====================================================================
+   SITIM — Welcome Dashboard
+   ==================================================================== */
+
+.sitim-welcome-section {
+    margin-top: 1.5rem;
+}
+
+/* ── 1. Hero ────────────────────────────────────────────────────── */
+.sitim-welcome-hero {
+    padding: 2.5rem 0 2rem;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+}
+
+/* Suppress any browser/Blazor-injected focus ring on every state */
+.sitim-welcome-hero:focus,
+.sitim-welcome-hero:focus-visible,
+.sitim-welcome-hero:focus-within {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.sitim-welcome-greeting:focus,
+.sitim-welcome-greeting:focus-visible,
+.sitim-welcome-hero-content:focus,
+.sitim-welcome-hero-content:focus-visible,
+.sitim-welcome-hero-text:focus,
+.sitim-welcome-hero-text:focus-visible {
+    outline: none !important;
+}
+
+.sitim-welcome-hero-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.sitim-welcome-hero-text { flex: 1; }
+
+.sitim-welcome-greeting {
+    font-size: clamp(1.75rem, 4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.45rem;
+    color: rgba(var(--sitim-ink-rgb), 0.95);
+    line-height: 1.15;
+}
+
+.sitim-welcome-subline {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: rgba(var(--sitim-ink-rgb), 0.48);
+    margin: 0;
+}
+
+.sitim-welcome-dot { opacity: 0.35; }
+
+/* ── 2. KPI Grid ────────────────────────────────────────────────── */
+/* auto-fit lets the columns redistribute whatever cards are actually
+   rendered (3 for Doctor/Technician, 4 for Admin/SuperAdmin) instead of
+   leaving a hole where the "Active users" card would've been. */
+.sitim-welcome-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+@media (max-width: 900px) {
+    .sitim-welcome-kpi-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+}
+
+@media (max-width: 480px) {
+    .sitim-welcome-kpi-grid { grid-template-columns: 1fr; }
+}
+
+.sitim-welcome-kpi-card {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 1.75rem 1.25rem 1.25rem !important;
+    min-height: 150px !important;
+}
+
+.sitim-welcome-kpi-icon {
+    position: absolute !important;
+    top: 0.9rem !important;
+    left: 0.9rem !important;
+    font-size: 1.15rem !important;
+    opacity: 0.58;
+}
+
+.sitim-kpi-icon-teal   { color: var(--sitim-accent) !important; }
+.sitim-kpi-icon-cyan   { color: var(--sitim-cyan)   !important; }
+.sitim-kpi-icon-amber  { color: var(--sitim-warn)              !important; }
+.sitim-kpi-icon-violet { color: var(--sitim-violet)              !important; }
+
+.sitim-welcome-kpi-value {
+    font-size: 2.9rem;
+    font-weight: 700;
+    line-height: 1;
+    margin: 0 0 0.4rem;
+}
+
+.sitim-text-gradient {
+    background: linear-gradient(135deg, var(--sitim-accent) 0%, var(--sitim-cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.sitim-kpi-value-amber {
+    color: var(--sitim-warn);
+}
+
+.sitim-kpi-value-violet {
+    background: linear-gradient(135deg, var(--sitim-violet) 0%, var(--sitim-violet-2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.sitim-welcome-kpi-label {
+    font-size: 0.765rem;
+    color: rgba(var(--sitim-ink-rgb), 0.50);
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.sitim-welcome-kpi-trend {
+    margin-top: 0.45rem;
+    font-size: 0.73rem;
+    font-weight: 600;
+}
+
+.sitim-trend-up   { color: var(--sitim-success); }
+.sitim-trend-down { color: var(--sitim-danger); }
+
+.sitim-live-badge {
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--sitim-warn);
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: 4px;
+    padding: 1px 5px;
+    line-height: 1.5;
+}
+
+/* ── 3. Activity ────────────────────────────────────────────────── */
+.sitim-welcome-activity-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .sitim-welcome-activity-grid { grid-template-columns: 1fr; }
+}
+
+.sitim-welcome-activity-card,
+.sitim-welcome-activity-card.rz-card {
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+.sitim-welcome-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem 0.85rem;
+    border-bottom: 1px solid rgba(var(--sitim-overlay-rgb), 0.06);
+    flex-shrink: 0;
+}
+
+.sitim-welcome-card-icon {
+    font-size: 1.05rem !important;
+    color: var(--sitim-accent) !important;
+    opacity: 0.70;
+    flex-shrink: 0;
+}
+
+.sitim-welcome-card-title {
+    font-size: 0.845rem;
+    font-weight: 600;
+    color: rgba(var(--sitim-ink-rgb), 0.78);
+    letter-spacing: -0.01em;
+}
+
+.sitim-welcome-list {
+    list-style: none;
+    margin: 0;
+    padding: 0.2rem 0;
+    flex: 1;
+}
+
+.sitim-welcome-list-item {
+    position: relative;
+    padding: 0.65rem 1.25rem;
+    cursor: pointer;
+    transition: background var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-welcome-list-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1.25rem;
+    right: 1.25rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(var(--sitim-overlay-rgb), 0.06), transparent);
+}
+
+.sitim-welcome-list-item:hover {
+    background: rgba(var(--sitim-overlay-rgb), 0.032);
+}
+
+.sitim-welcome-list-primary {
+    font-size: 0.815rem;
+    font-weight: 500;
+    color: rgba(var(--sitim-ink-rgb), 0.84);
+    margin-bottom: 0.14rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+}
+
+.sitim-welcome-list-secondary {
+    font-size: 0.74rem;
+    color: rgba(var(--sitim-ink-rgb), 0.40);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.sitim-welcome-confidence {
+    font-size: 0.71rem;
+    color: rgba(var(--sitim-ink-rgb), 0.40);
+    font-weight: 400;
+}
+
+/* DR severity badges */
+.sitim-dr-badge {
+    display: inline-block;
+    font-size: 0.67rem;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.sitim-dr-none     { background: rgba(16, 185, 129, 0.13); color: var(--sitim-success); border: 1px solid rgba(16, 185, 129, 0.22); }
+.sitim-dr-mild     { background: rgba(245, 158, 11, 0.12); color: var(--sitim-warn); border: 1px solid rgba(245, 158, 11, 0.22); }
+.sitim-dr-moderate { background: rgba(245, 158, 11, 0.12); color: var(--sitim-warn); border: 1px solid rgba(245, 158, 11, 0.22); }
+.sitim-dr-severe   { background: rgba(244, 63, 94, 0.12);  color: var(--sitim-danger); border: 1px solid rgba(244, 63, 94, 0.22);  }
+
+.sitim-welcome-card-footer {
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid rgba(var(--sitim-overlay-rgb), 0.055);
+    flex-shrink: 0;
+}
+
+.sitim-welcome-footer-link {
+    font-size: 0.77rem;
+    font-weight: 500;
+    color: var(--sitim-accent);
+    cursor: pointer;
+    opacity: 0.78;
+    transition: opacity var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-welcome-footer-link:hover { opacity: 1; }
+
+/* Empty state */
+.sitim-welcome-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1.5rem;
+    gap: 0.75rem;
+    text-align: center;
+    flex: 1;
+}
+
+.sitim-welcome-empty-icon {
+    font-size: 2.4rem !important;
+    opacity: 0.26;
+    color: var(--sitim-accent) !important;
+}
+
+.sitim-welcome-empty p {
+    font-size: 0.815rem;
+    color: rgba(var(--sitim-ink-rgb), 0.42);
+    margin: 0;
+}
+
+/* ── 4. Quick Actions ───────────────────────────────────────────── */
+.sitim-welcome-quick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 480px) {
+    .sitim-welcome-quick-grid { grid-template-columns: 1fr; }
+}
+
+.sitim-welcome-quick-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 1.4rem 1rem;
+    background: var(--sitim-glass-bg);
+    backdrop-filter: var(--sitim-glass-blur);
+    -webkit-backdrop-filter: var(--sitim-glass-blur);
+    border: 1px solid var(--sitim-glass-border);
+    border-radius: 16px;
+    cursor: pointer;
+    transition:
+        transform       var(--sitim-duration) var(--sitim-ease),
+        box-shadow      var(--sitim-duration) var(--sitim-ease),
+        border-color    var(--sitim-duration) var(--sitim-ease),
+        background      var(--sitim-duration) var(--sitim-ease);
+    box-shadow: var(--sitim-elev-1);
+}
+
+.sitim-welcome-quick-card:hover {
+    transform: translateY(-4px);
+    background: var(--sitim-glass-bg-hover);
+    border-color: var(--sitim-accent-border);
+    box-shadow: var(--sitim-elev-hover), 0 0 18px var(--sitim-accent-glow);
+}
+
+.sitim-welcome-quick-icon {
+    font-size: 1.9rem !important;
+    color: var(--sitim-accent) !important;
+    opacity: 0.82;
+    transition: opacity var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-welcome-quick-card:hover .sitim-welcome-quick-icon { opacity: 1; }
+
+.sitim-welcome-quick-label {
+    font-size: 0.785rem;
+    font-weight: 600;
+    color: rgba(var(--sitim-ink-rgb), 0.65);
+    letter-spacing: 0.01em;
+}
+
+/* ── 5. Status Footer ───────────────────────────────────────────── */
+.sitim-welcome-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 1.2rem 0 0.5rem;
+    flex-wrap: wrap;
+}
+
+.sitim-status-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.32rem;
+    font-size: 0.71rem;
+    color: rgba(var(--sitim-ink-rgb), 0.38);
+}
+
+.sitim-status-pill::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.sitim-status-ok::before {
+    background: var(--sitim-success);
+    box-shadow: 0 0 4px rgba(16, 185, 129, 0.45);
+}
+
+.sitim-status-sep {
+    font-size: 0.71rem;
+    color: rgba(var(--sitim-ink-rgb), 0.18);
+}
+
+
+/* === FL — Institution picker (multi-select list) ====================
+   Replaces the generic RadzenDropDown multi-select. Each row is a
+   selectable glass card with an online/offline indicator.
+   ================================================================== */
+
+.sitim-field-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: rgba(var(--sitim-ink-rgb), 0.62);
+    margin-bottom: 0.45rem;
+    text-transform: uppercase;
+}
+
+.sitim-required {
+    color: var(--sitim-accent);
+    margin-left: 2px;
+}
+
+.sitim-institution-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 4px;
+    margin: 0 -4px;
+}
+
+.sitim-institution-picker::-webkit-scrollbar { width: 4px; }
+.sitim-institution-picker::-webkit-scrollbar-track { background: transparent; }
+.sitim-institution-picker::-webkit-scrollbar-thumb {
+    background: rgba(var(--sitim-overlay-rgb), 0.14);
+    border-radius: 2px;
+}
+
+.sitim-institution-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.7rem 0.95rem;
+    border-radius: 12px;
+    background: rgba(var(--sitim-overlay-rgb), 0.035);
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.08);
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+    transition:
+        background var(--sitim-duration) var(--sitim-ease),
+        border-color var(--sitim-duration) var(--sitim-ease),
+        transform var(--sitim-duration) var(--sitim-ease),
+        box-shadow var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-institution-item:hover {
+    background: rgba(var(--sitim-overlay-rgb), 0.06);
+    border-color: rgba(0, 184, 169, 0.22);
+    transform: translateY(-1px);
+}
+
+.sitim-institution-item:focus-visible {
+    border-color: var(--sitim-accent);
+    box-shadow: 0 0 0 3px var(--sitim-accent-dim);
+}
+
+.sitim-institution-item.is-selected {
+    background: rgba(0, 184, 169, 0.09);
+    border-color: var(--sitim-accent);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 4px 18px rgba(0, 184, 169, 0.18);
+}
+
+.sitim-institution-item.is-offline .sitim-institution-name {
+    opacity: 0.55;
+}
+
+.sitim-institution-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: rgba(var(--sitim-ink-rgb), 0.28);
+    flex-shrink: 0;
+    transition: color var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-institution-item.is-selected .sitim-institution-check {
+    color: var(--sitim-accent);
+    filter: drop-shadow(0 0 6px rgba(0, 184, 169, 0.55));
+}
+
+.sitim-institution-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.sitim-institution-name {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: rgba(var(--sitim-ink-rgb), 0.92);
+    margin-bottom: 0.18rem;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sitim-institution-status {
+    font-size: 0.75rem;
+    color: rgba(var(--sitim-ink-rgb), 0.52);
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.sitim-institution-item .sitim-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.sitim-institution-item.is-online .sitim-status-dot {
+    background: var(--sitim-success);
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.65);
+}
+
+.sitim-institution-item.is-offline .sitim-status-dot {
+    background: rgba(244, 63, 94, 0.55);
+}
+
+.sitim-institution-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    color: rgba(var(--sitim-ink-rgb), 0.42);
+    font-size: 0.85rem;
+    border-radius: 12px;
+    border: 1px dashed rgba(var(--sitim-overlay-rgb), 0.12);
+    background: rgba(var(--sitim-overlay-rgb), 0.02);
+}
+
+.sitim-helper-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-top: 0.45rem;
+}
+
+
+/* === ModelSelectionDialog — picker grid ============================ */
+
+.sitim-model-picker-root {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem 1.75rem;
+}
+
+.sitim-model-picker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid rgba(var(--sitim-overlay-rgb), 0.07);
+}
+
+.sitim-model-picker-title {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(var(--sitim-ink-rgb), 0.92);
+    letter-spacing: -0.01em;
+}
+
+.sitim-model-picker-title .rz-icon {
+    color: var(--sitim-accent) !important;
+    filter: drop-shadow(0 0 5px rgba(0, 184, 169, 0.32));
+    font-size: 22px !important;
+}
+
+.sitim-model-picker-count {
+    font-size: 0.75rem;
+    color: rgba(var(--sitim-ink-rgb), 0.52);
+    background: rgba(var(--sitim-overlay-rgb), 0.04);
+    padding: 4px 10px;
+    border-radius: 16px;
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.08);
+    letter-spacing: 0.01em;
+}
+
+.sitim-model-picker-grid {
+    display: grid;
+    grid-template-columns: minmax(260px, 5fr) minmax(280px, 7fr);
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .sitim-model-picker-grid { grid-template-columns: 1fr; }
+}
+
+.sitim-model-picker-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    max-height: 420px;
+    overflow-y: auto;
+    padding: 4px 6px 4px 4px;
+    margin: 0 -4px;
+}
+
+.sitim-model-picker-list::-webkit-scrollbar { width: 4px; }
+.sitim-model-picker-list::-webkit-scrollbar-track { background: transparent; }
+.sitim-model-picker-list::-webkit-scrollbar-thumb {
+    background: rgba(var(--sitim-overlay-rgb), 0.14);
+    border-radius: 2px;
+}
+
+.sitim-model-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.8rem 0.95rem;
+    border-radius: 12px;
+    background: rgba(var(--sitim-overlay-rgb), 0.035);
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.08);
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+    transition:
+        background var(--sitim-duration) var(--sitim-ease),
+        border-color var(--sitim-duration) var(--sitim-ease),
+        transform var(--sitim-duration) var(--sitim-ease),
+        box-shadow var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-model-card:hover {
+    background: rgba(var(--sitim-overlay-rgb), 0.06);
+    border-color: rgba(0, 184, 169, 0.22);
+    transform: translateY(-1px);
+}
+
+.sitim-model-card:focus-visible {
+    border-color: var(--sitim-accent);
+    box-shadow: 0 0 0 3px var(--sitim-accent-dim);
+}
+
+.sitim-model-card.is-selected {
+    background: rgba(0, 184, 169, 0.09);
+    border-color: var(--sitim-accent);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 4px 18px rgba(0, 184, 169, 0.18);
+}
+
+.sitim-model-card-radio {
+    color: rgba(var(--sitim-ink-rgb), 0.28);
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: color var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-model-card.is-selected .sitim-model-card-radio {
+    color: var(--sitim-accent);
+    filter: drop-shadow(0 0 6px rgba(0, 184, 169, 0.55));
+}
+
+.sitim-model-card-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.sitim-model-card-name {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: rgba(var(--sitim-ink-rgb), 0.94);
+    letter-spacing: -0.005em;
+    margin-bottom: 0.4rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.sitim-model-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.sitim-model-chip {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 999px;
+    letter-spacing: 0.01em;
+    line-height: 1.6;
+}
+
+.sitim-model-chip.is-version {
+    background: rgba(var(--sitim-overlay-rgb), 0.06);
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.10);
+    color: rgba(var(--sitim-ink-rgb), 0.78);
+}
+
+.sitim-model-chip.is-modality {
+    background: var(--sitim-cyan-dim);
+    border: 1px solid rgba(14, 165, 233, 0.30);
+    color: var(--sitim-cyan);
+}
+
+.sitim-model-chip.is-accuracy {
+    background: rgba(16, 185, 129, 0.13);
+    border: 1px solid rgba(16, 185, 129, 0.30);
+    color: var(--sitim-success-soft);
+}
+
+.sitim-model-accuracy {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--sitim-success-soft);
+    margin-left: auto;
+}
+
+.sitim-model-accuracy .rz-icon {
+    font-size: 14px !important;
+}
+
+/* Detail panel on the right */
+.sitim-model-picker-details {
+    background: rgba(var(--sitim-overlay-rgb), 0.025);
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.07);
+    border-radius: 14px;
+    min-height: 420px;
+    padding: 1.1rem 1.2rem;
+    overflow-y: auto;
+}
+
+.sitim-model-details-empty {
+    height: 100%;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    color: rgba(var(--sitim-ink-rgb), 0.36);
+    font-size: 0.85rem;
+    letter-spacing: 0.01em;
+}
+
+.sitim-model-details-empty .rz-icon {
+    font-size: 42px !important;
+    opacity: 0.35;
+}
+
+.sitim-model-details-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.sitim-model-details-header {
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid rgba(var(--sitim-overlay-rgb), 0.06);
+}
+
+.sitim-model-details-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(var(--sitim-ink-rgb), 0.96);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.55rem;
+}
+
+.sitim-model-details-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.sitim-model-details-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.sitim-model-details-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(var(--sitim-ink-rgb), 0.42);
+}
+
+.sitim-model-details-value {
+    font-size: 0.9rem;
+    color: rgba(var(--sitim-ink-rgb), 0.86);
+    line-height: 1.55;
+}
+
+.sitim-model-picker-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(var(--sitim-overlay-rgb), 0.07);
+}
+
+
+/* === Footer — Liquid Glass site-wide footer =======================
+   Dark-navy translucent surface mirroring header/sidebar, separated
+   from page content by a hairline with a soft teal glow centerpiece.
+   Sticky-bottom: when page content is short, footer parks at the
+   viewport floor instead of floating mid-page.
+   ================================================================== */
+
+/* Outer app shell wraps the RadzenLayout + footer in a flex column.
+   This way the footer sticks to the viewport bottom when content is
+   short, WITHOUT touching .rz-body's internal layout (which would
+   otherwise squeeze RadzenStack / RadzenCard widths inside pages). */
+.sitim-app-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.sitim-app-shell > .rz-layout {
+    flex: 1 0 auto;             /* grow to fill remaining viewport */
+    min-height: 0;
+}
+
+.sitim-footer {
+    position: relative;
+    width: 100%;
+    flex-shrink: 0;             /* never compress the footer */
+    background: var(--sitim-chrome-bg);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-top: 1px solid rgba(var(--sitim-overlay-rgb), 0.07);
+    isolation: isolate;
+    color: rgba(var(--sitim-ink-rgb), 0.78);
+}
+
+/* Soft teal glow at the top edge — signature SITIM divider */
+.sitim-footer::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(720px, 70%);
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(0, 184, 169, 0.45) 50%,
+        transparent 100%);
+    box-shadow: 0 0 12px rgba(0, 184, 169, 0.32);
+    pointer-events: none;
+}
+
+.sitim-footer-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 3rem 2rem 1.5rem;
+}
+
+.sitim-footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.2fr;
+    gap: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(var(--sitim-overlay-rgb), 0.05);
+}
+
+@media (max-width: 980px) {
+    .sitim-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 560px) {
+    .sitim-footer-grid {
+        grid-template-columns: 1fr;
+        gap: 1.75rem;
+    }
+}
+
+/* --- Brand column ------------------------------------------------ */
+.sitim-footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 380px;
+}
+
+.sitim-footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--sitim-accent);
+    letter-spacing: -0.02em;
+}
+
+.sitim-footer-logo .rz-icon {
+    font-size: 28px !important;
+    color: var(--sitim-accent) !important;
+    filter: drop-shadow(0 0 8px rgba(0, 184, 169, 0.40));
+}
+
+.sitim-footer-tagline {
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: rgba(var(--sitim-ink-rgb), 0.62);
+    margin: 0;
+    letter-spacing: 0.005em;
+    max-width: 36ch;
+}
+
+/* Live status pill — SaaS commercial cue (Stripe / Linear / Vercel style) */
+.sitim-footer-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    width: fit-content;
+    transition: background var(--sitim-duration) var(--sitim-ease),
+                border-color var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-footer-status:hover {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.40);
+}
+
+.sitim-footer-status-dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sitim-success);
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.65);
+    flex-shrink: 0;
+}
+
+/* Soft outward pulse — visible heartbeat that this isn't a static badge */
+.sitim-footer-status-dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1.5px solid var(--sitim-success);
+    opacity: 0;
+    animation: sitim-status-pulse 2.4s var(--sitim-ease) infinite;
+}
+
+@keyframes sitim-status-pulse {
+    0%   { transform: scale(0.85); opacity: 0.65; }
+    70%  { transform: scale(1.6); opacity: 0; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+.sitim-footer-status-text {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--sitim-success-soft);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sitim-footer-status-dot::after { animation: none !important; }
+}
+
+/* --- Link columns ------------------------------------------------ */
+.sitim-footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.sitim-footer-col-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(var(--sitim-ink-rgb), 0.55);
+    margin: 0 0 1.1rem 0;
+}
+
+.sitim-footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.sitim-footer-links li {
+    line-height: 1.5;
+}
+
+.sitim-footer-links a {
+    position: relative;
+    display: inline-block;
+    color: rgba(var(--sitim-ink-rgb), 0.70);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.005em;
+    transition: color var(--sitim-duration) var(--sitim-ease),
+                transform var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-footer-links a::before {
+    content: "";
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translate(-4px, -50%) scale(0.6);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--sitim-accent);
+    box-shadow: 0 0 6px rgba(0, 184, 169, 0.55);
+    opacity: 0;
+    transition: opacity var(--sitim-duration) var(--sitim-ease),
+                transform var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-footer-links a:hover {
+    color: rgba(var(--sitim-ink-rgb), 0.96);
+    transform: translateX(10px);
+}
+
+.sitim-footer-links a:hover::before {
+    opacity: 1;
+    transform: translate(0, -50%) scale(1);
+}
+
+/* --- Connect column --------------------------------------------- */
+.sitim-footer-connect {
+    align-items: flex-start;
+}
+
+.sitim-footer-contact {
+    display: inline-block;
+    color: rgba(var(--sitim-ink-rgb), 0.78);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.005em;
+    margin-bottom: 1rem;
+    transition: color var(--sitim-duration) var(--sitim-ease);
+    word-break: break-all;
+}
+
+.sitim-footer-contact:hover {
+    color: var(--sitim-accent);
+}
+
+.sitim-footer-socials {
+    display: flex;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+}
+
+.sitim-footer-social {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: rgba(var(--sitim-overlay-rgb), 0.04);
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.09);
+    color: rgba(var(--sitim-ink-rgb), 0.68);
+    transition:
+        background var(--sitim-duration) var(--sitim-ease),
+        border-color var(--sitim-duration) var(--sitim-ease),
+        color var(--sitim-duration) var(--sitim-ease),
+        transform var(--sitim-duration) var(--sitim-ease),
+        box-shadow var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-footer-social:hover,
+.sitim-footer-social:focus-visible {
+    background: var(--sitim-accent-dim);
+    border-color: var(--sitim-accent);
+    color: var(--sitim-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px var(--sitim-accent-glow);
+    outline: none;
+}
+
+.sitim-footer-social svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    transition: transform var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-footer-social:hover svg {
+    transform: scale(1.08);
+}
+
+/* --- Bottom strip ----------------------------------------------- */
+.sitim-footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.5rem;
+    gap: 1.5rem;
+    font-size: 0.72rem;
+    color: rgba(var(--sitim-ink-rgb), 0.45);
+    letter-spacing: 0.02em;
+    flex-wrap: wrap;
+}
+
+.sitim-footer-copyright {
+    line-height: 1.4;
+    flex-shrink: 0;
+}
+
+.sitim-footer-legal {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.sitim-footer-legal a {
+    color: rgba(var(--sitim-ink-rgb), 0.55);
+    text-decoration: none;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    transition: color var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-footer-legal a:hover {
+    color: var(--sitim-accent);
+}
+
+.sitim-footer-legal-sep {
+    color: rgba(var(--sitim-ink-rgb), 0.20);
+    font-size: 0.65rem;
+    user-select: none;
+}
+
+.sitim-footer-meta {
+    font-family: ui-monospace, 'JetBrains Mono', Consolas, 'Cascadia Code', monospace;
+    background: rgba(var(--sitim-overlay-rgb), 0.03);
+    padding: 3px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(var(--sitim-overlay-rgb), 0.07);
+    color: rgba(var(--sitim-ink-rgb), 0.58);
+    font-size: 0.7rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+@media (max-width: 720px) {
+    .sitim-footer-bottom {
+        justify-content: center;
+        text-align: center;
+    }
+    .sitim-footer-copyright {
+        flex-basis: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 560px) {
+    .sitim-footer-inner { padding: 2.25rem 1.25rem 1.25rem; }
+    .sitim-footer-bottom {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .sitim-footer-links a,
+    .sitim-footer-links a::before,
+    .sitim-footer-social,
+    .sitim-footer-social svg {
+        transition: none !important;
+    }
+    .sitim-footer-links a:hover { transform: none !important; }
+    .sitim-footer-social:hover { transform: none !important; }
+    .sitim-footer-social:hover svg { transform: none !important; }
+}
+
+
+/* === Duration display — tabular monospaced digits for live timers === */
+.sitim-duration-mono {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    font-family: ui-monospace, 'JetBrains Mono', Consolas, 'Cascadia Code', monospace;
+    letter-spacing: 0.02em;
+}
+
+
+/* === SitimModal — rendered via Radzen DialogService ===============
+   We keep Radzen's default .rz-dialog shell (already styled as
+   dark-navy glass in the "Radzen Dialog glass shell" block above)
+   so the dialog itself is opaque-glass — blocks the mask from
+   showing through. We only strip the inner content padding so a
+   RadzenCard inside doesn't get double-padded.
+   ================================================================== */
+
+.rz-dialog.sitim-modal-wrap {
+    max-width: min(720px, calc(100vw - 2rem));
+}
+
+.rz-dialog.sitim-modal-wrap .rz-dialog-content {
+    padding: 0 !important;
+}
+
+/* Each usage site wraps its content in a RadzenCard for padding. The dialog
+   shell already carries the glass treatment (.rz-dialog ↑) — stacking another
+   .rz-card glass on top produced a washed-out grey look. Strip the card's
+   visual chrome here: it stays purely as a padding/layout container. */
+.rz-dialog.sitim-modal-wrap .rz-dialog-content > .rz-card {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-radius: 0 !important;
+}
+
+.rz-dialog.sitim-modal-wrap .rz-dialog-content > .rz-card:hover {
+    transform: none !important;   /* kill the global card hover lift */
+}
+
+
+/* === Appearance toggle (header) ====================================
+   A plain anchor, so the swap survives a full page reload. Which glyph
+   is visible is decided off <html data-theme> rather than component
+   state — the markup is identical in both appearances, which is what
+   lets the component stay stateless.
+   ================================================================== */
+.sitim-theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    color: rgba(var(--sitim-ink-rgb), 0.70);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition:
+        color var(--sitim-duration) var(--sitim-ease),
+        background var(--sitim-duration) var(--sitim-ease);
+}
+
+.sitim-theme-toggle:hover,
+.sitim-theme-toggle:focus-visible {
+    color: var(--sitim-accent);
+    background: rgba(var(--sitim-overlay-rgb), 0.06);
+    outline: none;
+}
+
+.sitim-theme-toggle .sitim-theme-icon {
+    font-size: 19px !important;
+    line-height: 1;
+}
+
+/* Dark appearance shows the "switch to light" glyph, and vice versa. */
+:root[data-theme="light"] .sitim-theme-icon-light { display: none; }
+:root:not([data-theme="light"]) .sitim-theme-icon-dark { display: none; }

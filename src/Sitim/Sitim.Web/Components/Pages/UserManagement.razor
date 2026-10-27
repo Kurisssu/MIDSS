@@ -1,0 +1,411 @@
+@page "/users"
+@using Sitim.Web.Services
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "SuperAdmin,Admin")]
+@inject SitimApiClient Api
+@inject NotificationService NotificationService
+@inject NavigationManager Navigation
+@inject AuthTokenStore TokenStore
+@inject IStringLocalizer<SharedResource> L
+
+<PageTitle>@L["Users.PageTitle"]</PageTitle>
+
+<RadzenStack Gap="1rem">
+    <RadzenRow AlignItems="AlignItems.Center">
+        <RadzenColumn Size="8">
+            <RadzenText Text="@L["Nav.Users"]" TextStyle="TextStyle.H4" />
+            <RadzenText Text="@L["Users.Subtitle"]" TextStyle="TextStyle.Body2"
+                        style="color: var(--rz-text-tertiary-color);" />
+        </RadzenColumn>
+        <RadzenColumn Size="4" class="rz-text-align-end">
+            <RadzenButton Text="@L["Users.Invite"]" Icon="person_add" ButtonStyle="ButtonStyle.Primary"
+                          Click="@OpenInviteDialog" />
+        </RadzenColumn>
+    </RadzenRow>
+
+    @if (_loading)
+    {
+        <RadzenProgressBarCircular ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
+    }
+    else
+    {
+        @if (!_users.Any())
+        {
+            <RadzenAlert AlertStyle="AlertStyle.Info" Shade="Shade.Light" AllowClose="false">
+                @L["Users.Empty"]
+            </RadzenAlert>
+        }
+        else
+        {
+            <RadzenStack Gap="0.5rem">
+                @foreach (var row in _users)
+                {
+                    <RadzenCard>
+                        <RadzenRow AlignItems="AlignItems.Center">
+                            <RadzenColumn Size="12" SizeMD="10">
+                                <RadzenRow>
+                                    <RadzenColumn Size="6" SizeMD="2">
+                                        <RadzenText Text="@L["Common.Name"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                        <RadzenText Text="@(string.IsNullOrWhiteSpace(row.FullName) ? "—" : row.FullName)" TextStyle="TextStyle.Body2" />
+                                    </RadzenColumn>
+                                    <RadzenColumn Size="12" SizeMD="3">
+                                        <RadzenText Text="Email" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                        <RadzenText Text="@row.Email" TextStyle="TextStyle.Body2" />
+                                    </RadzenColumn>
+                                    <RadzenColumn Size="6" SizeMD="2">
+                                        <RadzenText Text="@L["Users.Role"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                        <div>
+                                            <RadzenBadge BadgeStyle="@RoleBadge(row.Role)" Text="@row.Role" />
+                                        </div>
+                                    </RadzenColumn>
+                                    @if (TokenStore.IsSuperAdmin)
+                                    {
+                                        <RadzenColumn Size="6" SizeMD="2">
+                                            <RadzenText Text="@L["Users.Institution"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                            <RadzenText Text="@(row.InstitutionName ?? "—")" TextStyle="TextStyle.Body2" />
+                                        </RadzenColumn>
+                                    }
+                                    <RadzenColumn Size="6" SizeMD="1">
+                                        <RadzenText Text="@L["Common.Status"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                        <div>
+                                            @if (row.IsActive)
+                                            {
+                                                <RadzenBadge BadgeStyle="BadgeStyle.Success" Text="@L["Common.Active"]" />
+                                            }
+                                            else
+                                            {
+                                                <RadzenBadge BadgeStyle="BadgeStyle.Danger" Text="@L["Common.Inactive"]" />
+                                            }
+                                        </div>
+                                    </RadzenColumn>
+                                    <RadzenColumn Size="6" SizeMD="2">
+                                        <RadzenText Text="@L["Users.Created"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                        <RadzenText Text="@row.CreatedAtUtc.ToString("yyyy-MM-dd")" TextStyle="TextStyle.Body2" />
+                                    </RadzenColumn>
+                                </RadzenRow>
+                            </RadzenColumn>
+                            <RadzenColumn Size="12" SizeMD="2" class="rz-text-align-end">
+                                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.25rem">
+                                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small"
+                                                  Click="@(() => OpenEditDialog(row))" title="@L["Users.Edit"]" />
+                                    <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Size="ButtonSize.Small"
+                                                  Click="@(() => ConfirmDelete(row))" title="@L["Users.DeleteUser"]" />
+                                </RadzenStack>
+                            </RadzenColumn>
+                        </RadzenRow>
+                    </RadzenCard>
+                }
+            </RadzenStack>
+        }
+    }
+</RadzenStack>
+
+@* ── Invite dialog ── *@
+<SitimModal Show="@_showInviteDialog" OnClose="@CloseDialogs">
+    <RadzenCard Style="min-width:440px;max-width:640px;padding:2rem;">
+        @if (_inviteResult is null)
+            {
+                <RadzenText Text="@L["Users.InviteNew"]" TextStyle="TextStyle.H6" class="rz-mb-4" />
+                <RadzenStack Gap="1rem">
+                    <RadzenFormField Text="Email *" Style="width:100%">
+                        <ChildContent>
+                            <RadzenTextBox @bind-Value="_invEmail" Placeholder="doctor@clinic.com" Style="width:100%" />
+                        </ChildContent>
+                    </RadzenFormField>
+                    <RadzenFormField Text="@L["Users.FullName"]" Style="width:100%">
+                        <ChildContent>
+                            <RadzenTextBox @bind-Value="_invFullName" Placeholder="Dr. Ion Popescu" Style="width:100%" />
+                        </ChildContent>
+                    </RadzenFormField>
+                    <RadzenFormField Text="@($"{L["Users.Role"]} *")" Style="width:100%">
+                        <ChildContent>
+                            <RadzenDropDown @bind-Value="_invRole"
+                                            Data="@GetAllowedRoles()"
+                                            Style="width:100%" />
+                        </ChildContent>
+                    </RadzenFormField>
+                    @if (TokenStore.IsSuperAdmin)
+                    {
+                        <RadzenFormField Text="@($"{L["Users.Institution"]} *")" Style="width:100%">
+                            <ChildContent>
+                                <RadzenDropDown @bind-Value="_invInstitutionId"
+                                                Data="@_institutions"
+                                                TextProperty="Name"
+                                                ValueProperty="Id"
+                                                Placeholder="@L["Users.SelectInstitution"]"
+                                                Style="width:100%" />
+                            </ChildContent>
+                        </RadzenFormField>
+                    }
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem" class="rz-mt-2">
+                        <RadzenButton Text="@L["Common.Cancel"]" ButtonStyle="ButtonStyle.Light" Click="@CloseDialogs" />
+                        <RadzenButton Text="@L["Users.SendInvite"]" Icon="mail" ButtonStyle="ButtonStyle.Primary"
+                                      Click="@DoInvite" IsBusy="@_saving" />
+                    </RadzenStack>
+                </RadzenStack>
+            }
+            else if (_inviteResult.EmailSent)
+            {
+                <RadzenText Text="@L["Users.InviteSent"]" TextStyle="TextStyle.H6" class="rz-mb-3" />
+                <RadzenAlert AlertStyle="AlertStyle.Success" AllowClose="false" class="rz-mb-3">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                        <RadzenIcon Icon="mark_email_read" />
+                        <span>@L["Users.InviteSentDetail"] <strong>@_inviteResult.Email</strong>.</span>
+                    </RadzenStack>
+                </RadzenAlert>
+                <RadzenText TextStyle="TextStyle.Caption" Style="color: var(--rz-text-tertiary-color);">
+                    @L["Users.InviteLinkHint"]
+                </RadzenText>
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem" class="rz-mt-3">
+                    <RadzenButton Text="@L["Common.Close"]" ButtonStyle="ButtonStyle.Primary" Click="@CloseDialogs" />
+                </RadzenStack>
+            }
+            else
+            {
+                @* SMTP failed — fallback link is shown only in Development (server-controlled). *@
+                <RadzenText Text="@L["Users.EmailUnavailable"]" TextStyle="TextStyle.H6" class="rz-mb-3" />
+                <RadzenAlert AlertStyle="AlertStyle.Warning" AllowClose="false" class="rz-mb-3">
+                    @L["Users.EmailFailed"]
+                </RadzenAlert>
+                @if (!string.IsNullOrWhiteSpace(_inviteResult.FallbackLink))
+                {
+                    <RadzenAlert AlertStyle="AlertStyle.Info" AllowClose="false" class="rz-mb-3" Size="AlertSize.Small">
+                        @L["Users.DevModeHint"]
+                    </RadzenAlert>
+                    <RadzenFormField Text="@L["Users.FallbackLink"]" Style="width:100%">
+                        <ChildContent>
+                            <RadzenTextBox Value="@_inviteResult.FallbackLink" ReadOnly="true" Style="width:100%;font-size:0.8rem;" />
+                        </ChildContent>
+                    </RadzenFormField>
+                }
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem" class="rz-mt-3">
+                    <RadzenButton Text="@L["Common.Close"]" ButtonStyle="ButtonStyle.Primary" Click="@CloseDialogs" />
+                </RadzenStack>
+            }
+    </RadzenCard>
+</SitimModal>
+
+@* ── Edit dialog ── *@
+<SitimModal Show="@(_showEditDialog && _editTarget is not null)" OnClose="@CloseDialogs">
+    @if (_editTarget is not null)
+    {
+        <RadzenCard Style="min-width:420px;max-width:560px;padding:2rem;">
+            <RadzenText Text="@L["Users.EditUser"]" TextStyle="TextStyle.H6" class="rz-mb-4" />
+            <RadzenStack Gap="1rem">
+                <RadzenFormField Text="@L["Users.FullName"]" Style="width:100%">
+                    <ChildContent>
+                        <RadzenTextBox @bind-Value="_editFullName" Style="width:100%" />
+                    </ChildContent>
+                </RadzenFormField>
+                <RadzenFormField Text="@L["Users.Role"]" Style="width:100%">
+                    <ChildContent>
+                        <RadzenDropDown @bind-Value="_editRole"
+                                        Data="@GetAllowedRoles()"
+                                        Style="width:100%" />
+                    </ChildContent>
+                </RadzenFormField>
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                    <RadzenCheckBox @bind-Value="_editIsActive" Name="editActive" />
+                    <RadzenLabel Text="@L["Users.ActiveAccount"]" Component="editActive" />
+                </RadzenStack>
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem" class="rz-mt-2">
+                    <RadzenButton Text="@L["Common.Cancel"]" ButtonStyle="ButtonStyle.Light" Click="@CloseDialogs" />
+                    <RadzenButton Text="@L["Common.Save"]" ButtonStyle="ButtonStyle.Primary"
+                                  Click="@DoEdit" IsBusy="@_saving" />
+                </RadzenStack>
+            </RadzenStack>
+        </RadzenCard>
+    }
+</SitimModal>
+
+@* ── Confirm delete dialog ── *@
+<SitimModal Show="@(_showDeleteDialog && _deleteTarget is not null)" OnClose="@CloseDialogs">
+    @if (_deleteTarget is not null)
+    {
+        <RadzenCard Style="min-width:380px;max-width:480px;padding:2rem;">
+            <RadzenStack Gap="1rem">
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem">
+                    <RadzenIcon Icon="warning" style="font-size:32px;color:var(--rz-danger);" />
+                    <RadzenText Text="@L["Users.ConfirmDeleteTitle"]" TextStyle="TextStyle.H6" class="rz-mb-0" />
+                </RadzenStack>
+                <RadzenText>
+                    @L["Users.ConfirmDeleteQuestion", _deleteTarget.FullName ?? _deleteTarget.Email]
+                    @L["Users.ConfirmDeleteWarning"]
+                </RadzenText>
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem" class="rz-mt-2">
+                    <RadzenButton Text="@L["Common.Cancel"]" ButtonStyle="ButtonStyle.Light" Click="@CloseDialogs" />
+                    <RadzenButton Text="@L["Studies.DeletePermanently"]" Icon="delete" ButtonStyle="ButtonStyle.Danger"
+                                  Click="@DoDelete" IsBusy="@_saving" />
+                </RadzenStack>
+            </RadzenStack>
+        </RadzenCard>
+    }
+</SitimModal>
+
+@code {
+    private List<UserResult> _users = [];
+    private List<InstitutionResult> _institutions = [];
+    private bool _loading = true;
+    private bool _saving = false;
+
+    // Invite dialog
+    private bool _showInviteDialog = false;
+    private string _invEmail = "";
+    private string? _invFullName;
+    private string _invRole = "Doctor";
+    private Guid? _invInstitutionId;
+    private InviteUserResponse? _inviteResult;
+
+    // Edit dialog
+    private bool _showEditDialog = false;
+    private UserResult? _editTarget;
+    private string _editFullName = "";
+    private string _editRole = "Doctor";
+    private bool _editIsActive = true;
+
+    // Delete dialog
+    private bool _showDeleteDialog = false;
+    private UserResult? _deleteTarget;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+        if (TokenStore.IsSuperAdmin)
+            _institutions = await Api.GetInstitutionsAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        _loading = true;
+        var all = await Api.GetUsersAsync();
+        // Exclude the currently logged-in user from the list
+        _users = all.Where(u => u.Id != TokenStore.UserId).ToList();
+        _loading = false;
+    }
+
+    private void OpenInviteDialog()
+    {
+        _invEmail = ""; _invFullName = null; _invRole = "Doctor"; _invInstitutionId = null; _inviteResult = null;
+        _showInviteDialog = true;
+        _showEditDialog = false;
+        _showDeleteDialog = false;
+    }
+
+    private void OpenEditDialog(UserResult u)
+    {
+        _editTarget = u;
+        _editFullName = u.FullName ?? "";
+        _editRole = u.Role;
+        _editIsActive = u.IsActive;
+        _showEditDialog = true;
+        _showInviteDialog = false;
+        _showDeleteDialog = false;
+    }
+
+    private void ConfirmDelete(UserResult u)
+    {
+        _deleteTarget = u;
+        _showDeleteDialog = true;
+        _showInviteDialog = false;
+        _showEditDialog = false;
+    }
+
+    private void CloseDialogs()
+    {
+        _showInviteDialog = false;
+        _showEditDialog = false;
+        _showDeleteDialog = false;
+        _inviteResult = null;
+        _deleteTarget = null;
+    }
+
+    private async Task DoInvite()
+    {
+        if (string.IsNullOrWhiteSpace(_invEmail))
+        {
+            NotificationService.Notify(NotificationSeverity.Warning, L["Users.EmailRequired"]);
+            return;
+        }
+        if (TokenStore.IsSuperAdmin && !_invInstitutionId.HasValue)
+        {
+            NotificationService.Notify(NotificationSeverity.Warning, L["Users.SelectInstitution"]);
+            return;
+        }
+
+        _saving = true;
+        var result = await Api.InviteUserAsync(_invEmail, _invFullName, _invRole, _invInstitutionId);
+        _saving = false;
+
+        if (result is null)
+        {
+            NotificationService.Notify(NotificationSeverity.Error, L["Users.InviteError"]);
+            return;
+        }
+
+        _inviteResult = result;
+        await LoadAsync();
+
+        if (result.EmailSent)
+            NotificationService.Notify(NotificationSeverity.Success, L["Users.InviteEmailSentTo", result.Email]);
+        else
+            NotificationService.Notify(NotificationSeverity.Warning, L["Users.InviteEmailFailed"]);
+    }
+
+    private async Task DoEdit()
+    {
+        if (_editTarget is null) return;
+
+        _saving = true;
+        var result = await Api.UpdateUserAsync(
+            _editTarget.Id,
+            string.IsNullOrWhiteSpace(_editFullName) ? null : _editFullName,
+            _editRole,
+            _editIsActive);
+        _saving = false;
+
+        if (result is null)
+        {
+            NotificationService.Notify(NotificationSeverity.Error, L["Users.UpdateError"]);
+            return;
+        }
+
+        NotificationService.Notify(NotificationSeverity.Success, L["Users.Updated"]);
+        CloseDialogs();
+        await LoadAsync();
+    }
+
+    private async Task DoDelete()
+    {
+        if (_deleteTarget is null) return;
+
+        _saving = true;
+        var ok = await Api.DeactivateUserAsync(_deleteTarget.Id);
+        _saving = false;
+
+        if (ok)
+        {
+            NotificationService.Notify(NotificationSeverity.Success, L["Users.DeletedDetail", _deleteTarget.Email]);
+            CloseDialogs();
+            await LoadAsync();
+        }
+        else
+        {
+            NotificationService.Notify(NotificationSeverity.Error, L["Users.DeleteError"]);
+        }
+    }
+
+    private IEnumerable<string> GetAllowedRoles()
+    {
+        yield return "Doctor";
+        yield return "Technician";
+        if (TokenStore.IsSuperAdmin)
+            yield return "Admin";
+    }
+
+    private static BadgeStyle RoleBadge(string role) => role switch
+    {
+        "Admin" => BadgeStyle.Warning,
+        "Doctor" => BadgeStyle.Info,
+        "Technician" => BadgeStyle.Secondary,
+        _ => BadgeStyle.Light
+    };
+}

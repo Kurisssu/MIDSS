@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Sitim.Api/Sitim.Api.csproj" />
+  <Project Path="Sitim.Core/Sitim.Core.csproj" />
+  <Project Path="Sitim.Infrastructure/Sitim.Infrastructure.csproj" />
+  <Project Path="Sitim.Web/Sitim.Web.csproj" />
+</Solution>

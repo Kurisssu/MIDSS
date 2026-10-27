@@ -1,0 +1,239 @@
+@page "/studies"
+@attribute [Authorize]
+@inject SitimApiClient Api
+@inject NavigationManager Navigation
+@inject NotificationService Notification
+@inject SitimAuthStateProvider AuthProvider
+@inject AuthTokenStore TokenStore
+@inject IStringLocalizer<SharedResource> L
+
+<PageTitle>@L["Studies.PageTitle"]</PageTitle>
+
+<RadzenStack Gap="1rem">
+    <RadzenRow AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+        <RadzenColumn Size="12" SizeMD="6">
+            <RadzenText Text="@L["Nav.Studies"]" TextStyle="TextStyle.DisplayH5" class="rz-mb-0" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                <RadzenButton Text="@L["Studies.SyncOrthanc"]" Icon="sync" ButtonStyle="ButtonStyle.Secondary"
+                              Click="@OnSyncAll" IsBusy="@isSyncing" BusyText="@L["Studies.Syncing"]" Size="ButtonSize.Small" />
+                <RadzenButton Text="@L["Common.Reload"]" Icon="refresh" ButtonStyle="ButtonStyle.Light"
+                              Click="@LoadStudies" Size="ButtonSize.Small" />
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+
+    @if (isLoading)
+    {
+        <RadzenProgressBarCircular ProgressBarStyle="ProgressBarStyle.Primary" Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
+    }
+    else
+    {
+        @if (!studies.Any())
+        {
+            <RadzenAlert AlertStyle="AlertStyle.Info" Shade="Shade.Light" AllowClose="false">
+                @L["Studies.Empty"]
+            </RadzenAlert>
+        }
+        else
+        {
+            <RadzenStack Gap="0.5rem">
+                @foreach (var study in studies)
+                {
+                    <RadzenCard>
+                        <RadzenRow AlignItems="AlignItems.Center">
+                            <RadzenColumn Size="12" SizeMD="10">
+                                <RadzenRow>
+                                    <RadzenColumn Size="6" SizeMD="2">
+                                        <RadzenText Text="@L["Common.Patient"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                        <RadzenText Text="@(study.PatientName ?? "—")" TextStyle="TextStyle.Body2" />
+                                    </RadzenColumn>
+                                    <RadzenColumn Size="6" SizeMD="2">
+                                        <RadzenText Text="@L["Studies.PatientId"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                        <RadzenText Text="@(study.PatientId ?? "—")" TextStyle="TextStyle.Body2" />
+                                    </RadzenColumn>
+                                    <RadzenColumn Size="6" SizeMD="2">
+                                        <RadzenText Text="@L["Studies.StudyDate"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                        <RadzenText Text="@FormatStudyDate(study.StudyDate)" TextStyle="TextStyle.Body2" />
+                                    </RadzenColumn>
+                                    <RadzenColumn Size="6" SizeMD="3">
+                                        <RadzenText Text="@L["Studies.Modalities"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                        <div>
+                                            @foreach (var mod in study.ModalitiesInStudy)
+                                            {
+                                                <RadzenBadge BadgeStyle="BadgeStyle.Info" Text="@mod" class="rz-mr-1" />
+                                            }
+                                        </div>
+                                    </RadzenColumn>
+                                    <RadzenColumn Size="12" SizeMD="3">
+                                        <RadzenText Text="Orthanc ID" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                                        <RadzenText Text="@Truncate(study.OrthancStudyId, 28)" TextStyle="TextStyle.Caption" style="font-family: monospace;" />
+                                    </RadzenColumn>
+                                </RadzenRow>
+                            </RadzenColumn>
+                            <RadzenColumn Size="12" SizeMD="2" class="rz-text-align-end">
+                                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.25rem">
+                                    <RadzenButton Icon="visibility" ButtonStyle="ButtonStyle.Info" Variant="Variant.Text" Size="ButtonSize.Small"
+                                                  Click="@(() => GoToStudy(study.OrthancStudyId))" title="@L["Studies.StudyDetails"]" />
+                                    @if (IsAdminOrAbove)
+                                    {
+                                        <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Text" Size="ButtonSize.Small"
+                                                      Click="@(() => ConfirmDelete(study))" title="@L["Studies.DeleteStudy"]" />
+                                    }
+                                </RadzenStack>
+                            </RadzenColumn>
+                        </RadzenRow>
+                    </RadzenCard>
+                }
+            </RadzenStack>
+        }
+    }
+</RadzenStack>
+
+@* ── Confirm delete dialog ── *@
+<SitimModal Show="@(_showDeleteDialog && _deleteTarget is not null)" OnClose="@CloseDeleteDialog">
+    @if (_deleteTarget is not null)
+    {
+        <RadzenCard Style="min-width:400px;max-width:520px;padding:2rem;">
+            <RadzenStack Gap="1rem">
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem">
+                    <RadzenIcon Icon="warning" style="font-size:32px;color:var(--rz-danger);" />
+                    <RadzenText Text="@L["Studies.ConfirmDeleteTitle"]" TextStyle="TextStyle.H6" class="rz-mb-0" />
+                </RadzenStack>
+                <RadzenText>
+                    @L["Studies.ConfirmDeleteQuestion",
+                       _deleteTarget.PatientName ?? _deleteTarget.PatientId ?? L["Studies.UnknownPatient"].Value,
+                       FormatStudyDate(_deleteTarget.StudyDate)]<br />
+                    @L["Studies.ConfirmDeleteWarning"]
+                </RadzenText>
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem" class="rz-mt-2">
+                    <RadzenButton Text="@L["Common.Cancel"]" ButtonStyle="ButtonStyle.Light" Click="@CloseDeleteDialog" Disabled="@_deleting" />
+                    <RadzenButton Text="@L["Studies.DeletePermanently"]" Icon="delete" ButtonStyle="ButtonStyle.Danger"
+                                  Click="@DoDelete" IsBusy="@_deleting" />
+                </RadzenStack>
+            </RadzenStack>
+        </RadzenCard>
+    }
+</SitimModal>
+
+@code {
+    private List<StudySummary> studies = [];
+    private bool isLoading = true;
+    private bool isSyncing;
+
+    private bool _showDeleteDialog = false;
+    private StudySummary? _deleteTarget;
+    private bool _deleting = false;
+
+    private bool IsAdminOrAbove =>
+        TokenStore.IsSuperAdmin || TokenStore.Roles.Contains("Admin");
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadStudies();
+    }
+
+    private async Task LoadStudies()
+    {
+        isLoading = true;
+        try
+        {
+            studies = await Api.GetLocalStudiesAsync();
+        }
+        catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            // Token cleared (e.g. during logout) — silently ignore, navigation will redirect to /login.
+        }
+        catch (HttpRequestException)
+        {
+            Notification.Notify(NotificationSeverity.Error, L["Common.Error"], L["Studies.ApiConnectionError"]);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task OnSyncAll()
+    {
+        isSyncing = true;
+        try
+        {
+            var count = await Api.SyncAllStudiesAsync();
+            string msg = count == 0
+                ? L["Studies.NoNewStudies"]
+                : count == 1 ? L["Studies.SyncedOne"] : L["Studies.SyncedMany", count];
+            var severity = count == 0 ? NotificationSeverity.Info : NotificationSeverity.Success;
+            Notification.Notify(severity, L["Studies.SyncComplete"], msg);
+            await LoadStudies();
+        }
+        catch (Exception ex)
+        {
+            Notification.Notify(NotificationSeverity.Error, L["Studies.SyncError"], ex.Message);
+        }
+        finally
+        {
+            isSyncing = false;
+        }
+    }
+
+    private void ConfirmDelete(StudySummary study)
+    {
+        _deleteTarget = study;
+        _showDeleteDialog = true;
+    }
+
+    private void CloseDeleteDialog()
+    {
+        _showDeleteDialog = false;
+        _deleteTarget = null;
+    }
+
+    private async Task DoDelete()
+    {
+        if (_deleteTarget is null) return;
+
+        _deleting = true;
+        var ok = await Api.DeleteStudyAsync(_deleteTarget.OrthancStudyId);
+        _deleting = false;
+
+        if (ok)
+        {
+            Notification.Notify(NotificationSeverity.Success, L["Studies.Deleted"],
+                L["Studies.DeletedDetail", _deleteTarget.PatientName ?? _deleteTarget.PatientId ?? L["Studies.UnknownPatient"].Value]);
+            CloseDeleteDialog();
+            await LoadStudies();
+        }
+        else
+        {
+            Notification.Notify(NotificationSeverity.Error, L["Common.Error"], L["Studies.DeleteFailed"]);
+        }
+    }
+
+    private void OnRowClick(DataGridRowMouseEventArgs<StudySummary> args)
+    {
+        if (!_showDeleteDialog)
+            GoToStudy(args.Data.OrthancStudyId);
+    }
+
+    private void GoToStudy(string orthancStudyId)
+    {
+        Navigation.NavigateTo($"/studies/{orthancStudyId}");
+    }
+
+    private static string FormatStudyDate(string? date)
+    {
+        if (string.IsNullOrWhiteSpace(date) || date.Length < 8)
+            return date ?? "—";
+
+        // DICOM date format: YYYYMMDD → DD.MM.YYYY
+        return $"{date[6..8]}.{date[4..6]}.{date[0..4]}";
+    }
+
+    private static string Truncate(string? text, int maxLen)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return "—";
+        return text.Length <= maxLen ? text : text[..maxLen] + "…";
+    }
+}

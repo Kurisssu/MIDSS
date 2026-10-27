@@ -1,0 +1,32 @@
+@inject NavigationManager Navigation
+
+<RadzenDropDown TValue="string" Value="@CurrentCulture" Data="@Options"
+                TextProperty="Label" ValueProperty="Code"
+                Change="@OnChange" Style="width: 92px;" />
+
+@code {
+    private sealed record CultureOption(string Code, string Label);
+
+    private static readonly CultureOption[] Options =
+    [
+        new("en-US", "EN"),
+        new("ro-RO", "RO")
+    ];
+
+    private static string CurrentCulture =>
+        System.Globalization.CultureInfo.CurrentUICulture.Name.StartsWith("ro",
+            StringComparison.OrdinalIgnoreCase) ? "ro-RO" : "en-US";
+
+    private void OnChange(object? value)
+    {
+        var culture = value?.ToString();
+        if (string.IsNullOrEmpty(culture) || culture == CurrentCulture)
+            return;
+
+        var returnTo = new Uri(Navigation.Uri).PathAndQuery;
+        // Full reload => new circuit => the new culture cookie takes effect.
+        Navigation.NavigateTo(
+            $"culture/set?culture={Uri.EscapeDataString(culture)}&redirectUri={Uri.EscapeDataString(returnTo)}",
+            forceLoad: true);
+    }
+}

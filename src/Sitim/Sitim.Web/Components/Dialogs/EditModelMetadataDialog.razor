@@ -1,0 +1,103 @@
+@using Sitim.Core.Contracts.AI
+@using Sitim.Web.Models
+@using Sitim.Web.Services
+@inject SitimApiClient ApiClient
+@inject NotificationService NotificationService
+@inject DialogService DialogService
+@inject IStringLocalizer<SharedResource> L
+
+<RadzenStack Gap="1rem">
+    <RadzenText TextStyle="TextStyle.H6" class="rz-mb-0">@L["EditModel.Title"]</RadzenText>
+    <RadzenText TextStyle="TextStyle.Caption" class="rz-text-tertiary-color rz-mb-0">
+        @Model.Name · v@Model.Version · @Model.Task
+    </RadzenText>
+
+    <RadzenFormField Text="@L["AIModels.ModelName"]" Variant="Variant.Outlined" class="w-100">
+        <RadzenTextBox @bind-Value="@name" class="w-100" />
+    </RadzenFormField>
+
+    <RadzenFormField Text="@L["Common.Description"]" Variant="Variant.Outlined" class="w-100">
+        <RadzenTextArea @bind-Value="@description" class="w-100" Rows="2" />
+    </RadzenFormField>
+
+    <RadzenFormField Text="@L["EditModel.TargetModality"]" Variant="Variant.Outlined" class="w-100">
+        <RadzenTextBox @bind-Value="@targetModality" class="w-100" Placeholder="OP" />
+    </RadzenFormField>
+
+    <hr class="rz-my-1" />
+
+    <ClassInterpretationEditor Rows="@classRows" />
+
+    <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" JustifyContent="JustifyContent.End" class="rz-mt-2">
+        <RadzenButton Text="@L["Common.Cancel"]" ButtonStyle="ButtonStyle.Light" Click="@Cancel" Disabled="@isSaving" />
+        <RadzenButton Text="@(isSaving ? L["Common.Saving"] : L["Common.Save"])"
+                      Icon="@(isSaving ? "" : "save")"
+                      ButtonStyle="ButtonStyle.Primary"
+                      Click="@Save"
+                      Disabled="@isSaving" />
+    </RadzenStack>
+</RadzenStack>
+
+@code {
+    [Parameter] public AIModelDto Model { get; set; } = null!;
+
+    private string name = string.Empty;
+    private string? description;
+    private string? targetModality;
+    private List<ClassInterpretationRow> classRows = new();
+    private bool isSaving;
+
+    protected override void OnInitialized()
+    {
+        name = Model.Name;
+        description = Model.Description;
+        targetModality = Model.TargetModality;
+        classRows = ClassInterpretation.FromJson(
+            Model.ClassNames, Model.ClassSeverities, Model.ClassRecommendations);
+    }
+
+    private async Task Save()
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            NotificationService.Notify(NotificationSeverity.Error, L["Common.Error"], L["EditModel.NameRequired"]);
+            return;
+        }
+
+        var definedRows = classRows.Where(r => !string.IsNullOrWhiteSpace(r.Name)).ToList();
+        var hasClasses = definedRows.Count > 0;
+
+        var request = new UpdateModelMetadataRequest(
+            Name: name.Trim(),
+            Description: description,
+            TargetModality: targetModality,
+            ClassNames: hasClasses ? ClassInterpretation.Names(definedRows) : null,
+            ClassSeverities: hasClasses ? ClassInterpretation.Severities(definedRows) : null,
+            ClassRecommendations: hasClasses ? ClassInterpretation.Recommendations(definedRows) : null);
+
+        isSaving = true;
+        try
+        {
+            var error = await ApiClient.UpdateModelMetadataAsync(Model.Id, request);
+            if (error is null)
+            {
+                NotificationService.Notify(NotificationSeverity.Success, L["Common.Success"], L["EditModel.Updated"]);
+                DialogService.Close(true);
+            }
+            else
+            {
+                NotificationService.Notify(NotificationSeverity.Error, L["Common.Error"], L["EditModel.SaveFailed", error]);
+            }
+        }
+        catch (Exception ex)
+        {
+            NotificationService.Notify(NotificationSeverity.Error, L["Common.Error"], L["EditModel.SaveFailed", ex.Message]);
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private void Cancel() => DialogService.Close(false);
+}

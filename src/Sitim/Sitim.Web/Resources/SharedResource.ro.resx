@@ -1,0 +1,1308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="App.Title" xml:space="preserve">
+    <value>SITIM — Diagnostic Imagistic</value>
+  </data>
+  <data name="Common.Error" xml:space="preserve">
+    <value>Eroare</value>
+  </data>
+  <data name="Common.Success" xml:space="preserve">
+    <value>Succes</value>
+  </data>
+  <data name="Common.Warning" xml:space="preserve">
+    <value>Atenție</value>
+  </data>
+  <data name="Common.Save" xml:space="preserve">
+    <value>Salvează</value>
+  </data>
+  <data name="Common.Saving" xml:space="preserve">
+    <value>Se salvează...</value>
+  </data>
+  <data name="Common.Cancel" xml:space="preserve">
+    <value>Anulează</value>
+  </data>
+  <data name="Common.Close" xml:space="preserve">
+    <value>Închide</value>
+  </data>
+  <data name="Common.Delete" xml:space="preserve">
+    <value>Șterge</value>
+  </data>
+  <data name="Common.Details" xml:space="preserve">
+    <value>Detalii</value>
+  </data>
+  <data name="Common.Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Common.Yes" xml:space="preserve">
+    <value>Da</value>
+  </data>
+  <data name="Common.No" xml:space="preserve">
+    <value>Nu</value>
+  </data>
+  <data name="Common.Loading" xml:space="preserve">
+    <value>Se încarcă...</value>
+  </data>
+  <data name="Common.Active" xml:space="preserve">
+    <value>Activ</value>
+  </data>
+  <data name="Common.Inactive" xml:space="preserve">
+    <value>Inactiv</value>
+  </data>
+  <data name="Common.Name" xml:space="preserve">
+    <value>Nume</value>
+  </data>
+  <data name="Common.Description" xml:space="preserve">
+    <value>Descriere</value>
+  </data>
+  <data name="Common.Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Common.CreatedAt" xml:space="preserve">
+    <value>Creată la</value>
+  </data>
+  <data name="Common.Patient" xml:space="preserve">
+    <value>Pacient</value>
+  </data>
+  <data name="Common.Study" xml:space="preserve">
+    <value>Studiu</value>
+  </data>
+  <data name="Common.Confidence" xml:space="preserve">
+    <value>Încredere</value>
+  </data>
+  <data name="Nav.Logout" xml:space="preserve">
+    <value>Deconectare</value>
+  </data>
+  <data name="Nav.ToggleTheme" xml:space="preserve">
+    <value>Comută între tema deschisă și cea întunecată</value>
+  </data>
+  <data name="Nav.Tagline" xml:space="preserve">
+    <value>Suportul diagnosticului imagistic</value>
+  </data>
+  <data name="Nav.Welcome" xml:space="preserve">
+    <value>Bun venit</value>
+  </data>
+  <data name="Nav.Studies" xml:space="preserve">
+    <value>Lista de studii</value>
+  </data>
+  <data name="Nav.Import" xml:space="preserve">
+    <value>Import studii</value>
+  </data>
+  <data name="Nav.AIAnalyses" xml:space="preserve">
+    <value>Analize AI</value>
+  </data>
+  <data name="Nav.Users" xml:space="preserve">
+    <value>Utilizatori</value>
+  </data>
+  <data name="Nav.Admin" xml:space="preserve">
+    <value>Administrare</value>
+  </data>
+  <data name="Nav.Institutions" xml:space="preserve">
+    <value>Instituții</value>
+  </data>
+  <data name="Nav.AIModels" xml:space="preserve">
+    <value>Modele AI</value>
+  </data>
+  <data name="Footer.Tagline" xml:space="preserve">
+    <value>Platformă inteligentă pentru imagistică medicală — gestiune DICOM, analiză AI asistată și federated learning cross-instituții, într-un singur loc.</value>
+  </data>
+  <data name="Footer.AllSystemsOperational" xml:space="preserve">
+    <value>Toate sistemele funcționează</value>
+  </data>
+  <data name="Footer.Resources" xml:space="preserve">
+    <value>Resurse</value>
+  </data>
+  <data name="Footer.Project" xml:space="preserve">
+    <value>Proiect</value>
+  </data>
+  <data name="Footer.SourceCode" xml:space="preserve">
+    <value>Cod sursă</value>
+  </data>
+  <data name="Footer.Issues" xml:space="preserve">
+    <value>Probleme &amp; sugestii</value>
+  </data>
+  <data name="Footer.AllRightsReserved" xml:space="preserve">
+    <value>Toate drepturile rezervate.</value>
+  </data>
+  <data name="Footer.Terms" xml:space="preserve">
+    <value>Termeni</value>
+  </data>
+  <data name="Footer.Privacy" xml:space="preserve">
+    <value>Confidențialitate</value>
+  </data>
+  <data name="Common.ProcessingTime" xml:space="preserve">
+    <value>Timp procesare</value>
+  </data>
+  <data name="Panel.AIAnalysis" xml:space="preserve">
+    <value>Analiză AI</value>
+  </data>
+  <data name="Panel.RunAnalysis" xml:space="preserve">
+    <value>Rulează Analiză</value>
+  </data>
+  <data name="Panel.NoModelsAvailable" xml:space="preserve">
+    <value>Nu sunt modele AI disponibile. Încărcați mai întâi un model din pagina "Modele AI".</value>
+  </data>
+  <data name="Panel.AIModel" xml:space="preserve">
+    <value>Model AI</value>
+  </data>
+  <data name="Panel.RunningAnalysis" xml:space="preserve">
+    <value>Se execută analiza AI... (aproximativ 30-60 secunde)</value>
+  </data>
+  <data name="Panel.LastResult" xml:space="preserve">
+    <value>Rezultat Ultim</value>
+  </data>
+  <data name="Panel.Prediction" xml:space="preserve">
+    <value>Predicție</value>
+  </data>
+  <data name="Panel.ClassProbabilities" xml:space="preserve">
+    <value>Probabilități pe Clasă</value>
+  </data>
+  <data name="Panel.LoadModelsFailed" xml:space="preserve">
+    <value>Nu s-au putut încărca modelele AI: {0}</value>
+  </data>
+  <data name="Panel.SelectModel" xml:space="preserve">
+    <value>Selectați un model AI.</value>
+  </data>
+  <data name="Panel.AnalysisComplete" xml:space="preserve">
+    <value>Analiza AI finalizată cu succes. Predicție: {0} ({1})</value>
+  </data>
+  <data name="Panel.RunAnalysisError" xml:space="preserve">
+    <value>Analiza AI nu a putut fi pornită.</value>
+  </data>
+  <data name="Panel.RunAnalysisFailed" xml:space="preserve">
+    <value>Analiza AI a eșuat: {0}</value>
+  </data>
+  <data name="Login.PageTitle" xml:space="preserve">
+    <value>SITIM — Autentificare</value>
+  </data>
+  <data name="Login.Tagline" xml:space="preserve">
+    <value>Platformă de Diagnostic Imagistic</value>
+  </data>
+  <data name="Login.Password" xml:space="preserve">
+    <value>Parolă</value>
+  </data>
+  <data name="Login.SignIn" xml:space="preserve">
+    <value>Autentificare</value>
+  </data>
+  <data name="Login.SigningIn" xml:space="preserve">
+    <value>Se autentifică...</value>
+  </data>
+  <data name="Login.ConnectionError" xml:space="preserve">
+    <value>Eroare de conexiune: {0}</value>
+  </data>
+  <data name="Login.InvalidCredentials" xml:space="preserve">
+    <value>Email sau parolă incorectă.</value>
+  </data>
+  <data name="Login.UserFetchFailed" xml:space="preserve">
+    <value>Nu s-au putut obține datele utilizatorului.</value>
+  </data>
+  <data name="SetPassword.PageTitle" xml:space="preserve">
+    <value>Setare parolă — SITIM</value>
+  </data>
+  <data name="SetPassword.Subtitle" xml:space="preserve">
+    <value>Activare cont nou</value>
+  </data>
+  <data name="SetPassword.PreviousSessionClosed" xml:space="preserve">
+    <value>Sesiunea anterioară a fost închisă. Continuă activarea contului nou mai jos.</value>
+  </data>
+  <data name="SetPassword.Success" xml:space="preserve">
+    <value>Parola a fost setată cu succes. Te poți autentifica acum.</value>
+  </data>
+  <data name="SetPassword.GoToLogin" xml:space="preserve">
+    <value>Mergi la autentificare</value>
+  </data>
+  <data name="SetPassword.InvalidLink" xml:space="preserve">
+    <value>Linkul de invitație este invalid sau a expirat. Solicită un link nou administratorului.</value>
+  </data>
+  <data name="SetPassword.NewPassword" xml:space="preserve">
+    <value>Parolă nouă</value>
+  </data>
+  <data name="SetPassword.MinChars" xml:space="preserve">
+    <value>Minim 8 caractere</value>
+  </data>
+  <data name="SetPassword.ConfirmPassword" xml:space="preserve">
+    <value>Confirmare parolă</value>
+  </data>
+  <data name="SetPassword.RepeatPassword" xml:space="preserve">
+    <value>Repetă parola</value>
+  </data>
+  <data name="SetPassword.SetPasswordButton" xml:space="preserve">
+    <value>Setează parola</value>
+  </data>
+  <data name="SetPassword.Processing" xml:space="preserve">
+    <value>Se procesează...</value>
+  </data>
+  <data name="SetPassword.TooShort" xml:space="preserve">
+    <value>Parola trebuie să aibă cel puțin 8 caractere.</value>
+  </data>
+  <data name="SetPassword.Mismatch" xml:space="preserve">
+    <value>Parolele nu coincid.</value>
+  </data>
+  <data name="SetPassword.SubmitFailed" xml:space="preserve">
+    <value>Linkul a expirat sau parola nu respectă cerințele (minim 8 caractere, literă mare, cifră, caracter special).</value>
+  </data>
+  <data name="Welcome.PageTitle" xml:space="preserve">
+    <value>Bun venit — SITIM</value>
+  </data>
+  <data name="Welcome.GoodMorning" xml:space="preserve">
+    <value>Bună dimineața</value>
+  </data>
+  <data name="Welcome.GoodAfternoon" xml:space="preserve">
+    <value>Bună ziua</value>
+  </data>
+  <data name="Welcome.GoodEvening" xml:space="preserve">
+    <value>Bună seara</value>
+  </data>
+  <data name="Welcome.GoodNight" xml:space="preserve">
+    <value>Noapte bună</value>
+  </data>
+  <data name="Welcome.StudiesThisMonth" xml:space="preserve">
+    <value>Studii această lună</value>
+  </data>
+  <data name="Welcome.AIAnalysesThisMonth" xml:space="preserve">
+    <value>Analize AI luna aceasta</value>
+  </data>
+  <data name="Welcome.InProgressNow" xml:space="preserve">
+    <value>În procesare acum</value>
+  </data>
+  <data name="Welcome.ActiveUsers" xml:space="preserve">
+    <value>Utilizatori activi</value>
+  </data>
+  <data name="Welcome.RecentStudies" xml:space="preserve">
+    <value>Ultimele studii importate</value>
+  </data>
+  <data name="Welcome.SeeAllStudies" xml:space="preserve">
+    <value>Vezi toate studiile</value>
+  </data>
+  <data name="Welcome.NoStudiesYet" xml:space="preserve">
+    <value>Niciun studiu importat încă.</value>
+  </data>
+  <data name="Welcome.ImportFirstStudy" xml:space="preserve">
+    <value>Importă primul studiu</value>
+  </data>
+  <data name="Welcome.RecentAnalyses" xml:space="preserve">
+    <value>Analize AI recente</value>
+  </data>
+  <data name="Welcome.SeeAllAnalyses" xml:space="preserve">
+    <value>Vezi toate analizele</value>
+  </data>
+  <data name="Welcome.NoAnalysesYet" xml:space="preserve">
+    <value>Nicio analiză efectuată încă.</value>
+  </data>
+  <data name="Welcome.StartAnalysis" xml:space="preserve">
+    <value>Pornește o analiză</value>
+  </data>
+  <data name="Welcome.SearchStudy" xml:space="preserve">
+    <value>Caută studiu</value>
+  </data>
+  <data name="Welcome.SystemOperational" xml:space="preserve">
+    <value>Sistem operațional</value>
+  </data>
+  <data name="Welcome.PACSConnected" xml:space="preserve">
+    <value>PACS conectat</value>
+  </data>
+  <data name="Welcome.AIServiceActive" xml:space="preserve">
+    <value>AI Service activ</value>
+  </data>
+  <data name="Welcome.AdminSections" xml:space="preserve">
+    <value>Secțiuni administrative</value>
+  </data>
+  <data name="Welcome.ConfidencePct" xml:space="preserve">
+    <value>{0}% încredere</value>
+  </data>
+  <data name="Welcome.DemoCTChest" xml:space="preserve">
+    <value>CT Toracic</value>
+  </data>
+  <data name="Welcome.DemoBrainMRI" xml:space="preserve">
+    <value>RMN Cerebral</value>
+  </data>
+  <data name="Welcome.DemoUltrasound" xml:space="preserve">
+    <value>Ecografie</value>
+  </data>
+  <data name="Welcome.DemoXRay" xml:space="preserve">
+    <value>Radiografie</value>
+  </data>
+  <data name="Welcome.PatientNo" xml:space="preserve">
+    <value>Pacient #{0}</value>
+  </data>
+  <data name="Welcome.StudyNo" xml:space="preserve">
+    <value>Studiu #{0}</value>
+  </data>
+  <data name="Welcome.HoursAgo" xml:space="preserve">
+    <value>acum {0} ore</value>
+  </data>
+  <data name="Welcome.YesterdayAt" xml:space="preserve">
+    <value>ieri, {0}</value>
+  </data>
+  <data name="Welcome.ImagesCount" xml:space="preserve">
+    <value>{0} imagini</value>
+  </data>
+  <data name="Welcome.Retinopathy" xml:space="preserve">
+    <value>Retinopatie</value>
+  </data>
+  <data name="Common.Reload" xml:space="preserve">
+    <value>Reîncarcă</value>
+  </data>
+  <data name="Studies.PageTitle" xml:space="preserve">
+    <value>Lista de studii — SITIM</value>
+  </data>
+  <data name="Studies.SyncOrthanc" xml:space="preserve">
+    <value>Sincronizare Orthanc</value>
+  </data>
+  <data name="Studies.Syncing" xml:space="preserve">
+    <value>Sincronizare...</value>
+  </data>
+  <data name="Studies.Empty" xml:space="preserve">
+    <value>Nu există studii. Apasă „Sincronizare Orthanc” sau importă studii noi.</value>
+  </data>
+  <data name="Studies.PatientId" xml:space="preserve">
+    <value>ID Pacient</value>
+  </data>
+  <data name="Studies.StudyDate" xml:space="preserve">
+    <value>Data studiu</value>
+  </data>
+  <data name="Studies.Modalities" xml:space="preserve">
+    <value>Modalități</value>
+  </data>
+  <data name="Studies.StudyDetails" xml:space="preserve">
+    <value>Detalii studiu</value>
+  </data>
+  <data name="Studies.DeleteStudy" xml:space="preserve">
+    <value>Șterge studiu</value>
+  </data>
+  <data name="Studies.ConfirmDeleteTitle" xml:space="preserve">
+    <value>Confirmare ștergere studiu</value>
+  </data>
+  <data name="Studies.ConfirmDeleteQuestion" xml:space="preserve">
+    <value>Ești sigur că vrei să ștergi definitiv studiul pacientului {0} din data {1}?</value>
+  </data>
+  <data name="Studies.ConfirmDeleteWarning" xml:space="preserve">
+    <value>Studiul va fi eliminat din Orthanc și din baza de date. Această acțiune nu poate fi anulată.</value>
+  </data>
+  <data name="Studies.UnknownPatient" xml:space="preserve">
+    <value>necunoscut</value>
+  </data>
+  <data name="Studies.DeletePermanently" xml:space="preserve">
+    <value>Șterge definitiv</value>
+  </data>
+  <data name="Studies.ApiConnectionError" xml:space="preserve">
+    <value>Nu s-a putut conecta la API. Verificați dacă serverul API rulează.</value>
+  </data>
+  <data name="Studies.NoNewStudies" xml:space="preserve">
+    <value>Nu există studii noi pentru această instituție în Orthanc.</value>
+  </data>
+  <data name="Studies.SyncedOne" xml:space="preserve">
+    <value>1 studiu sincronizat din Orthanc.</value>
+  </data>
+  <data name="Studies.SyncedMany" xml:space="preserve">
+    <value>{0} studii sincronizate din Orthanc.</value>
+  </data>
+  <data name="Studies.SyncComplete" xml:space="preserve">
+    <value>Sincronizare completă</value>
+  </data>
+  <data name="Studies.SyncError" xml:space="preserve">
+    <value>Eroare sincronizare</value>
+  </data>
+  <data name="Studies.Deleted" xml:space="preserve">
+    <value>Studiu șters</value>
+  </data>
+  <data name="Studies.DeletedDetail" xml:space="preserve">
+    <value>Studiul pacientului {0} a fost șters definitiv.</value>
+  </data>
+  <data name="Studies.DeleteFailed" xml:space="preserve">
+    <value>Nu s-a putut șterge studiul. Verificați conexiunea cu Orthanc.</value>
+  </data>
+  <data name="Import.PageTitle" xml:space="preserve">
+    <value>Import studii — SITIM</value>
+  </data>
+  <data name="Import.Title" xml:space="preserve">
+    <value>Import studii DICOM</value>
+  </data>
+  <data name="Import.FileField" xml:space="preserve">
+    <value>Fișier arhivă (.zip) sau fișiere DICOM</value>
+  </data>
+  <data name="Import.FilesSelected" xml:space="preserve">
+    <value>{0} fișier(e) selectat(e) — {1}</value>
+  </data>
+  <data name="Import.ImportButton" xml:space="preserve">
+    <value>Importă</value>
+  </data>
+  <data name="Import.Importing" xml:space="preserve">
+    <value>Se importă...</value>
+  </data>
+  <data name="Import.Result" xml:space="preserve">
+    <value>Rezultat import</value>
+  </data>
+  <data name="Import.UploadedInstances" xml:space="preserve">
+    <value>Instanțe încărcate</value>
+  </data>
+  <data name="Import.DetectedStudies" xml:space="preserve">
+    <value>Studii detectate</value>
+  </data>
+  <data name="Import.SyncedStudies" xml:space="preserve">
+    <value>Studii sincronizate</value>
+  </data>
+  <data name="Import.Warnings" xml:space="preserve">
+    <value>Avertismente</value>
+  </data>
+  <data name="Import.GoHome" xml:space="preserve">
+    <value>Mergi la pagina principală</value>
+  </data>
+  <data name="Import.OpenStudy" xml:space="preserve">
+    <value>Deschide studiul</value>
+  </data>
+  <data name="Import.ReadingArchive" xml:space="preserve">
+    <value>Se citește arhiva {0}...</value>
+  </data>
+  <data name="Import.SendingToServer" xml:space="preserve">
+    <value>Se trimite la server...</value>
+  </data>
+  <data name="Import.ReadingFile" xml:space="preserve">
+    <value>Se citește fișierul {0} din {1}: {2}</value>
+  </data>
+  <data name="Import.ReadProgress" xml:space="preserve">
+    <value>Citit {0} din {1} fișiere ({2} / {3})</value>
+  </data>
+  <data name="Import.SyncingStudies" xml:space="preserve">
+    <value>Se sincronizează studiile...</value>
+  </data>
+  <data name="Import.Succeeded" xml:space="preserve">
+    <value>Import reușit</value>
+  </data>
+  <data name="Import.SucceededDetail" xml:space="preserve">
+    <value>{0} instanțe importate, {1} studii sincronizate.</value>
+  </data>
+  <data name="Import.Error" xml:space="preserve">
+    <value>Eroare import</value>
+  </data>
+  <data name="Import.NoServerResult" xml:space="preserve">
+    <value>Serverul nu a returnat un rezultat.</value>
+  </data>
+  <data name="StudyDetails.PageTitle" xml:space="preserve">
+    <value>Studiu — SITIM</value>
+  </data>
+  <data name="StudyDetails.NotFound" xml:space="preserve">
+    <value>Studiul nu a fost găsit.</value>
+  </data>
+  <data name="StudyDetails.BackToWorklist" xml:space="preserve">
+    <value>Înapoi la Worklist</value>
+  </data>
+  <data name="StudyDetails.Title" xml:space="preserve">
+    <value>Studiu: {0}</value>
+  </data>
+  <data name="StudyDetails.Sync" xml:space="preserve">
+    <value>Sincronizare</value>
+  </data>
+  <data name="StudyDetails.Analyze" xml:space="preserve">
+    <value>Analiză</value>
+  </data>
+  <data name="StudyDetails.SeriesCount" xml:space="preserve">
+    <value>Serii: {0}</value>
+  </data>
+  <data name="StudyDetails.OHIFViewer" xml:space="preserve">
+    <value>Vizualizare OHIF</value>
+  </data>
+  <data name="StudyDetails.OpenNewTab" xml:space="preserve">
+    <value>Deschide în tab nou</value>
+  </data>
+  <data name="StudyDetails.RetryViewer" xml:space="preserve">
+    <value>Reîncearcă viewer</value>
+  </data>
+  <data name="StudyDetails.LoadViewer" xml:space="preserve">
+    <value>Încarcă viewer</value>
+  </data>
+  <data name="StudyDetails.PACSUnavailable" xml:space="preserve">
+    <value>Serverul PACS (Orthanc) nu este disponibil momentan. Vizualizatorul OHIF nu poate fi deschis.</value>
+  </data>
+  <data name="StudyDetails.PACSUnavailableShort" xml:space="preserve">
+    <value>Serverul PACS (Orthanc) nu este disponibil momentan.</value>
+  </data>
+  <data name="StudyDetails.PressLoadViewer" xml:space="preserve">
+    <value>Apasă 'Încarcă viewer' pentru a deschide vizualizatorul OHIF.</value>
+  </data>
+  <data name="StudyDetails.AnalysesOnStudy" xml:space="preserve">
+    <value>Analize pe acest studiu</value>
+  </data>
+  <data name="StudyDetails.NoAnalysesYet" xml:space="preserve">
+    <value>Nu există încă analize pentru acest studiu.</value>
+  </data>
+  <data name="StudyDetails.OpenAnalysis" xml:space="preserve">
+    <value>Deschide analiza</value>
+  </data>
+  <data name="StudyDetails.ViewerUnavailable" xml:space="preserve">
+    <value>Viewer indisponibil</value>
+  </data>
+  <data name="StudyDetails.ViewerError" xml:space="preserve">
+    <value>Eroare viewer</value>
+  </data>
+  <data name="StudyDetails.Synced" xml:space="preserve">
+    <value>Sincronizat</value>
+  </data>
+  <data name="StudyDetails.SyncedDetail" xml:space="preserve">
+    <value>Studiul a fost sincronizat din Orthanc.</value>
+  </data>
+  <data name="StudyDetails.NoDbId" xml:space="preserve">
+    <value>Studiul nu are ID din baza de date.</value>
+  </data>
+  <data name="StudyDetails.NoModelAvailable" xml:space="preserve">
+    <value>Niciun model disponibil</value>
+  </data>
+  <data name="StudyDetails.NoCompatibleModels" xml:space="preserve">
+    <value>Nu sunt modele compatibile cu modalitatea acestui studiu ({0}).</value>
+  </data>
+  <data name="StudyDetails.SelectModelTitle" xml:space="preserve">
+    <value>Selectare Model pentru Analiză</value>
+  </data>
+  <data name="StudyDetails.AnalysisStarted" xml:space="preserve">
+    <value>Analiză pornită</value>
+  </data>
+  <data name="StudyDetails.AnalysisQueued" xml:space="preserve">
+    <value>Analiza a fost adăugată în coadă (Job ID: {0}).</value>
+  </data>
+  <data name="StudyDetails.AnalysisStartError" xml:space="preserve">
+    <value>Eroare la pornire analiză</value>
+  </data>
+  <data name="StudyDetails.AnalysesError" xml:space="preserve">
+    <value>Eroare analize</value>
+  </data>
+  <data name="AIAnalyses.PageTitle" xml:space="preserve">
+    <value>Analize AI — SITIM</value>
+  </data>
+  <data name="AIAnalyses.Subtitle" xml:space="preserve">
+    <value>Analize în curs și analize finalizate</value>
+  </data>
+  <data name="AIAnalyses.Empty" xml:space="preserve">
+    <value>Nu există analize AI pentru instituția curentă.</value>
+  </data>
+  <data name="Common.AutoRefresh5s" xml:space="preserve">
+    <value>Actualizare automată la 5 sec</value>
+  </data>
+  <data name="Progress.PageTitle" xml:space="preserve">
+    <value>Progresul analizei — SITIM</value>
+  </data>
+  <data name="Progress.JobNotFound" xml:space="preserve">
+    <value>Jobul de analiză nu a fost găsit.</value>
+  </data>
+  <data name="Progress.BackToStudy" xml:space="preserve">
+    <value>Înapoi la studiu</value>
+  </data>
+  <data name="Progress.Title" xml:space="preserve">
+    <value>Progresul analizei</value>
+  </data>
+  <data name="Progress.StartedAt" xml:space="preserve">
+    <value>Pornită la</value>
+  </data>
+  <data name="Progress.Finished" xml:space="preserve">
+    <value>Analiza este finalizată.</value>
+  </data>
+  <data name="Progress.Class" xml:space="preserve">
+    <value>Clasă: {0}</value>
+  </data>
+  <data name="Progress.Confidence" xml:space="preserve">
+    <value>Încredere: {0}</value>
+  </data>
+  <data name="Progress.SeeResultDetails" xml:space="preserve">
+    <value>Vezi Detalii Rezultat</value>
+  </data>
+  <data name="Progress.Error" xml:space="preserve">
+    <value>Eroare: {0}</value>
+  </data>
+  <data name="Progress.StatusQueued" xml:space="preserve">
+    <value>Analiza este în coadă și urmează să pornească.</value>
+  </data>
+  <data name="Progress.StatusRunning" xml:space="preserve">
+    <value>Analiza rulează în acest moment.</value>
+  </data>
+  <data name="Progress.StatusCompleted" xml:space="preserve">
+    <value>Analiza a fost finalizată cu succes.</value>
+  </data>
+  <data name="Progress.StatusFailed" xml:space="preserve">
+    <value>Analiza a eșuat. Verifică mesajul de eroare.</value>
+  </data>
+  <data name="Results.PageTitle" xml:space="preserve">
+    <value>Rezultatul analizei — SITIM</value>
+  </data>
+  <data name="Results.NotFound" xml:space="preserve">
+    <value>Rezultatul analizei nu a fost găsit.</value>
+  </data>
+  <data name="Results.Title" xml:space="preserve">
+    <value>Rezultatul analizei</value>
+  </data>
+  <data name="Results.NotFinishedYet" xml:space="preserve">
+    <value>Analiza nu este finalizată încă. Status:</value>
+  </data>
+  <data name="Results.SeeProgress" xml:space="preserve">
+    <value>Vezi progresul</value>
+  </data>
+  <data name="Results.FinishedAt" xml:space="preserve">
+    <value>Finalizată la</value>
+  </data>
+  <data name="Results.ClinicalInterpretation" xml:space="preserve">
+    <value>Interpretare clinică</value>
+  </data>
+  <data name="Results.Diagnosis" xml:space="preserve">
+    <value>Diagnostic</value>
+  </data>
+  <data name="Results.Severity" xml:space="preserve">
+    <value>Severitate</value>
+  </data>
+  <data name="Results.PredictionClass" xml:space="preserve">
+    <value>Clasă predicție</value>
+  </data>
+  <data name="Results.ClassNo" xml:space="preserve">
+    <value>Clasa {0}</value>
+  </data>
+  <data name="Results.Recommendations" xml:space="preserve">
+    <value>Recomandări</value>
+  </data>
+  <data name="Results.NewAnalysis" xml:space="preserve">
+    <value>Analiză Nouă</value>
+  </data>
+  <data name="AIModels.PageTitle" xml:space="preserve">
+    <value>Modele AI — SITIM</value>
+  </data>
+  <data name="AIModels.Subtitle" xml:space="preserve">
+    <value>Gestionează modelele de inteligență artificială pentru analiză medicală</value>
+  </data>
+  <data name="AIModels.UploadNew" xml:space="preserve">
+    <value>Încarcă Model Nou</value>
+  </data>
+  <data name="AIModels.LoadingModels" xml:space="preserve">
+    <value>Se încarcă modelele...</value>
+  </data>
+  <data name="AIModels.Empty" xml:space="preserve">
+    <value>Nu există modele AI încărcate</value>
+  </data>
+  <data name="AIModels.EmptyHint" xml:space="preserve">
+    <value>Începe prin a încărca un model antrenat în format ONNX</value>
+  </data>
+  <data name="AIModels.ModelName" xml:space="preserve">
+    <value>Nume model</value>
+  </data>
+  <data name="AIModels.Accuracy" xml:space="preserve">
+    <value>Acuratețe</value>
+  </data>
+  <data name="AIModels.UploadDate" xml:space="preserve">
+    <value>Data încărcării</value>
+  </data>
+  <data name="AIModels.EditClasses" xml:space="preserve">
+    <value>Editează clase și recomandări</value>
+  </data>
+  <data name="AIModels.Deactivate" xml:space="preserve">
+    <value>Dezactivează</value>
+  </data>
+  <data name="AIModels.Activate" xml:space="preserve">
+    <value>Activează</value>
+  </data>
+  <data name="AIModels.UploadDialogTitle" xml:space="preserve">
+    <value>Încarcă Model AI</value>
+  </data>
+  <data name="AIModels.DetailsDialogTitle" xml:space="preserve">
+    <value>Detalii Model AI</value>
+  </data>
+  <data name="AIModels.EditDialogTitle" xml:space="preserve">
+    <value>Editează Model AI</value>
+  </data>
+  <data name="AIModels.ConfirmDeactivate" xml:space="preserve">
+    <value>Ești sigur că vrei să dezactivezi modelul '{0}'?</value>
+  </data>
+  <data name="AIModels.ConfirmActivate" xml:space="preserve">
+    <value>Ești sigur că vrei să activezi modelul '{0}'?</value>
+  </data>
+  <data name="AIModels.ConfirmTitle" xml:space="preserve">
+    <value>Confirmare</value>
+  </data>
+  <data name="AIModels.Deactivated" xml:space="preserve">
+    <value>Modelul a fost dezactivat</value>
+  </data>
+  <data name="AIModels.Activated" xml:space="preserve">
+    <value>Modelul a fost activat</value>
+  </data>
+  <data name="AIModels.ToggleFailed" xml:space="preserve">
+    <value>Nu s-a putut modifica statusul</value>
+  </data>
+  <data name="AIModels.ToggleFailedDetail" xml:space="preserve">
+    <value>Nu s-a putut modifica statusul: {0}</value>
+  </data>
+  <data name="AIModels.ConfirmDelete" xml:space="preserve">
+    <value>Ești sigur că vrei să ștergi modelul '{0}' v{1}? Această acțiune este ireversibilă.</value>
+  </data>
+  <data name="AIModels.ConfirmDeleteTitle" xml:space="preserve">
+    <value>Confirmare Ștergere</value>
+  </data>
+  <data name="AIModels.Deleted" xml:space="preserve">
+    <value>Modelul a fost șters</value>
+  </data>
+  <data name="AIModels.DeleteFailed" xml:space="preserve">
+    <value>Nu s-a putut șterge modelul</value>
+  </data>
+  <data name="AIModels.DeleteFailedDetail" xml:space="preserve">
+    <value>Nu s-a putut șterge modelul: {0}</value>
+  </data>
+  <data name="NotFoundPage.PageTitle" xml:space="preserve">
+    <value>Pagină negăsită</value>
+  </data>
+  <data name="NotFoundPage.Title" xml:space="preserve">
+    <value>Pagina nu este disponibilă. Ne pare rău.</value>
+  </data>
+  <data name="NotFoundPage.Subtitle" xml:space="preserve">
+    <value>Nu găsim nicio pagină cu adresa introdusă.</value>
+  </data>
+  <data name="NotFoundPage.GoHome" xml:space="preserve">
+    <value>Mergi la pagina principală</value>
+  </data>
+  <data name="ModelPicker.Title" xml:space="preserve">
+    <value>Selectează modelul AI pentru analiză</value>
+  </data>
+  <data name="ModelPicker.CompatibleCount" xml:space="preserve">
+    <value>{0} modele compatibile</value>
+  </data>
+  <data name="ModelPicker.NoModels" xml:space="preserve">
+    <value>Nu sunt modele disponibile pentru această modalitate DICOM.</value>
+  </data>
+  <data name="ModelPicker.SelectForDetails" xml:space="preserve">
+    <value>Selectează un model din listă pentru detalii.</value>
+  </data>
+  <data name="ModelPicker.AnyModality" xml:space="preserve">
+    <value>Orice modalitate</value>
+  </data>
+  <data name="ModelPicker.AccuracyNA" xml:space="preserve">
+    <value>Acuratețe n/a</value>
+  </data>
+  <data name="ModelPicker.NoDescription" xml:space="preserve">
+    <value>Fără descriere.</value>
+  </data>
+  <data name="ModelPicker.StartAnalysis" xml:space="preserve">
+    <value>Pornește analiza</value>
+  </data>
+  <data name="Users.PageTitle" xml:space="preserve">
+    <value>Utilizatori — SITIM</value>
+  </data>
+  <data name="Users.Subtitle" xml:space="preserve">
+    <value>Gestionare conturi: doctori, tehnicieni și administratori.</value>
+  </data>
+  <data name="Users.Invite" xml:space="preserve">
+    <value>Invită utilizator</value>
+  </data>
+  <data name="Users.Empty" xml:space="preserve">
+    <value>Nu există utilizatori.</value>
+  </data>
+  <data name="Users.Role" xml:space="preserve">
+    <value>Rol</value>
+  </data>
+  <data name="Users.Institution" xml:space="preserve">
+    <value>Instituție</value>
+  </data>
+  <data name="Users.Created" xml:space="preserve">
+    <value>Creat</value>
+  </data>
+  <data name="Users.Edit" xml:space="preserve">
+    <value>Editează</value>
+  </data>
+  <data name="Users.DeleteUser" xml:space="preserve">
+    <value>Șterge utilizatorul</value>
+  </data>
+  <data name="Users.InviteNew" xml:space="preserve">
+    <value>Invită utilizator nou</value>
+  </data>
+  <data name="Users.FullName" xml:space="preserve">
+    <value>Nume complet</value>
+  </data>
+  <data name="Users.SelectInstitution" xml:space="preserve">
+    <value>Selectați instituția</value>
+  </data>
+  <data name="Users.SendInvite" xml:space="preserve">
+    <value>Trimite invitație</value>
+  </data>
+  <data name="Users.InviteSent" xml:space="preserve">
+    <value>Invitație trimisă</value>
+  </data>
+  <data name="Users.InviteSentDetail" xml:space="preserve">
+    <value>Am trimis un email cu link de activare la</value>
+  </data>
+  <data name="Users.InviteLinkHint" xml:space="preserve">
+    <value>Linkul este valabil 2 ore și poate fi folosit o singură dată. Dacă utilizatorul nu îl primește, verifică folderul Spam sau trimite invitația din nou.</value>
+  </data>
+  <data name="Users.EmailUnavailable" xml:space="preserve">
+    <value>Email indisponibil</value>
+  </data>
+  <data name="Users.EmailFailed" xml:space="preserve">
+    <value>Trimiterea emailului a eșuat. Contul nou a fost retras automat.</value>
+  </data>
+  <data name="Users.DevModeHint" xml:space="preserve">
+    <value>Modul Development: poți folosi linkul de mai jos manual.</value>
+  </data>
+  <data name="Users.FallbackLink" xml:space="preserve">
+    <value>Link de fallback (DEV)</value>
+  </data>
+  <data name="Users.EditUser" xml:space="preserve">
+    <value>Editare utilizator</value>
+  </data>
+  <data name="Users.ActiveAccount" xml:space="preserve">
+    <value>Cont activ</value>
+  </data>
+  <data name="Users.ConfirmDeleteTitle" xml:space="preserve">
+    <value>Confirmare ștergere</value>
+  </data>
+  <data name="Users.ConfirmDeleteQuestion" xml:space="preserve">
+    <value>Ești sigur că vrei să ștergi definitiv utilizatorul {0}?</value>
+  </data>
+  <data name="Users.ConfirmDeleteWarning" xml:space="preserve">
+    <value>Această acțiune nu poate fi anulată.</value>
+  </data>
+  <data name="Users.EmailRequired" xml:space="preserve">
+    <value>Email obligatoriu.</value>
+  </data>
+  <data name="Users.InviteError" xml:space="preserve">
+    <value>Eroare la invitație. Verificați că email-ul nu este deja înregistrat.</value>
+  </data>
+  <data name="Users.InviteEmailSentTo" xml:space="preserve">
+    <value>Email de invitație trimis către {0}.</value>
+  </data>
+  <data name="Users.InviteEmailFailed" xml:space="preserve">
+    <value>Trimiterea emailului a eșuat. Vezi detaliile în dialog.</value>
+  </data>
+  <data name="Users.UpdateError" xml:space="preserve">
+    <value>Eroare la actualizare.</value>
+  </data>
+  <data name="Users.Updated" xml:space="preserve">
+    <value>Utilizatorul a fost actualizat.</value>
+  </data>
+  <data name="Users.DeletedDetail" xml:space="preserve">
+    <value>Utilizatorul {0} a fost șters definitiv.</value>
+  </data>
+  <data name="Users.DeleteError" xml:space="preserve">
+    <value>Eroare la ștergere. Nu poți șterge conturi SuperAdmin sau propriul cont.</value>
+  </data>
+  <data name="Institutions.PageTitle" xml:space="preserve">
+    <value>Gestionare Instituții — SITIM</value>
+  </data>
+  <data name="Institutions.Subtitle" xml:space="preserve">
+    <value>Gestionarea instituțiilor înregistrate pe platformă.</value>
+  </data>
+  <data name="Institutions.New" xml:space="preserve">
+    <value>Instituție nouă</value>
+  </data>
+  <data name="Institutions.Empty" xml:space="preserve">
+    <value>Nu există instituții înregistrate.</value>
+  </data>
+  <data name="Institutions.Name" xml:space="preserve">
+    <value>Denumire</value>
+  </data>
+  <data name="Institutions.OrthancUrl" xml:space="preserve">
+    <value>URL Orthanc</value>
+  </data>
+  <data name="Institutions.CreatedAt" xml:space="preserve">
+    <value>Creat la</value>
+  </data>
+  <data name="Institutions.NamePlaceholder" xml:space="preserve">
+    <value>ex: Spitalul Clinic Județean Cluj</value>
+  </data>
+  <data name="Institutions.SlugPlaceholder" xml:space="preserve">
+    <value>ex: scj-cluj</value>
+  </data>
+  <data name="Institutions.OrthancUrlPlaceholder" xml:space="preserve">
+    <value>ex: http://orthanc-scj-cluj:8042</value>
+  </data>
+  <data name="Institutions.OrthancUrlHint" xml:space="preserve">
+    <value>Adresa serverului Orthanc dedicat acestei instituții (hostname Docker sau URL extern)</value>
+  </data>
+  <data name="Institutions.OrthancUser" xml:space="preserve">
+    <value>User Orthanc</value>
+  </data>
+  <data name="Institutions.OrthancPassword" xml:space="preserve">
+    <value>Parolă Orthanc</value>
+  </data>
+  <data name="Institutions.NoAuthPlaceholder" xml:space="preserve">
+    <value>Lasă gol dacă fără autentificare</value>
+  </data>
+  <data name="Institutions.Create" xml:space="preserve">
+    <value>Creare</value>
+  </data>
+  <data name="Institutions.Edit" xml:space="preserve">
+    <value>Editare instituție</value>
+  </data>
+  <data name="Institutions.EmptyNoAuth" xml:space="preserve">
+    <value>Gol = fără autentificare</value>
+  </data>
+  <data name="Institutions.EmptyKeepPassword" xml:space="preserve">
+    <value>Gol = păstrează parola actuală</value>
+  </data>
+  <data name="Institutions.FillRequired" xml:space="preserve">
+    <value>Completați toate câmpurile obligatorii.</value>
+  </data>
+  <data name="Institutions.CreatedDetail" xml:space="preserve">
+    <value>Instituția '{0}' a fost creată.</value>
+  </data>
+  <data name="Institutions.CreateError" xml:space="preserve">
+    <value>Eroare la crearea instituției. Verificați că slug-ul este unic.</value>
+  </data>
+  <data name="Institutions.Updated" xml:space="preserve">
+    <value>Instituția a fost actualizată.</value>
+  </data>
+  <data name="Institutions.UpdateError" xml:space="preserve">
+    <value>Eroare la actualizarea instituției.</value>
+  </data>
+  <data name="Admin.PageTitle" xml:space="preserve">
+    <value>Administrare — SITIM</value>
+  </data>
+  <data name="Admin.SystemStatus" xml:space="preserve">
+    <value>Stare sistem</value>
+  </data>
+  <data name="Admin.Unchecked" xml:space="preserve">
+    <value>Neverificat</value>
+  </data>
+  <data name="Admin.Check" xml:space="preserve">
+    <value>Verifică</value>
+  </data>
+  <data name="Admin.Checking" xml:space="preserve">
+    <value>Se verifică...</value>
+  </data>
+  <data name="Admin.QuickActions" xml:space="preserve">
+    <value>Acțiuni rapide</value>
+  </data>
+  <data name="Admin.FullSync" xml:space="preserve">
+    <value>Sincronizare completă Orthanc → DB</value>
+  </data>
+  <data name="Admin.FullSyncHint" xml:space="preserve">
+    <value>Sincronizează toate studiile din Orthanc în baza de date locală.</value>
+  </data>
+  <data name="Admin.SyncingAll" xml:space="preserve">
+    <value>Se sincronizează...</value>
+  </data>
+  <data name="Admin.ExternalLinks" xml:space="preserve">
+    <value>Linkuri externe</value>
+  </data>
+  <data name="Admin.ApiOnline" xml:space="preserve">
+    <value>API-ul este online.</value>
+  </data>
+  <data name="Admin.ApiNotResponding" xml:space="preserve">
+    <value>API-ul nu răspunde.</value>
+  </data>
+  <data name="FL.Subtitle" xml:space="preserve">
+    <value>Sesiuni FL active și istoricul rundelor de antrenare</value>
+  </data>
+  <data name="FL.NewSession" xml:space="preserve">
+    <value>Sesiune nouă</value>
+  </data>
+  <data name="FL.ConnectedClients" xml:space="preserve">
+    <value>Clienți FL conectați (handshake instituție)</value>
+  </data>
+  <data name="FL.NoClientsOnline" xml:space="preserve">
+    <value>Nu există clienți FL online. Configurează fiecare container cu</value>
+  </data>
+  <data name="FL.NoSessions" xml:space="preserve">
+    <value>Nu există sesiuni FL create.</value>
+  </data>
+  <data name="FL.Rounds" xml:space="preserve">
+    <value>Runde</value>
+  </data>
+  <data name="FL.Participants" xml:space="preserve">
+    <value>Participanți</value>
+  </data>
+  <data name="FL.SessionDetails" xml:space="preserve">
+    <value>Detalii sesiune</value>
+  </data>
+  <data name="FL.StopSession" xml:space="preserve">
+    <value>Oprește sesiunea</value>
+  </data>
+  <data name="FL.NewFLSession" xml:space="preserve">
+    <value>Sesiune FL nouă</value>
+  </data>
+  <data name="FL.ModelKey" xml:space="preserve">
+    <value>Cheie model</value>
+  </data>
+  <data name="FL.Architecture" xml:space="preserve">
+    <value>Arhitectura rețelei</value>
+  </data>
+  <data name="FL.TotalRounds" xml:space="preserve">
+    <value>Număr total runde</value>
+  </data>
+  <data name="FL.ParticipatingInstitutions" xml:space="preserve">
+    <value>Instituții participante</value>
+  </data>
+  <data name="FL.NoActiveInstitutions" xml:space="preserve">
+    <value>Nu există instituții active.</value>
+  </data>
+  <data name="FL.ClientConnected" xml:space="preserve">
+    <value>Client FL conectat</value>
+  </data>
+  <data name="FL.ClientDisconnected" xml:space="preserve">
+    <value>Client FL deconectat</value>
+  </data>
+  <data name="FL.SelectionHint" xml:space="preserve">
+    <value>Selectați minimum o instituție activă. Doar instituțiile cu client FL conectat pot porni sesiunea.</value>
+  </data>
+  <data name="FL.Selected" xml:space="preserve">
+    <value>Selectate:</value>
+  </data>
+  <data name="FL.Connected" xml:space="preserve">
+    <value>Conectate:</value>
+  </data>
+  <data name="FL.StartSession" xml:space="preserve">
+    <value>Pornește sesiunea</value>
+  </data>
+  <data name="FL.Validation" xml:space="preserve">
+    <value>Validare</value>
+  </data>
+  <data name="FL.ModelKeyRequired" xml:space="preserve">
+    <value>Completați cheia modelului.</value>
+  </data>
+  <data name="FL.RoundsPositive" xml:space="preserve">
+    <value>Numărul de runde trebuie să fie mai mare decât 0.</value>
+  </data>
+  <data name="FL.SelectOneInstitution" xml:space="preserve">
+    <value>Selectați minimum o instituție participantă.</value>
+  </data>
+  <data name="FL.MissingClient" xml:space="preserve">
+    <value>Client FL lipsă</value>
+  </data>
+  <data name="FL.MissingClientDetail" xml:space="preserve">
+    <value>Instituții fără client FL online: {0}</value>
+  </data>
+  <data name="FL.StartFailed" xml:space="preserve">
+    <value>Nu s-a putut porni sesiunea FL.</value>
+  </data>
+  <data name="FL.SessionStarted" xml:space="preserve">
+    <value>Sesiunea FL {0} a fost pornită.</value>
+  </data>
+  <data name="FL.StopFailed" xml:space="preserve">
+    <value>Nu s-a putut opri sesiunea FL.</value>
+  </data>
+  <data name="FL.SessionStopped" xml:space="preserve">
+    <value>Sesiune oprită</value>
+  </data>
+  <data name="FL.SessionStoppedDetail" xml:space="preserve">
+    <value>Sesiunea {0} a fost oprită.</value>
+  </data>
+  <data name="FLDetails.PageTitle" xml:space="preserve">
+    <value>Detalii sesiune FL — SITIM</value>
+  </data>
+  <data name="FLDetails.BackToDashboard" xml:space="preserve">
+    <value>Înapoi la dashboard</value>
+  </data>
+  <data name="FLDetails.Title" xml:space="preserve">
+    <value>Detalii sesiune FL</value>
+  </data>
+  <data name="FLDetails.NotFound" xml:space="preserve">
+    <value>Sesiunea FL nu a fost găsită.</value>
+  </data>
+  <data name="FLDetails.CurrentRound" xml:space="preserve">
+    <value>Runda curentă</value>
+  </data>
+  <data name="FLDetails.ModelOutput" xml:space="preserve">
+    <value>Model output</value>
+  </data>
+  <data name="FLDetails.LastError" xml:space="preserve">
+    <value>Ultima eroare</value>
+  </data>
+  <data name="FLDetails.PublishedModel" xml:space="preserve">
+    <value>Model publicat în registry</value>
+  </data>
+  <data name="FLDetails.NotPublishedYet" xml:space="preserve">
+    <value>Modelul nu este încă publicat în registry.</value>
+  </data>
+  <data name="FLDetails.ModelActiveInference" xml:space="preserve">
+    <value>Model activ în inferență</value>
+  </data>
+  <data name="FLDetails.ActivateModel" xml:space="preserve">
+    <value>Activează modelul FL</value>
+  </data>
+  <data name="FLDetails.NoParticipants" xml:space="preserve">
+    <value>Nu există participanți înregistrați.</value>
+  </data>
+  <data name="FLDetails.MetricsEvolution" xml:space="preserve">
+    <value>Evoluție metrici (loss/accuracy)</value>
+  </data>
+  <data name="FLDetails.NoRoundsYet" xml:space="preserve">
+    <value>Nu există încă runde finalizate.</value>
+  </data>
+  <data name="FLDetails.Round" xml:space="preserve">
+    <value>Runda</value>
+  </data>
+  <data name="FLDetails.MetricValue" xml:space="preserve">
+    <value>Valoare metrică</value>
+  </data>
+  <data name="FLDetails.AggregatedLoss" xml:space="preserve">
+    <value>Loss agregat</value>
+  </data>
+  <data name="FLDetails.AggregatedAccuracy" xml:space="preserve">
+    <value>Accuracy agregat</value>
+  </data>
+  <data name="FLDetails.AggregatedF1" xml:space="preserve">
+    <value>F1 macro agregat</value>
+  </data>
+  <data name="FLDetails.CommunicationCost" xml:space="preserve">
+    <value>Cost de comunicare</value>
+  </data>
+  <data name="FLDetails.CommunicationCostHint" xml:space="preserve">
+    <value>Volumul de parametri transmiși de clienți.</value>
+  </data>
+  <data name="FLDetails.SessionTotal" xml:space="preserve">
+    <value>Total sesiune</value>
+  </data>
+  <data name="FLDetails.AvgPerClientRound" xml:space="preserve">
+    <value>Mediu / client / rundă</value>
+  </data>
+  <data name="FLDetails.MbPerRound" xml:space="preserve">
+    <value>MB / rundă</value>
+  </data>
+  <data name="FLDetails.MbTransferred" xml:space="preserve">
+    <value>MB transmiși</value>
+  </data>
+  <data name="FLDetails.NoCommunicationData" xml:space="preserve">
+    <value>Nu există încă date de cost de comunicare.</value>
+  </data>
+  <data name="FLDetails.ClassDistribution" xml:space="preserve">
+    <value>Distribuția claselor pe instituții (non-IID)</value>
+  </data>
+  <data name="FLDetails.NoClassDistribution" xml:space="preserve">
+    <value>Distribuția claselor nu a fost încă raportată de clienți.</value>
+  </data>
+  <data name="FLDetails.Class" xml:space="preserve">
+    <value>Clasă</value>
+  </data>
+  <data name="FLDetails.SampleCount" xml:space="preserve">
+    <value>Număr exemple</value>
+  </data>
+  <data name="FLDetails.ActivateFailed" xml:space="preserve">
+    <value>Nu s-a putut activa modelul FL.</value>
+  </data>
+  <data name="FLDetails.ActivatedDetail" xml:space="preserve">
+    <value>Modelul FL a fost activat pentru inferență.</value>
+  </data>
+  <data name="ModelDialog.Classes" xml:space="preserve">
+    <value>Clase</value>
+  </data>
+  <data name="ModelDialog.TrainingSource" xml:space="preserve">
+    <value>Sursă antrenare</value>
+  </data>
+  <data name="ModelDialog.StorageFile" xml:space="preserve">
+    <value>Fișier stocare</value>
+  </data>
+  <data name="ModelDialog.InternalId" xml:space="preserve">
+    <value>ID intern</value>
+  </data>
+  <data name="EditModel.Title" xml:space="preserve">
+    <value>Editează interpretarea modelului</value>
+  </data>
+  <data name="EditModel.TargetModality" xml:space="preserve">
+    <value>Modalitate țintă (DICOM, ex: OP, CR,DX)</value>
+  </data>
+  <data name="EditModel.NameRequired" xml:space="preserve">
+    <value>Numele modelului este obligatoriu.</value>
+  </data>
+  <data name="EditModel.Updated" xml:space="preserve">
+    <value>Metadatele modelului au fost actualizate.</value>
+  </data>
+  <data name="EditModel.SaveFailed" xml:space="preserve">
+    <value>Salvarea a eșuat: {0}</value>
+  </data>
+  <data name="ClassEditor.Title" xml:space="preserve">
+    <value>Interpretarea claselor (severitate + recomandări)</value>
+  </data>
+  <data name="ClassEditor.Hint1" xml:space="preserve">
+    <value>Câte o intrare pentru fiecare clasă de ieșire a modelului, în ordinea indexului (0, 1, 2…).</value>
+  </data>
+  <data name="ClassEditor.Hint2" xml:space="preserve">
+    <value>Severitate recomandată pentru colorare corectă:</value>
+  </data>
+  <data name="ClassEditor.Hint3" xml:space="preserve">
+    <value>Recomandările: câte una pe linie.</value>
+  </data>
+  <data name="ClassEditor.NoClasses" xml:space="preserve">
+    <value>Nicio clasă definită. Apasă „Adaugă clasă" pentru a începe.</value>
+  </data>
+  <data name="ClassEditor.RemoveClass" xml:space="preserve">
+    <value>Elimină clasa</value>
+  </data>
+  <data name="ClassEditor.ClassName" xml:space="preserve">
+    <value>Nume clasă</value>
+  </data>
+  <data name="ClassEditor.Recommendations" xml:space="preserve">
+    <value>Recomandări (una pe linie)</value>
+  </data>
+  <data name="ClassEditor.RecommendationsPlaceholder" xml:space="preserve">
+    <value>Programare la oftalmolog în 3 luni&#10;Control glicemic strict</value>
+  </data>
+  <data name="ClassEditor.AddClass" xml:space="preserve">
+    <value>Adaugă clasă</value>
+  </data>
+  <data name="Upload.Title" xml:space="preserve">
+    <value>Încarcă Model AI Nou</value>
+  </data>
+  <data name="Upload.ModelFile" xml:space="preserve">
+    <value>Fișier Model (ONNX)</value>
+  </data>
+  <data name="Upload.SelectOnnx" xml:space="preserve">
+    <value>Selectează fișierul .onnx antrenat</value>
+  </data>
+  <data name="Upload.DescriptionPlaceholder" xml:space="preserve">
+    <value>Descriere detaliată a modelului și utilizarea sa...</value>
+  </data>
+  <data name="Upload.TaskType" xml:space="preserve">
+    <value>Tipul Analizei</value>
+  </data>
+  <data name="Upload.SelectTaskType" xml:space="preserve">
+    <value>Selectează tipul de analiză</value>
+  </data>
+  <data name="Upload.Version" xml:space="preserve">
+    <value>Versiune</value>
+  </data>
+  <data name="Upload.AccuracyPct" xml:space="preserve">
+    <value>Acuratețe (%)</value>
+  </data>
+  <data name="Upload.NumClasses" xml:space="preserve">
+    <value>Număr Clase</value>
+  </data>
+  <data name="Upload.InputShape" xml:space="preserve">
+    <value>Dimensiune Input</value>
+  </data>
+  <data name="Upload.ActiveImmediately" xml:space="preserve">
+    <value>Activat imediat după încărcare</value>
+  </data>
+  <data name="Upload.SaveInactive" xml:space="preserve">
+    <value>Salvează ca inactiv</value>
+  </data>
+  <data name="Upload.UploadButton" xml:space="preserve">
+    <value>Încarcă Model</value>
+  </data>
+  <data name="Upload.TaskRetinopathy" xml:space="preserve">
+    <value>Retinopatie Diabetică</value>
+  </data>
+  <data name="Upload.TaskChestXray" xml:space="preserve">
+    <value>Radiografie Toracică</value>
+  </data>
+  <data name="Upload.TaskBrainTumor" xml:space="preserve">
+    <value>Tumoare Cerebrală</value>
+  </data>
+  <data name="Upload.TaskSkinLesion" xml:space="preserve">
+    <value>Leziune Cutanată</value>
+  </data>
+  <data name="Upload.TaskPneumonia" xml:space="preserve">
+    <value>Pneumonie</value>
+  </data>
+  <data name="Upload.TaskOther" xml:space="preserve">
+    <value>Altul</value>
+  </data>
+  <data name="Upload.SelectFile" xml:space="preserve">
+    <value>Selectează un fișier model</value>
+  </data>
+  <data name="Upload.Succeeded" xml:space="preserve">
+    <value>Modelul a fost încărcat cu succes!</value>
+  </data>
+  <data name="Upload.Failed" xml:space="preserve">
+    <value>Încărcarea a eșuat: {0}</value>
+  </data>
+</root>

@@ -1,0 +1,131 @@
+@page "/login"
+@attribute [AllowAnonymous]
+@layout AuthLayout
+@inject SitimAuthStateProvider AuthProvider
+@inject NavigationManager Navigation
+@inject NotificationService Notification
+@inject IStringLocalizer<SharedResource> L
+@using Microsoft.AspNetCore.Components
+
+<PageTitle>@L["Login.PageTitle"]</PageTitle>
+
+@if (!_alreadyAuthenticated)
+{
+<div class="sitim-login-wrapper">
+    <RadzenRow JustifyContent="JustifyContent.Center" Style="width: 100%;">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="4">
+            <RadzenCard class="sitim-login-card">
+                <RadzenStack Gap="1.5rem">
+                    <RadzenStack AlignItems="AlignItems.Center">
+                        <RadzenIcon Icon="biotech" class="sitim-login-logo" style="font-size: 64px;" />
+                        <RadzenText Text="SITIM" TextStyle="TextStyle.H4" class="rz-mb-0" />
+                        <RadzenText Text="@L["Login.Tagline"]" TextStyle="TextStyle.Subtitle1"
+                                    style="color: var(--rz-text-tertiary-color);" />
+                        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                            <LanguageSwitcher />
+                            <ThemeSwitcher />
+                        </RadzenStack>
+                    </RadzenStack>
+
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <RadzenAlert AlertStyle="AlertStyle.Danger" ShowIcon="true" Variant="Variant.Flat" Size="AlertSize.Small">
+                            @errorMessage
+                        </RadzenAlert>
+                    }
+
+                    <RadzenTemplateForm TItem="LoginModel" Data="@loginModel" Submit="@OnSubmit">
+                        <RadzenStack Gap="1rem">
+                            <RadzenFormField Text="Email" Variant="Variant.Outlined">
+                                <RadzenTextBox @bind-Value="loginModel.Email" Name="Email" />
+                            </RadzenFormField>
+
+                            <RadzenFormField Text="@L["Login.Password"]" Variant="Variant.Outlined">
+                                <RadzenPassword @bind-Value="loginModel.Password" Name="Password" />
+                            </RadzenFormField>
+
+                            <RadzenButton Text="@L["Login.SignIn"]" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary"
+                                          Size="ButtonSize.Large" IsBusy="@isLoading" BusyText="@L["Login.SigningIn"]"
+                                          Style="width: 100%;" Icon="login" />
+                        </RadzenStack>
+                    </RadzenTemplateForm>
+                </RadzenStack>
+            </RadzenCard>
+        </RadzenColumn>
+    </RadzenRow>
+</div>
+}
+
+@code {
+    [SupplyParameterFromQuery]
+    public string? ReturnUrl { get; set; }
+
+    private LoginModel loginModel = new();
+    private string? errorMessage;
+    private bool isLoading;
+    private bool _alreadyAuthenticated;
+
+    private sealed class LoginModel
+    {
+        public string Email { get; set; } = "";
+        public string Password { get; set; } = "";
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Check auth state (reads from cookie — no JS needed, instant)
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        _alreadyAuthenticated = authState.User.Identity?.IsAuthenticated == true;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && _alreadyAuthenticated)
+        {
+            Navigation.NavigateTo(GetSafeReturnUrl(), replace: true);
+        }
+    }
+
+    private async Task OnSubmit()
+    {
+        isLoading = true;
+        errorMessage = null;
+
+        try
+        {
+            var error = await AuthProvider.LoginAsync(loginModel.Email, loginModel.Password);
+            if (error is not null)
+            {
+                errorMessage = error;
+            }
+            else
+            {
+                Navigation.NavigateTo(GetSafeReturnUrl(), forceLoad: true);
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = L["Login.ConnectionError", ex.Message];
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private string GetSafeReturnUrl()
+    {
+        if (string.IsNullOrWhiteSpace(ReturnUrl))
+            return "/";
+
+        var decoded = Uri.UnescapeDataString(ReturnUrl);
+        if (!decoded.StartsWith("/", StringComparison.Ordinal))
+            return "/";
+        if (decoded.StartsWith("//", StringComparison.Ordinal))
+            return "/";
+        if (decoded.StartsWith("/login", StringComparison.OrdinalIgnoreCase))
+            return "/";
+
+        return decoded;
+    }
+}

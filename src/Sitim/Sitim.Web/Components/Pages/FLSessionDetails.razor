@@ -1,0 +1,490 @@
+@page "/federated-learning/sessions/{SessionIdStr}"
+@attribute [Authorize(Roles = "SuperAdmin")]
+@implements IAsyncDisposable
+@inject SitimApiClient Api
+@inject NavigationManager Navigation
+@inject NotificationService Notification
+@inject IStringLocalizer<SharedResource> L
+
+<PageTitle>@L["FLDetails.PageTitle"]</PageTitle>
+
+<RadzenStack Gap="1rem">
+    <RadzenRow AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+        <RadzenColumn Size="12" SizeMD="8">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                <RadzenButton Icon="arrow_back" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" Size="ButtonSize.Small"
+                              title="@L["FLDetails.BackToDashboard"]"
+                              Click="@(() => Navigation.NavigateTo("/federated-learning"))" />
+                <RadzenText Text="@L["FLDetails.Title"]" TextStyle="TextStyle.DisplayH5" class="rz-mb-0" />
+            </RadzenStack>
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-end">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem" AlignItems="AlignItems.Center">
+                <RadzenText Text="@L["Common.AutoRefresh5s"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                <RadzenButton Text="@L["Common.Reload"]" Icon="refresh" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small"
+                              Click="@LoadSessionAsync" IsBusy="@_loading" />
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+
+    @if (_loading)
+    {
+        <RadzenProgressBarCircular ProgressBarStyle="ProgressBarStyle.Primary" Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
+    }
+    else if (_session is null)
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Warning" Shade="Shade.Light" AllowClose="false">
+            @L["FLDetails.NotFound"]
+        </RadzenAlert>
+    }
+    else
+    {
+        <RadzenRow Gap="1rem">
+            <RadzenColumn Size="12" SizeMD="3">
+                <RadzenCard>
+                    <RadzenText Text="@L["Common.Model"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                    <RadzenText Text="@_session.ModelKey" TextStyle="TextStyle.Body1" />
+                </RadzenCard>
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="3">
+                <RadzenCard>
+                    <RadzenText Text="@L["Common.Status"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                    <div>
+                        <RadzenBadge BadgeStyle="@GetSessionBadgeStyle(_session.Status)" Text="@_session.Status" />
+                    </div>
+                </RadzenCard>
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="3">
+                <RadzenCard>
+                    <RadzenText Text="@L["FLDetails.CurrentRound"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                    <RadzenText Text="@($"{_session.CurrentRound}/{_session.TotalRounds}")" TextStyle="TextStyle.Body1" />
+                </RadzenCard>
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="3">
+                <RadzenCard>
+                    <RadzenText Text="@L["FL.Participants"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                    <RadzenText Text="@_session.Participants.Count.ToString()" TextStyle="TextStyle.Body1" />
+                </RadzenCard>
+            </RadzenColumn>
+        </RadzenRow>
+
+        <RadzenRow Gap="1rem">
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenCard>
+                    <RadzenStack Gap="0.5rem">
+                        <RadzenText Text="@L["Progress.StartedAt"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                        <RadzenText Text="@(_session.StartedAtUtc.HasValue ? FormatDateTime(_session.StartedAtUtc.Value) : "—")" TextStyle="TextStyle.Body2" />
+                        <RadzenText Text="@L["Results.FinishedAt"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                        <RadzenText Text="@(_session.FinishedAtUtc.HasValue ? FormatDateTime(_session.FinishedAtUtc.Value) : "—")" TextStyle="TextStyle.Body2" />
+                    </RadzenStack>
+                </RadzenCard>
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenCard>
+                    <RadzenStack Gap="0.5rem">
+                        <RadzenText Text="@L["FLDetails.ModelOutput"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                        <RadzenText Text="@(_session.OutputModelPath ?? "—")" TextStyle="TextStyle.Body2" />
+                        <RadzenText Text="@L["FLDetails.LastError"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                        <RadzenText Text="@(_session.LastError ?? "—")" TextStyle="TextStyle.Body2" />
+                    </RadzenStack>
+                </RadzenCard>
+            </RadzenColumn>
+        </RadzenRow>
+
+        @if (_session.Status == "Completed")
+        {
+            <RadzenCard>
+                <RadzenRow AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenStack Gap="0.25rem">
+                            <RadzenText Text="@L["FLDetails.PublishedModel"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                            <RadzenText Text="@(_publishedModel is null ? L["FLDetails.NotPublishedYet"].Value : $"{_publishedModel.Name} (v{_publishedModel.Version})")" TextStyle="TextStyle.Body2" />
+                            @if (_publishedModel is not null)
+                            {
+                                <RadzenText Text="@($"Storage: {_publishedModel.StorageFileName}")" TextStyle="TextStyle.Caption" />
+                            }
+                        </RadzenStack>
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-end">
+                        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                            @if (_publishedModel is not null && _publishedModel.IsActive)
+                            {
+                                <RadzenBadge BadgeStyle="BadgeStyle.Success" Text="@L["FLDetails.ModelActiveInference"]" />
+                            }
+                            else if (_publishedModel is not null)
+                            {
+                                <RadzenButton Text="@L["FLDetails.ActivateModel"]"
+                                              Icon="published_with_changes"
+                                              ButtonStyle="ButtonStyle.Primary"
+                                              Size="ButtonSize.Small"
+                                              IsBusy="@_activatingModel"
+                                              Click="@ActivatePublishedModelAsync" />
+                            }
+                        </RadzenStack>
+                    </RadzenColumn>
+                </RadzenRow>
+            </RadzenCard>
+        }
+
+        <RadzenCard>
+            <RadzenStack Gap="0.75rem">
+                <RadzenText Text="@L["FL.Participants"]" TextStyle="TextStyle.H6" />
+                @if (!_session.Participants.Any())
+                {
+                    <RadzenText Text="@L["FLDetails.NoParticipants"]" TextStyle="TextStyle.Body2" />
+                }
+                else
+                {
+                    <RadzenStack Gap="0.5rem">
+                        @foreach (var participant in _session.Participants.OrderBy(p => p.InstitutionName))
+                        {
+                            <RadzenCard Variant="Variant.Outlined">
+                                <RadzenRow AlignItems="AlignItems.Center">
+                                    <RadzenColumn Size="12" SizeMD="5">
+                                        <RadzenText Text="@participant.InstitutionName" TextStyle="TextStyle.Body2" />
+                                    </RadzenColumn>
+                                    <RadzenColumn Size="6" SizeMD="3">
+                                        <RadzenBadge BadgeStyle="@GetParticipantBadgeStyle(participant.Status)" Text="@participant.Status" />
+                                    </RadzenColumn>
+                                    <RadzenColumn Size="6" SizeMD="4" class="rz-text-align-end">
+                                        <RadzenText Text="@(participant.LastHeartbeatUtc.HasValue ? FormatDateTime(participant.LastHeartbeatUtc.Value) : "—")" TextStyle="TextStyle.Caption" />
+                                    </RadzenColumn>
+                                </RadzenRow>
+                            </RadzenCard>
+                        }
+                    </RadzenStack>
+                }
+            </RadzenStack>
+        </RadzenCard>
+
+        <RadzenCard>
+            <RadzenStack Gap="0.75rem">
+                <RadzenText Text="@L["FLDetails.MetricsEvolution"]" TextStyle="TextStyle.H6" />
+                @if (!_session.Rounds.Any())
+                {
+                    <RadzenText Text="@L["FLDetails.NoRoundsYet"]" TextStyle="TextStyle.Body2" />
+                }
+                else
+                {
+                    <RadzenChart>
+                        <RadzenLineSeries Data="@_session.Rounds.OrderBy(r => r.RoundNumber).ToList()"
+                                          CategoryProperty="RoundNumber"
+                                          ValueProperty="AggregatedLoss"
+                                          Title="Loss" />
+                        <RadzenLineSeries Data="@_session.Rounds.OrderBy(r => r.RoundNumber).ToList()"
+                                          CategoryProperty="RoundNumber"
+                                          ValueProperty="AggregatedAccuracy"
+                                          Title="Accuracy" />
+                        <RadzenLineSeries Data="@_session.Rounds.OrderBy(r => r.RoundNumber).ToList()"
+                                          CategoryProperty="RoundNumber"
+                                          ValueProperty="AggregatedMacroF1"
+                                          Title="F1 macro" />
+                        <RadzenCategoryAxis>
+                            <RadzenAxisTitle Text="@L["FLDetails.Round"]" />
+                        </RadzenCategoryAxis>
+                        <RadzenValueAxis>
+                            <RadzenAxisTitle Text="@L["FLDetails.MetricValue"]" />
+                        </RadzenValueAxis>
+                    </RadzenChart>
+
+                    <div style="overflow:auto;">
+                        <table class="rz-datatable-tablewrapper" style="width:100%;border-collapse:collapse;">
+                            <thead>
+                                <tr style="text-align:left;border-bottom:1px solid var(--rz-base-300);">
+                                    <th style="padding:0.5rem;">@L["FLDetails.Round"]</th>
+                                    <th style="padding:0.5rem;">@L["FLDetails.AggregatedLoss"]</th>
+                                    <th style="padding:0.5rem;">@L["FLDetails.AggregatedAccuracy"]</th>
+                                    <th style="padding:0.5rem;">@L["FLDetails.AggregatedF1"]</th>
+                                    <th style="padding:0.5rem;">@L["Results.FinishedAt"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var round in _session.Rounds.OrderBy(r => r.RoundNumber))
+                                {
+                                    <tr style="border-bottom:1px solid var(--rz-base-200);">
+                                        <td style="padding:0.5rem;">@round.RoundNumber</td>
+                                        <td style="padding:0.5rem;">@(round.AggregatedLoss?.ToString("0.000000") ?? "—")</td>
+                                        <td style="padding:0.5rem;">@(round.AggregatedAccuracy?.ToString("0.0000") ?? "—")</td>
+                                        <td style="padding:0.5rem;">@(round.AggregatedMacroF1?.ToString("0.0000") ?? "—")</td>
+                                        <td style="padding:0.5rem;">@(round.CompletedAtUtc.HasValue ? FormatDateTime(round.CompletedAtUtc.Value) : "—")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </RadzenStack>
+        </RadzenCard>
+
+        <RadzenCard>
+            <RadzenStack Gap="0.75rem">
+                <RadzenText Text="@L["FLDetails.CommunicationCost"]" TextStyle="TextStyle.H6" />
+                <RadzenText TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);">
+                    @L["FLDetails.CommunicationCostHint"]
+                </RadzenText>
+                <RadzenRow Gap="1rem">
+                    <RadzenColumn Size="6" SizeMD="3">
+                        <RadzenText Text="@L["FLDetails.SessionTotal"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                        <RadzenText Text="@FormatMb(_session.TotalCommunicationBytes)" TextStyle="TextStyle.Body1" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="6" SizeMD="4">
+                        <RadzenText Text="@L["FLDetails.AvgPerClientRound"]" TextStyle="TextStyle.Caption" style="color: var(--rz-text-tertiary-color);" />
+                        <RadzenText Text="@FormatMb((long)_session.AvgPayloadBytesPerClientPerRound)" TextStyle="TextStyle.Body1" />
+                    </RadzenColumn>
+                </RadzenRow>
+                @{
+                    var roundsWithPayload = _session.Rounds
+                        .Where(r => r.RoundPayloadBytes.HasValue)
+                        .OrderBy(r => r.RoundNumber)
+                        .Select(r => new RoundCost(r.RoundNumber, r.RoundPayloadBytes!.Value / (1024.0 * 1024.0)))
+                        .ToList();
+                }
+                @if (roundsWithPayload.Any())
+                {
+                    <RadzenChart>
+                        <RadzenColumnSeries Data="@roundsWithPayload"
+                                            CategoryProperty="RoundNumber"
+                                            ValueProperty="Mb"
+                                            Title="@L["FLDetails.MbPerRound"]" />
+                        <RadzenCategoryAxis>
+                            <RadzenAxisTitle Text="@L["FLDetails.Round"]" />
+                        </RadzenCategoryAxis>
+                        <RadzenValueAxis>
+                            <RadzenAxisTitle Text="@L["FLDetails.MbTransferred"]" />
+                        </RadzenValueAxis>
+                    </RadzenChart>
+                }
+                else
+                {
+                    <RadzenText Text="@L["FLDetails.NoCommunicationData"]" TextStyle="TextStyle.Body2" />
+                }
+            </RadzenStack>
+        </RadzenCard>
+
+        <RadzenCard>
+            <RadzenStack Gap="0.75rem">
+                <RadzenText Text="@L["FLDetails.ClassDistribution"]" TextStyle="TextStyle.H6" />
+                @{
+                    var histograms = ParseHistograms();
+                    var allClasses = histograms.Values.SelectMany(h => h.Keys).Distinct().OrderBy(c => c).ToList();
+                }
+                @if (!histograms.Any() || !allClasses.Any())
+                {
+                    <RadzenText Text="@L["FLDetails.NoClassDistribution"]" TextStyle="TextStyle.Body2" />
+                }
+                else
+                {
+                    <RadzenChart>
+                        @foreach (var participant in _session.Participants.OrderBy(p => p.InstitutionName))
+                        {
+                            if (histograms.TryGetValue(participant.InstitutionId, out var hist))
+                            {
+                                var data = allClasses.Select(c => new ClassBucket(L["Results.ClassNo", c], hist.GetValueOrDefault(c, 0))).ToList();
+                                <RadzenColumnSeries Data="@data" CategoryProperty="ClassLabel" ValueProperty="Count" Title="@participant.InstitutionName" />
+                            }
+                        }
+                        <RadzenCategoryAxis>
+                            <RadzenAxisTitle Text="@L["FLDetails.Class"]" />
+                        </RadzenCategoryAxis>
+                        <RadzenValueAxis>
+                            <RadzenAxisTitle Text="@L["FLDetails.SampleCount"]" />
+                        </RadzenValueAxis>
+                    </RadzenChart>
+
+                    <div style="overflow:auto;">
+                        <table class="rz-datatable-tablewrapper" style="width:100%;border-collapse:collapse;">
+                            <thead>
+                                <tr style="text-align:left;border-bottom:1px solid var(--rz-base-300);">
+                                    <th style="padding:0.5rem;">@L["Users.Institution"]</th>
+                                    @foreach (var c in allClasses)
+                                    {
+                                        <th style="padding:0.5rem;">@L["Results.ClassNo", c]</th>
+                                    }
+                                    <th style="padding:0.5rem;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var participant in _session.Participants.OrderBy(p => p.InstitutionName))
+                                {
+                                    var hist = histograms.GetValueOrDefault(participant.InstitutionId) ?? new Dictionary<int, int>();
+                                    <tr style="border-bottom:1px solid var(--rz-base-200);">
+                                        <td style="padding:0.5rem;">@participant.InstitutionName</td>
+                                        @foreach (var c in allClasses)
+                                        {
+                                            <td style="padding:0.5rem;">@hist.GetValueOrDefault(c, 0)</td>
+                                        }
+                                        <td style="padding:0.5rem;"><strong>@hist.Values.Sum()</strong></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </RadzenStack>
+        </RadzenCard>
+    }
+</RadzenStack>
+
+@code {
+    [Parameter]
+    public string SessionIdStr { get; set; } = string.Empty;
+
+    private Guid _sessionId;
+    private FLSessionDetailsDto? _session;
+    private FLPublishedModelDto? _publishedModel;
+    private bool _loading = true;
+    private bool _activatingModel;
+    private System.Timers.Timer? _refreshTimer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Guid.TryParse(SessionIdStr, out _sessionId))
+        {
+            _loading = false;
+            return;
+        }
+
+        await LoadSessionAsync();
+        StartAutoRefresh();
+    }
+
+    private async Task LoadSessionAsync()
+    {
+        _loading = true;
+        try
+        {
+            var sessionTask = Api.GetFLSessionAsync(_sessionId);
+            var publishedModelTask = Api.GetFLPublishedModelAsync(_sessionId);
+            await Task.WhenAll(sessionTask, publishedModelTask);
+
+            // SitimApiClient maps every non-2xx to null, so a transient API failure is
+            // indistinguishable here from a genuinely missing session. With a 5 s poll that
+            // meant one slow response blanked a live session into "not found". Keep the last
+            // good snapshot instead and let the next tick recover; only trust null when we
+            // have never managed to load the session.
+            _session = sessionTask.Result ?? _session;
+            _publishedModel = publishedModelTask.Result ?? _publishedModel;
+        }
+        catch (Exception ex)
+        {
+            Notification.Notify(NotificationSeverity.Error, L["Common.Error"], ex.Message);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private void StartAutoRefresh()
+    {
+        _refreshTimer = new System.Timers.Timer(5000);
+        _refreshTimer.Elapsed += (_, _) =>
+        {
+            // Skip API calls when the session has finished — its state is final.
+            if (_session is null || !IsSessionRunning(_session.Status))
+                return;
+
+            _ = InvokeAsync(LoadSessionAsync);
+        };
+        _refreshTimer.AutoReset = true;
+        _refreshTimer.Start();
+    }
+
+    private async Task ActivatePublishedModelAsync()
+    {
+        if (_session is null || _session.Status != "Completed")
+            return;
+
+        _activatingModel = true;
+        try
+        {
+            var activated = await Api.ActivateFLPublishedModelAsync(_sessionId);
+            if (activated is null)
+            {
+                Notification.Notify(NotificationSeverity.Error, L["Common.Error"], L["FLDetails.ActivateFailed"]);
+                return;
+            }
+
+            _publishedModel = activated;
+            Notification.Notify(NotificationSeverity.Success, L["Common.Success"], L["FLDetails.ActivatedDetail"]);
+            await LoadSessionAsync();
+        }
+        catch (Exception ex)
+        {
+            Notification.Notify(NotificationSeverity.Error, L["Common.Error"], ex.Message);
+        }
+        finally
+        {
+            _activatingModel = false;
+        }
+    }
+
+    private static bool IsSessionRunning(string status) =>
+        status is "Running" or "Pending";
+
+    private static BadgeStyle GetSessionBadgeStyle(string status) => status switch
+    {
+        "Pending" => BadgeStyle.Warning,
+        "Running" => BadgeStyle.Info,
+        "Completed" => BadgeStyle.Success,
+        "Stopped" => BadgeStyle.Danger,
+        "Failed" => BadgeStyle.Danger,
+        _ => BadgeStyle.Light
+    };
+
+    private static BadgeStyle GetParticipantBadgeStyle(string status) => status switch
+    {
+        "Invited" => BadgeStyle.Warning,
+        "Accepted" => BadgeStyle.Info,
+        "Training" => BadgeStyle.Info,
+        "Completed" => BadgeStyle.Success,
+        "Stopped" => BadgeStyle.Warning,
+        "Failed" => BadgeStyle.Danger,
+        _ => BadgeStyle.Light
+    };
+
+    private static string FormatDateTime(DateTime value) => value.ToString("yyyy-MM-dd HH:mm:ss");
+
+    private static string FormatMb(long bytes) => $"{bytes / (1024.0 * 1024.0):0.00} MB";
+
+    /// <summary>Parses each participant's ClassHistogramJson ({"0":n,...}) into class->count.</summary>
+    private Dictionary<Guid, Dictionary<int, int>> ParseHistograms()
+    {
+        var result = new Dictionary<Guid, Dictionary<int, int>>();
+        if (_session is null) return result;
+
+        foreach (var participant in _session.Participants)
+        {
+            if (string.IsNullOrWhiteSpace(participant.ClassHistogramJson))
+                continue;
+            try
+            {
+                var raw = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, int>>(participant.ClassHistogramJson);
+                if (raw is null) continue;
+                var parsed = new Dictionary<int, int>();
+                foreach (var kvp in raw)
+                {
+                    if (int.TryParse(kvp.Key, out var cls))
+                        parsed[cls] = kvp.Value;
+                }
+                if (parsed.Count > 0)
+                    result[participant.InstitutionId] = parsed;
+            }
+            catch (System.Text.Json.JsonException)
+            {
+                // Ignore malformed histogram JSON; just skip that participant.
+            }
+        }
+        return result;
+    }
+
+    private sealed record RoundCost(int RoundNumber, double Mb);
+
+    private sealed record ClassBucket(string ClassLabel, int Count);
+
+    public ValueTask DisposeAsync()
+    {
+        _refreshTimer?.Dispose();
+        return ValueTask.CompletedTask;
+    }
+}

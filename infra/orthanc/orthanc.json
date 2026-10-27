@@ -1,0 +1,17 @@
+{
+  "Name": "SITIM-Orthanc",
+  "HttpPort": 8042,
+  "DicomPort": 4242,
+  "DicomAet": "SITIMORTHANC",
+  "AuthenticationEnabled": false,
+  "RemoteAccessAllowed": true,
+  "DicomWeb": {
+    "Enable": true,
+    "Root": "/dicom-web/",
+    "PublicRoot": "/orthanc/dicom-web/",
+    "EnableWado": true,
+    "WadoRoot": "/wado"
+  },
+  "StorageDirectory": "/var/lib/orthanc/db",
+  "Verbose": true
+}

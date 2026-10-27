@@ -1,0 +1,6 @@
+# torch/torchvision se instalează în Dockerfile prin build-args (implicit CPU). Serverul
+# face doar reconstituire + export ONNX (un singur forward), deci CPU e suficient pe server.
+flwr==1.9.0
+numpy==1.26.4
+flask==3.0.3
+onnx==1.16.2

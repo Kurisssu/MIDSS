@@ -1,0 +1,305 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Net.Http.Headers
+@using System.Text.Json
+@using Sitim.Web.Models
+@using Sitim.Web.Services
+@inject SitimApiClient ApiClient
+@inject NotificationService NotificationService
+@inject DialogService DialogService
+@inject AuthTokenStore TokenStore
+@inject IConfiguration Configuration
+@inject IStringLocalizer<SharedResource> L
+
+<RadzenStack Gap="1rem">
+    <RadzenText TextStyle="TextStyle.H6">@L["Upload.Title"]</RadzenText>
+
+    <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+        <DataAnnotationsValidator />
+        
+        <RadzenStack Gap="1rem">
+            <!-- File Upload -->
+            <RadzenFormField Text="@L["Upload.ModelFile"]" Variant="Variant.Outlined">
+                <ChildContent>
+                    <InputFile OnChange="@OnFileSelected" accept=".onnx" class="form-control" />
+                </ChildContent>
+                <Helper>
+                    <RadzenText TextStyle="TextStyle.Caption" class="rz-color-secondary">
+                        @L["Upload.SelectOnnx"]
+                    </RadzenText>
+                </Helper>
+            </RadzenFormField>
+
+            @if (fileSize > 0)
+            {
+                <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                        <RadzenIcon Icon="insert_drive_file" />
+                        <RadzenText>@fileName (@FormatFileSize(fileSize))</RadzenText>
+                    </RadzenStack>
+                </RadzenAlert>
+            }
+
+            <!-- Name -->
+            <RadzenFormField Text="@L["AIModels.ModelName"]" Variant="Variant.Outlined">
+                <RadzenTextBox @bind-Value="@model.Name" class="w-100" Placeholder="Diabetic Retinopathy Detection" />
+            </RadzenFormField>
+
+            <!-- Description -->
+            <RadzenFormField Text="@L["Common.Description"]" Variant="Variant.Outlined">
+                <RadzenTextArea @bind-Value="@model.Description"
+                                class="w-100"
+                                Rows="3"
+                                Placeholder="@L["Upload.DescriptionPlaceholder"]" />
+            </RadzenFormField>
+
+            <!-- Task Type -->
+            <RadzenFormField Text="@L["Upload.TaskType"]" Variant="Variant.Outlined">
+                <RadzenDropDown @bind-Value="@model.Task"
+                                Data="@taskTypes"
+                                TextProperty="Label"
+                                ValueProperty="Value"
+                                class="w-100"
+                                Placeholder="@L["Upload.SelectTaskType"]" />
+            </RadzenFormField>
+
+            <!-- Row: Version + Accuracy -->
+            <RadzenRow>
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenFormField Text="@L["Upload.Version"]" Variant="Variant.Outlined">
+                        <RadzenTextBox @bind-Value="@model.Version" class="w-100" Placeholder="v1.0" />
+                    </RadzenFormField>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenFormField Text="@L["Upload.AccuracyPct"]" Variant="Variant.Outlined">
+                        <RadzenNumeric @bind-Value="@model.AccuracyPercent" 
+                                       class="w-100" 
+                                       Min="0" 
+                                       Max="100" 
+                                       Step="0.01m"
+                                       Placeholder="85.27" />
+                    </RadzenFormField>
+                </RadzenColumn>
+            </RadzenRow>
+
+            <!-- Row: NumClasses + InputShape -->
+            <RadzenRow>
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenFormField Text="@L["Upload.NumClasses"]" Variant="Variant.Outlined">
+                        <RadzenNumeric @bind-Value="@model.NumClasses" 
+                                       class="w-100" 
+                                       Min="2" 
+                                       Placeholder="5" />
+                    </RadzenFormField>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenFormField Text="@L["Upload.InputShape"]" Variant="Variant.Outlined">
+                        <RadzenTextBox @bind-Value="@model.InputShape" 
+                                       class="w-100" 
+                                       Placeholder="1,3,512,512" />
+                    </RadzenFormField>
+                </RadzenColumn>
+            </RadzenRow>
+
+            <!-- Training Source -->
+            <RadzenFormField Text="@L["ModelDialog.TrainingSource"]" Variant="Variant.Outlined">
+                <RadzenTextBox @bind-Value="@model.TrainingSource"
+                               class="w-100"
+                               Placeholder="APTOS 2019, ImageNet" />
+            </RadzenFormField>
+
+            <!-- Active Status -->
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem">
+                <RadzenSwitch @bind-Value="@model.IsActive" />
+                <RadzenText TextStyle="TextStyle.Body2">@(model.IsActive ? L["Upload.ActiveImmediately"] : L["Upload.SaveInactive"])</RadzenText>
+            </RadzenStack>
+
+            <RadzenColumn Size="12"><hr class="rz-my-2" /></RadzenColumn>
+
+            <!-- Per-class interpretation: severity + recommendations -->
+            <ClassInterpretationEditor Rows="@classRows" />
+
+            <!-- Buttons -->
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" JustifyContent="JustifyContent.End" class="rz-mt-4">
+                <RadzenButton Text="@L["Common.Cancel"]"
+                              ButtonStyle="ButtonStyle.Light"
+                              Click="@Cancel"
+                              Disabled="@isUploading" />
+                <RadzenButton Text="@(isUploading ? L["Common.Loading"] : L["Upload.UploadButton"])"
+                              ButtonType="ButtonType.Submit" 
+                              ButtonStyle="ButtonStyle.Primary" 
+                              Icon="@(isUploading ? "" : "upload")"
+                              Disabled="@(isUploading || selectedFile == null)" />
+            </RadzenStack>
+
+            @if (isUploading)
+            {
+                <RadzenProgressBar Value="@uploadProgress" 
+                                   Max="100" 
+                                   ShowValue="true" 
+                                   Mode="@(uploadProgress < 100 ? ProgressBarMode.Determinate : ProgressBarMode.Indeterminate)" />
+            }
+        </RadzenStack>
+    </EditForm>
+</RadzenStack>
+
+@code {
+    [Parameter] public EventCallback OnUploadComplete { get; set; }
+
+    private UploadModelForm model = new();
+    private List<ClassInterpretationRow> classRows = new();
+    private IBrowserFile? selectedFile;
+    private string fileName = string.Empty;
+    private long fileSize = 0;
+    private bool isUploading = false;
+    private double uploadProgress = 0;
+
+    // Built in OnInitialized so the localizer is available.
+    private List<TaskTypeOption> taskTypes = new();
+
+    protected override void OnInitialized()
+    {
+        taskTypes = new()
+        {
+            new("diabetic_retinopathy", L["Upload.TaskRetinopathy"]),
+            new("chest_xray", L["Upload.TaskChestXray"]),
+            new("brain_tumor", L["Upload.TaskBrainTumor"]),
+            new("skin_lesion", L["Upload.TaskSkinLesion"]),
+            new("pneumonia", L["Upload.TaskPneumonia"]),
+            new("covid19", "COVID-19 Detection"),
+            new("other", L["Upload.TaskOther"])
+        };
+    }
+
+    private void OnFileSelected(InputFileChangeEventArgs e)
+    {
+        selectedFile = e.File;
+        if (selectedFile != null)
+        {
+            fileName = selectedFile.Name;
+            fileSize = selectedFile.Size;
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (selectedFile == null)
+        {
+            NotificationService.Notify(NotificationSeverity.Error, L["Common.Error"], L["Upload.SelectFile"]);
+            return;
+        }
+
+        isUploading = true;
+        uploadProgress = 0;
+
+        try
+        {
+            // Get API base URL from configuration
+            var apiBaseUrl = Configuration["Api:BaseUrl"] ?? "https://localhost:7006";
+            using var httpClient = new HttpClient { BaseAddress = new Uri(apiBaseUrl.TrimEnd('/') + "/") };
+            
+            // Add authentication token
+            var token = TokenStore.Token;
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                httpClient.DefaultRequestHeaders.Authorization = 
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            }
+
+            using var content = new MultipartFormDataContent();
+
+            // Add file
+            var fileContent = new StreamContent(selectedFile.OpenReadStream(maxAllowedSize: 500_000_000)); // 500MB
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            content.Add(fileContent, "ModelFile", fileName);
+
+            // Add form fields
+            content.Add(new StringContent(model.Name), "Name");
+            if (!string.IsNullOrWhiteSpace(model.Description))
+                content.Add(new StringContent(model.Description), "Description");
+            content.Add(new StringContent(model.Task), "Task");
+            content.Add(new StringContent(model.Version), "Version");
+            if (model.AccuracyPercent.HasValue)
+                content.Add(new StringContent((model.AccuracyPercent.Value / 100m).ToString("F4")), "Accuracy");
+            content.Add(new StringContent(model.IsActive.ToString()), "IsActive");
+            if (model.NumClasses.HasValue)
+                content.Add(new StringContent(model.NumClasses.Value.ToString()), "NumClasses");
+            if (!string.IsNullOrWhiteSpace(model.InputShape))
+                content.Add(new StringContent(model.InputShape), "InputShape");
+            if (!string.IsNullOrWhiteSpace(model.TrainingSource))
+                content.Add(new StringContent(model.TrainingSource), "TrainingSource");
+
+            // Per-class interpretation metadata (names + severities + recommendations).
+            // Serialized into the JSON shapes the API stores; only sent when at least
+            // one class is defined, so existing behaviour is unchanged for empty input.
+            if (ClassInterpretation.HasAny(classRows))
+            {
+                var definedRows = classRows.Where(r => !string.IsNullOrWhiteSpace(r.Name)).ToList();
+                content.Add(new StringContent(JsonSerializer.Serialize(ClassInterpretation.Names(definedRows))), "ClassNames");
+                content.Add(new StringContent(JsonSerializer.Serialize(ClassInterpretation.Severities(definedRows))), "ClassSeverities");
+                content.Add(new StringContent(JsonSerializer.Serialize(ClassInterpretation.Recommendations(definedRows))), "ClassRecommendations");
+                if (!model.NumClasses.HasValue)
+                    content.Add(new StringContent(definedRows.Count.ToString()), "NumClasses");
+            }
+
+            uploadProgress = 50; // Simulated progress
+
+            var response = await httpClient.PostAsync("api/ai/models/upload", content);
+
+            uploadProgress = 100;
+
+            if (response.IsSuccessStatusCode)
+            {
+                NotificationService.Notify(NotificationSeverity.Success, L["Common.Success"], L["Upload.Succeeded"]);
+                await OnUploadComplete.InvokeAsync();
+                DialogService.Close(true);
+            }
+            else
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                NotificationService.Notify(NotificationSeverity.Error, L["Common.Error"], L["Upload.Failed", error]);
+            }
+        }
+        catch (Exception ex)
+        {
+            NotificationService.Notify(NotificationSeverity.Error, L["Common.Error"], L["Upload.Failed", ex.Message]);
+        }
+        finally
+        {
+            isUploading = false;
+            uploadProgress = 0;
+        }
+    }
+
+    private void Cancel()
+    {
+        DialogService.Close(false);
+    }
+
+    private string FormatFileSize(long bytes)
+    {
+        string[] sizes = { "B", "KB", "MB", "GB" };
+        double len = bytes;
+        int order = 0;
+        while (len >= 1024 && order < sizes.Length - 1)
+        {
+            order++;
+            len = len / 1024;
+        }
+        return $"{len:0.##} {sizes[order]}";
+    }
+
+    private class UploadModelForm
+    {
+        public string Name { get; set; } = string.Empty;
+        public string? Description { get; set; }
+        public string Task { get; set; } = "diabetic_retinopathy";
+        public string Version { get; set; } = "v1.0";
+        public decimal? AccuracyPercent { get; set; }
+        public bool IsActive { get; set; } = true;
+        public int? NumClasses { get; set; }
+        public string? InputShape { get; set; }
+        public string? TrainingSource { get; set; }
+    }
+
+    private record TaskTypeOption(string Value, string Label);
+}
